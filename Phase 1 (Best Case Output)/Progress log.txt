@@ -1,0 +1,16 @@
+1-21-16
+-need to tweak equation to get proper sunrise/sunset schedules. Must do this before continuing to the rest of the equations. For future reference, the url of the main resource is:
+	http://www.pveducation.org/pvcdrom/properties-of-sunlight/calculation-of-solar-insolation
+-oh, and I see that there is a more reliable equation for sunrise/set on that same page. I'll do it tomorrow, I need to sleep.
+
+-woke up, think i figured out the sunrise/set equation. Use this for declination:
+	http://www.itacanet.org/the-sun-as-a-source-of-energy/part-3-calculating-solar-angles/#3.1.-Declination-Angle
+-Also, divide arccos by 15, make every trig function use degrees, and add the result by one (to account for 12:00 am in the day)
+
+1-27-16
+-gave up on making the sunset/rise prediction equation. Just using an API instead. That works, so I'm going to integrate that with the rest of the pveducation equations.
+
+1-29-16
+-currently trying to find the solar insolation for a given day. I have the equations all together, which involves calculating air mass, solar insolation, and the length of daylight hours. I linked air mass with the grander solar insolation equation, I am now needing to find out how to use the hours of daylight in an hour to extend the period length of the other equation to match the day.
+I think I have the equation working. Was frustrated with tyring to integrate the sunlight hours into the graph, but I think I found something which may render that useless. Pveducation says there is roughly 12 hours of sunlight on average over the year, meaning that taking all daylight hours in a year and dividing them by 365 gives you 12. I will test this tomorrow with the API to see if it is accurate.
+On an off note, even if I don't get twelve, I could still use the avg hours to assert that the Id equation can run with one number, as opposed to running itself for each specific day. 

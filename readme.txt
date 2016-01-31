@@ -1,0 +1,1 @@
+This repo is a child of the FURI repository. It is here to experiment with power output prediction, which will be essential to the progress of the larger project. 
