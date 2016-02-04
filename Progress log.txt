@@ -1,0 +1,73 @@
+1-21-16
+-need to tweak equation to get proper sunrise/sunset schedules. Must do this before continuing to the rest of the equations. For future reference, the url of the main resource is:
+	http://www.pveducation.org/pvcdrom/properties-of-sunlight/calculation-of-solar-insolation
+-oh, and I see that there is a more reliable equation for sunrise/set on that same page. I'll do it tomorrow, I need to sleep.
+
+-woke up, think i figured out the sunrise/set equation. Use this for declination:
+	http://www.itacanet.org/the-sun-as-a-source-of-energy/part-3-calculating-solar-angles/#3.1.-Declination-Angle
+-Also, divide arccos by 15, make every trig function use degrees, and add the result by one (to account for 12:00 am in the day)
+
+1-27-16
+-gave up on making the sunset/rise prediction equation. Just using an API instead. That works, so I'm going to integrate that with the rest of the pveducation equations.
+
+1-29-16
+-currently trying to find the solar insolation for a given day. I have the equations all together, which involves calculating air mass, solar insolation, and the length of daylight hours. I linked air mass with the grander solar insolation equation, I am now needing to find out how to use the hours of daylight in an hour to extend the period length of the other equation to match the day.
+I think I have the equation working. Was frustrated with tyring to integrate the sunlight hours into the graph, but I think I found something which may render that useless. Pveducation says there is roughly 12 hours of sunlight on average over the year, meaning that taking all daylight hours in a year and dividing them by 365 gives you 12. I will test this tomorrow with the API to see if it is accurate.
+On an off note, even if I don't get twelve, I could still use the avg hours to assert that the Id equation can run with one number, as opposed to running itself for each specific day. 
+
+1-30-16
+-I was able to show that any area on the earth gets a daily avg of 12 hours of sunlight annually. I'll use that constant of 12 for now to work on the solar insolation equation. I think the formulas needed to predict that must span the length of 12 hours, and to find total solar insolation in a day I would need the area under the curve (integral). The only problem is that the result would entail that all places on earth have the same annual solar insolation. While that might be somewhat true (variations in sea level would likely disprove that hypothesis) I would still have problems in finding what the annual solar insolation IS. 
+-The big issue with the solar insolation is with the peak hour. While I've been able to create the span of the daytime hour, I haven't been able to change the peak. The cause of peak change I'm sure I know: the changing of seasons and earth declination, bringing the earth closer to the sun and possibly affecting the air mass.
+-I'm going to attempt to turn some of the data points visible on pveducation into graphs using logger pro, hopefully I can get some indication of how their formulas are working. 
+	*This did not work as well as I had planned. the slope of this graph was too unfitting for the data.
+
+-Turning in for the night. I think the solar irradiance thing has played out for this week. I'll revisit the problem when I meet with Pan's associate. Till then, I'll spend time think over other aspects of the master problem.
+
+2-3-16 
+-Today, I'm going tolook at something called the NREL Solar API, something that might very well predict the weather for me. I'm going to have a look at some of its results and play with its different features, becuase if it does work, it'll save lots of time for me to work with the crux of my research. 
+-My main concern with this api will be whether it factors weather interference into its calculations, or if its going to just give me best case scenarios and expects me to work from there. I'll write this down once I find out.
+
+About the API
+-------------
+Name: PVWatts
+Version: 5
+site: http://developer.nrel.gov/docs/solar/pvwatts-v5/
+Description:NREL's PVWatts calculates the energy production of grid-connected photovoltaic (PV) energy systems. This service estimates the performance of hypothetical residential and small commercial PV installations.
+
+First test case (using SPR-E20-327-COM)
+---------------------------------------
+-to send out my first calls, I'm going to need to get the following information (all required):
+
+	-address of where I'm setting up the panels
+	-system capacity: otherwise known as nominal capacity, nominal power, power rating, etc. It's how much power a solar panel can produce under ideal conditions (my datasheets call this thing nominal power)
+	-module type: with selection of std, premium, or thin film. I'll assume the modules are std if it's not mentioned.
+	-loses: the percent (as an integer) of energy lost in converting power from DC to AC. I don't know this for my test systems of the bat (something I will need to talk to a professor about later) so I'll assume ten percent loss (10%)
+	-array_type: the array type. I'll assume fixed-open rack for right now
+	-tilt (set to 0)
+	-azimuth: this is the angle of the object with respect to the plane it rests on (earth). 0 degrees is an object aligned directly north, and its angle increases with clockwise pivoting. For the test case, I'll assume it has a 0 degree angle (this variable is currently unneeded, as there is no tilt on the test case module)
+	
+
+I compiled all of this into a url and got my data. Here's what came in it:
+	* Estimated AC produced monthly (in KWh)
+	* Estimated Solar irradiance (in KWh/m^2) on the land
+	* Estimated Solar irradiance per day (KWh/m^2/day)
+	* Estimated DC produced monthly (in KWh)
+	* annual AC generated
+	* annual Solar Radiation generated
+
+
+-the data seems to be alright, nothing too out of the ordinary. However, I would like to be sure of the API's accuracy, and to do this, I'll be comparing PVWatts' results with that of "Real-time prediction models for output power...", the research which had recorded data of a solar panel in Macau, China for a solid year.
+-I've gotten the estimated data from my program, but can't seem to find anything from the research paper. I can look into this tomorrow, though I might not be able to find an annual yeild off the paper (maybe try searching for a monthly, or maybe they didn't include it becuase their research focused more on their gaussian models)
+
+2-4-16
+-Looking at the research paper, I didn't find the power output in terms of months or the whole year. There was a lot of information about the minutely output, but that's difficult to multiply into months because it does not specify the weather conditions.
+-I'm certain that using PVWatts will be the best alternative to creating my own equation. The process has already been thoroughly developed and accounts for more factors than I would have been able to. It uses weather history and tilt, along with the type of panel arrangement, to find what kind of power might be generated from one's system. 
+-I've gone through all of PVWatt's cautionary disclaimers (link below) and believe that the problems potentially faced will not come as too great a disadvantage. Furthermore, I've found PVWatts is an acclaimed technology and has the trust of many solar prediction sites.
+	PVWatts Cautions: http://rredc.nrel.gov/solar/calculators/pvwatts/interp.html
+
+*Just a reminder, the PVWatts calculator is returning calculations of output PER METERS SQUARED. To make sure I get the real results, I might need to multiply the outputs of the system by their surface size, if the api hasn't already covered this.
+
+-To test the surface changes, I want to  compare it to the information in the link posted below. Here,they say that a square foot of solar panel (ignore specs for right now) is going to generate 30 KW for an entire year. Change this data to meters squared (m^2 = 10.7639 ft^2) and you have the pannel generating 322.917 KW. The macau panel was less than that (211 KW) but still in the lower triple-digits. Lets also keep in mind that the Macau panels had a max output power of 175 Watts, which is below average. Overall, the PVWatts system makes sense, so it'll be used for the duration of the research.	
+
+	Solar Basics: http://www.lightsonsolar.com/solar-basics-kw-and-kwh/
+

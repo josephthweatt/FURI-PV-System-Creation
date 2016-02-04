@@ -1,0 +1,17 @@
+import java.io.IOException;
+import java.net.URL;
+import java.nio.charset.Charset;
+
+import org.apache.commons.io.IOUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class BestCaseWithAPI {
+	final private String apiKey = "1c1b6574bb1b22de6f63";
+	
+	public static void main(String[] args) {
+		
+	}
+
+}
