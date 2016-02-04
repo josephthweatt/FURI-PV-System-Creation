@@ -50,3 +50,23 @@ First test case (using SPR-E20-327-COM)
 I compiled all of this into a url and got my data. Here's what came in it:
 	* Estimated AC produced monthly (in KWh)
 	* Estimated Solar irradiance (in KWh/m^2) on the land
+	* Estimated Solar irradiance per day (KWh/m^2/day)
+	* Estimated DC produced monthly (in KWh)
+	* annual AC generated
+	* annual Solar Radiation generated
+
+
+-the data seems to be alright, nothing too out of the ordinary. However, I would like to be sure of the API's accuracy, and to do this, I'll be comparing PVWatts' results with that of "Real-time prediction models for output power...", the research which had recorded data of a solar panel in Macau, China for a solid year.
+-I've gotten the estimated data from my program, but can't seem to find anything from the research paper. I can look into this tomorrow, though I might not be able to find an annual yeild off the paper (maybe try searching for a monthly, or maybe they didn't include it becuase their research focused more on their gaussian models)
+
+2-4-16
+-Looking at the research paper, I didn't find the power output in terms of months or the whole year. There was a lot of information about the minutely output, but that's difficult to multiply into months because it does not specify the weather conditions.
+-I'm certain that using PVWatts will be the best alternative to creating my own equation. The process has already been thoroughly developed and accounts for more factors than I would have been able to. It uses weather history and tilt, along with the type of panel arrangement, to find what kind of power might be generated from one's system. 
+-I've gone through all of PVWatt's cautionary disclaimers (link below) and believe that the problems potentially faced will not come as too great a disadvantage. Furthermore, I've found PVWatts is an acclaimed technology and has the trust of many solar prediction sites.
+	PVWatts Cautions: http://rredc.nrel.gov/solar/calculators/pvwatts/interp.html
+
+*Just a reminder, the PVWatts calculator is returning calculations of output PER METERS SQUARED. To make sure I get the real results, I might need to multiply the outputs of the system by their surface size, if the api hasn't already covered this.
+
+-To test the surface changes, I want to  compare it to the information in the link posted below. Here,they say that a square foot of solar panel (ignore specs for right now) is going to generate 30 KW for an entire year. Change this data to meters squared (m^2 = 10.7639 ft^2) and you have the pannel generating 322.917 KW. The macau panel was less than that (211 KW) but still in the lower triple-digits. Lets also keep in mind that the Macau panels had a max output power of 175 Watts, which is below average. Overall, the PVWatts system makes sense, so it'll be used for the duration of the research.	
+
+	Solar Basics: http://www.lightsonsolar.com/solar-basics-kw-and-kwh/
