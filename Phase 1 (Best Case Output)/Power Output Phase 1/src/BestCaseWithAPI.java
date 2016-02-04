@@ -1,49 +1,94 @@
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import org.apache.commons.io.IOUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/* Current Version created 2-3-16. 
+ * At Present will only display some PV data for a certain location. 
+ * Next step will be to use the data with research to find what 
+ * systems (out of a given database) would work most efficiently.
+ */
+
 public class BestCaseWithAPI {
-	final static private String apiSite = "http://api.sunrise-sunset.org/";
-	final static private String format = "json?";
-	final private static String resultKey = "results";
-	final private static String sunriseKey = "sunrise";
-	final private static String sunsetKey = "sunset";
 	
-	private static String latitude, longitude; //three JSON variables
-	private static String sunrise, sunset;
-	private static double sunriseDbl, sunsetDbl;
-	private static double daylightHours;
+	//API structure for PVWatts power prediction api
+	final static private String apiSite = "http://developer.nrel.gov/api/pvwatts/";
+	final static private String version = "v5.";
+	final static private String format = "json?";
+	final static private String apiKey = "api_key=" + getPVWattsKey();
+	final static private String address = "address=";
+	final static private String systemCap = "system_capacity=";
+	final static private String moduleTyp = "module_type=";
+	final static private String loss = "losses=";
+	final static private String arrayTyp = "array_type=";
+	final static private String tilt = "tilt=";
+	final static private String azimuth = "azimuth=";
+	final static String amp = "&";
+	
+	/*Variables for JSON Params. This is a test case using the SPR-E20-327-COM.
+	* It will be changeable in later versions */
+	public static String addressInput = "1711%20S%20Rural%20Rd"; //ASU's address
+	public static double systemCapInput = .327; //this is in KW
+	public static byte moduleTypInput = 0;
+	public static byte lossInput = 10;
+	public static byte arrayTypInput = 0;
+	public static double tiltInput = 0;
+	public static double azimuthInput = 0;
+	
+	//JSON keys for the PVWatts API
+	final static String JSONOutputs = "outputs"; //gives a JSONObject
+	final static String annualACKey = "ac_annual"; //gives a double
+	final static String annualDCKey = "dc_monthly"; //gives a JSONArray
+	final static String annualSolRadKey = "poa_monthly"; //gives a JSONArray
 
 	public static void main(String[] args) throws IOException, JSONException {
-		getDaylightHours();
-		
-		System.out.println(daylightHours);
-	}
-
-	public static void getDaylightHours() throws IOException, JSONException {
-		latitude = "lat=" + 33.45; //az lat
-		longitude = "lng=" + 112.0667; //az long
-		String url = apiSite + format + latitude + "&"+ longitude;
+		String url = compileURL();
 		String source = IOUtils.toString(new URL(url), Charset.forName("UTF-8"));
 		JSONObject mainObject = new JSONObject(source);
-		mainObject = mainObject.getJSONObject(resultKey);
-		sunrise = mainObject.getString(sunriseKey);
-		sunset = mainObject.getString(sunsetKey);
 		
-		String[] dubs = sunrise.split(":");	
-		sunriseDbl = Double.parseDouble(dubs[0]) + Double.parseDouble(dubs[1]) / 60;
+		//JSONOutputs gives us the object with all the requested data
+		mainObject = mainObject.getJSONObject(JSONOutputs);
 		
-		dubs = sunset.split(":");
-		sunsetDbl = Double.parseDouble(dubs[0]) + Double.parseDouble(dubs[1]) / 60;
-		if (sunsetDbl < 12) {
-			sunsetDbl += 12;
+		//now we assign some data to be displayed...
+		double annualAC = mainObject.getDouble(annualACKey);
+		JSONArray monthlyDC = mainObject.getJSONArray(annualDCKey);
+		double annualDC = 0;
+		for (int i = 0; i < 12; i++) {
+			annualDC += monthlyDC.getDouble(i);
 		}
+		JSONArray solRad = mainObject.getJSONArray(annualSolRadKey);
+		double solRadJan = solRad.getDouble(0);
 		
-		daylightHours = sunsetDbl - sunriseDbl;
+		System.out.println("Annual AC: " + annualAC);
+		System.out.println("Annual DC: " + annualDC);
+		System.out.println("Annual Solar Radiation: " + solRadJan);
 	}
 	
+	//Method made to retrieve the key without showing it on github (for safety reasons)
+	public static String getPVWattsKey() {
+		try {
+			return Files.readAllLines(Paths.get("C:/PVWattsKey.txt")).get(0);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "Error retrieving Key: is the file in the GitHub Directory?";
+		}
+	}
+	
+	//takes all API params & variables and returns a single http string
+	public static String compileURL() {
+		return apiSite + version + format + apiKey + amp
+				 + address + addressInput + amp 
+				 + systemCap + systemCapInput + amp
+				 + moduleTyp + moduleTypInput + amp
+				 + loss + lossInput + amp
+				 + arrayTyp + arrayTypInput + amp
+				 + tilt + tiltInput + amp
+				 + azimuth + azimuthInput;
+	}
 }

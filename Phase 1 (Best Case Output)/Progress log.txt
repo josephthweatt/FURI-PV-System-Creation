@@ -22,3 +22,31 @@ On an off note, even if I don't get twelve, I could still use the avg hours to a
 	*This did not work as well as I had planned. the slope of this graph was too unfitting for the data.
 
 -Turning in for the night. I think the solar irradiance thing has played out for this week. I'll revisit the problem when I meet with Pan's associate. Till then, I'll spend time think over other aspects of the master problem.
+
+2-3-16 
+-Today, I'm going tolook at something called the NREL Solar API, something that might very well predict the weather for me. I'm going to have a look at some of its results and play with its different features, becuase if it does work, it'll save lots of time for me to work with the crux of my research. 
+-My main concern with this api will be whether it factors weather interference into its calculations, or if its going to just give me best case scenarios and expects me to work from there. I'll write this down once I find out.
+
+About the API
+-------------
+Name: PVWatts
+Version: 5
+site: http://developer.nrel.gov/docs/solar/pvwatts-v5/
+Description:NREL's PVWatts calculates the energy production of grid-connected photovoltaic (PV) energy systems. This service estimates the performance of hypothetical residential and small commercial PV installations.
+
+First test case (using SPR-E20-327-COM)
+---------------------------------------
+-to send out my first calls, I'm going to need to get the following information (all required):
+
+	-address of where I'm setting up the panels
+	-system capacity: otherwise known as nominal capacity, nominal power, power rating, etc. It's how much power a solar panel can produce under ideal conditions (my datasheets call this thing nominal power)
+	-module type: with selection of std, premium, or thin film. I'll assume the modules are std if it's not mentioned.
+	-loses: the percent (as an integer) of energy lost in converting power from DC to AC. I don't know this for my test systems of the bat (something I will need to talk to a professor about later) so I'll assume ten percent loss (10%)
+	-array_type: the array type. I'll assume fixed-open rack for right now
+	-tilt (set to 0)
+	-azimuth: this is the angle of the object with respect to the plane it rests on (earth). 0 degrees is an object aligned directly north, and its angle increases with clockwise pivoting. For the test case, I'll assume it has a 0 degree angle (this variable is currently unneeded, as there is no tilt on the test case module)
+	
+
+I compiled all of this into a url and got my data. Here's what came in it:
+	* Estimated AC produced monthly (in KWh)
+	* Estimated Solar irradiance (in KWh/m^2) on the land
