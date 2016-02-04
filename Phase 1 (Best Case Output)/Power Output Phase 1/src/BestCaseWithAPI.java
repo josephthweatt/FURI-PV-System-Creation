@@ -13,7 +13,7 @@ public class BestCaseWithAPI {
 	final private static String sunriseKey = "sunrise";
 	final private static String sunsetKey = "sunset";
 	
-	private static String latitude, longitude, date; //three JSON variables
+	private static String latitude, longitude; //three JSON variables
 	private static String sunrise, sunset;
 	private static double sunriseDbl, sunsetDbl;
 	private static double daylightHours;
