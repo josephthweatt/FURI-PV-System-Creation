@@ -71,3 +71,7 @@ I compiled all of this into a url and got my data. Here's what came in it:
 
 	Solar Basics: http://www.lightsonsolar.com/solar-basics-kw-and-kwh/
 
+-Now I'm going to Implement a database for PVWatts to take information from. The models inserted from the database all come from one company, Sunpower, at the time of this writing. I'm going to make something in the code that reaches into the db, assigns values as a new system, and makes an API call with that information. I'm thinking later I will be using the DB to create Objects (saved as .ser files) to be manipulated with the API later.
+
+2-7-16 (Also covers work done on 2-6)
+-Started implementing the database with the PVWatts program. Everything works so far. PVModels are being stored as objects (PVModelObject.java) and iterated through with a for loop. 

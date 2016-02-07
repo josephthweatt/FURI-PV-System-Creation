@@ -1,8 +1,9 @@
+
 public class PVModelObject {
-    public static String modelName;
-    public static double sysCapacity; //this is in KW
-    public static double percentLost;
-    public static int moduleType;
+    public String modelName;
+    public double sysCapacity; //this is in KW
+    public double percentLost;
+    public int moduleType;
     
     public PVModelObject(String modelName, double sysCapacity, 
                             double percentLost, int moduleType) {

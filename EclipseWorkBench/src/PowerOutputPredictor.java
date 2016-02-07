@@ -10,6 +10,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /* Current Version created 2-3-16. 
  * At Present will only display some PV data for a certain location. 
@@ -21,7 +23,7 @@ import java.sql.*;
  * systems (out of a given database) would work most efficiently.
  */
 
-public class BestCaseWithAPI {
+public class PowerOutputPredictor {
 	
 	//API structure for PVWatts power prediction api
 	final static private String apiSite = "http://developer.nrel.gov/api/pvwatts/";
@@ -63,8 +65,11 @@ public class BestCaseWithAPI {
     private static Statement stmt;
 
 	public static void main(String[] args) throws IOException, JSONException {
-        loadPVModels();
-        
+		//we use Tempe's coordinates for the test case
+		longitudeInput = 111.9431;
+		latitudeInput = 33.4294;
+		
+		pvModels = loadPVModels();
         for (int i = 0; i < pvModels.size(); i++) {
             String url = compileURL(pvModels.get(i));
             String source = null;
@@ -84,8 +89,8 @@ public class BestCaseWithAPI {
             double annualAC = mainObject.getDouble(annualACKey) * size;
             JSONArray monthlyDC = mainObject.getJSONArray(annualDCKey);
             double annualDC = 0;
-            for (int i = 0; i < 12; i++) {
-                annualDC += monthlyDC.getDouble(i);
+            for (int x = 0; x < 12; x++) {
+                annualDC += monthlyDC.getDouble(x);
             }
             annualDC *= size;
             JSONArray solRad = mainObject.getJSONArray(annualSolRadKey);
@@ -109,36 +114,51 @@ public class BestCaseWithAPI {
 	}
     
     //inserts pv model data into a List of PVModelObjects
-    public static void loadPVModels() {
-        pvModels = new List<PVModelObject>();
-        
-        openDB();
-        rs = stmt.executeQuery("select * from panel_models");
-        while (rs.next()) {
-            pvModels.add(
-                rs.getString("modelName"),
-                rs.getDouble("systemCapacity"),
-                rs.getDouble("percentLost"),
-                rs.getInt("moduleType"));
+    public static ArrayList<PVModelObject> loadPVModels() {
+    	ArrayList<PVModelObject> pvModels = new ArrayList<PVModelObject>();
+        try {
+	        openDB();
+	        rs = stmt.executeQuery("select * from panel_models");
+	        while (rs.next()) {
+	            pvModels.add(new PVModelObject(
+	                rs.getString("modelName"),
+	                rs.getDouble("systemCapacity"),
+	                rs.getDouble("percentLost"),
+	                rs.getInt("moduleType")));
+	        }
+        } catch (SQLException e) {
+        	e.printStackTrace();
         }
+        return pvModels;
     }
     
     //gets access to PVModels.db
-    private static void openDB() {
-        c = DriverManager.getConnection("jdbc:sqlite:PVModels.db");
-        stmt = c.createStatement();
+    private static void openDB() throws SQLException {
+	    c = DriverManager.getConnection("jdbc:sqlite:PVModels.db");
+	    stmt = c.createStatement();
     }
     
     //takes all API params & variables and returns a single http string
 	private static String compileURL(PVModelObject pvObj) {
-		return apiSite + version + format + apiKey + amp
-				 + latitude + latitudeInput + amp
-				 + longitude + longitudeInput + amp
-				 + systemCap + pvObj.sysCapacity + amp
-				 + moduleTyp + pvObj.moduleType + amp
-				 + loss + pvObj.percentLost + amp
-				 + arrayTyp + arrayTypInput + amp
-				 + tilt + tiltInput + amp
-				 + azimuth + azimuthInput;
+		if (addressInput != null) {
+			return apiSite + version + format + apiKey + amp
+					 + address + amp
+					 + systemCap + pvObj.sysCapacity + amp
+					 + moduleTyp + pvObj.moduleType + amp
+					 + loss + pvObj.percentLost + amp
+					 + arrayTyp + arrayTypInput + amp
+					 + tilt + tiltInput + amp
+					 + azimuth + azimuthInput;
+		} else {
+			return apiSite + version + format + apiKey + amp
+					 + latitude + latitudeInput + amp
+					 + longitude + longitudeInput + amp
+					 + systemCap + pvObj.sysCapacity + amp
+					 + moduleTyp + pvObj.moduleType + amp
+					 + loss + pvObj.percentLost + amp
+					 + arrayTyp + arrayTypInput + amp
+					 + tilt + tiltInput + amp
+					 + azimuth + azimuthInput;
+		}
 	}
 }

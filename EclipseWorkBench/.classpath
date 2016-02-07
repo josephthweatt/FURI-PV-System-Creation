@@ -2,9 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/Family/Documents/School/Extra Ciricular/FURI/Experimental Code/Required JARS/commons-io-2.4/commons-io-2.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Family/Documents/School/Extra Ciricular/FURI/Experimental Code/Required JARS/org.json-20120521.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Family/Documents/GitHub/PV-Power-Output-Predictor/Phase 1 (Best Case Output)/Required JARS/commons-io-2.4/commons-io-2.4.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Family/Documents/GitHub/PV-Power-Output-Predictor/Phase 1 (Best Case Output)/Required JARS/org.json-20120521.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Family/Documents/GitHub/PV-Power-Output-Predictor/Required JARS/org.json-20120521.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Family/Documents/GitHub/PV-Power-Output-Predictor/Required JARS/sqlite-jdbc-3.8.11.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Family/Documents/GitHub/PV-Power-Output-Predictor/Required JARS/commons-io-2.4/commons-io-2.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
