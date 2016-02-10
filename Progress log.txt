@@ -75,3 +75,7 @@ I compiled all of this into a url and got my data. Here's what came in it:
 
 2-7-16 (Also covers work done on 2-6)
 -Started implementing the database with the PVWatts program. Everything works so far. PVModels are being stored as objects (PVModelObject.java) and iterated through with a for loop. 
+
+
+2-9-16
+-For today and tomorrow, I'll be trying to get some product types into the database. PVModels.db (I should probably change that name) will hold the tables of all the essential parts needed for a residential solar system. I will not be able to datamine sites for product data, as I am looking for product features essential to the estimation of power output. For example, all inverters in the database must have a specified efficiency, otherwise the PVWatts estimation would be skewed.
