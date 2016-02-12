@@ -82,3 +82,7 @@ I compiled all of this into a url and got my data. Here's what came in it:
 
 2-11-16
 -I'm almost finished with the database, I'm waiting right now for a reply from Sai with regards to the wiring and meter tables. I'm also going to add schema information for all of the tables I've created thus far.
+-I've finished all of the database and have made a file to make comments on the schema of each table. Unfortunately, I wasn't able to data mine a site as I thought, and had to insert the product information by hand. A copy of this database and the schema notes can be found in the "Product Database" folder. 
+About the Database: 
+	*all product info was attained through wholesalesolar.com, using their catalog to get important product information. 
+	*I tried to store 15 products per type, so 15 solar panels, 15 inverters, etc. Hopefully this will provide a good enough variety for the algorithm to work with.
