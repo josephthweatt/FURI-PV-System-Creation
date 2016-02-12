@@ -1,1 +1,1 @@
-This repo is a child of the FURI repository. It is here to experiment with power output prediction, which will be essential to the progress of the larger project. 
+This repo is a child of the FURI repository. This will hold most of the research code so that it is easily identifiable. Once it has been completed, I will copy this code into the FURI-2016 repo for use in the Android application. See Progress Log.txt for updates. 
