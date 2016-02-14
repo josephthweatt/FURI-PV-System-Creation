@@ -7,12 +7,12 @@ package ProductObjects;
  * cannot delete rows from sqlite tables)
  */
 
-public class WiresObject {
+public class PVWiresObject {
 	public String name;
 	public double price;
 	public int lengthInFeet;
 
-	public WiresObject (String name, double price, int lengthInFeet) {
+	public PVWiresObject(String name, double price, int lengthInFeet) {
 		this.name = name;
 		this.price = price;
 		this.lengthInFeet = lengthInFeet;

@@ -5,13 +5,13 @@ public class BatteryControllerObject {
 	public double price;
 	public String bankVoltage;
 	public String maxAmpPerController;
-	
-	public BatteryControllerObject(String name, double price, 
+
+	public BatteryControllerObject(String name, double price,
 			String bankVoltage, String maxAmpPerController) {
 		this.name = name;
 		this.price = price;
 		this.bankVoltage = bankVoltage;
-		this .maxAmpPerController = maxAmpPerController;
+		this.maxAmpPerController = maxAmpPerController;
 	}
 
 }

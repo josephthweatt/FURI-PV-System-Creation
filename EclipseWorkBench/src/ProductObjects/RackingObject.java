@@ -5,10 +5,9 @@ public class RackingObject {
 	public double price;
 	public String bankVoltage;
 	public String maxAmpPerController;
-	
-	public RackingObject(String name, double price, 
-							String bankVoltage, 
-							String maxAmpPerController) {
+
+	public RackingObject(String name, double price, String bankVoltage,
+			String maxAmpPerController) {
 		this.name = name;
 		this.price = price;
 		this.bankVoltage = bankVoltage;
