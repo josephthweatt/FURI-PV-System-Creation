@@ -13,6 +13,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import ProductObjects.*;
+
 /* Current Version created 2-3-16. 
  * At Present will only display some PV data for a certain location. 
  * In this commit, I will be comparing the results of this API against
@@ -23,7 +25,7 @@ import java.util.List;
  * systems (out of a given database) would work most efficiently.
  */
 
-public class PowerOutputPredictor {
+public class PowerInfoMain {
 	
 	//API structure for PVWatts power prediction api
 	final static private String apiSite = "http://developer.nrel.gov/api/pvwatts/";
@@ -51,7 +53,7 @@ public class PowerOutputPredictor {
     public static double tiltInput;
 	public static double azimuthInput;
 	public static double size = 1; //default value (is 1 m^2)
-    public static List<PVModelObject> pvModels;
+    public static List<PanelObject> pvModels;
 	
 	//JSON Object keys for the PVWatts API
 	final static String JSONOutputs = "outputs"; //gives a JSONObject
@@ -96,7 +98,7 @@ public class PowerOutputPredictor {
             JSONArray solRad = mainObject.getJSONArray(annualSolRadKey);
             double solRadJan = solRad.getDouble(0) * size;
 
-            System.out.println("Power Output for: " + pvModels.get(i).modelName);
+            System.out.println("Power Output for: " + pvModels.get(i).name);
             System.out.printf("\tAnnual AC: %.3f%n", annualAC);
             System.out.printf("\tAnnual DC: %.3f%n", annualDC);
             System.out.printf("\tJanuary Solar Radiation: %.3f%n", solRadJan);
@@ -114,13 +116,13 @@ public class PowerOutputPredictor {
 	}
     
     //inserts pv model data into a List of PVModelObjects
-    public static ArrayList<PVModelObject> loadPVModels() {
-    	ArrayList<PVModelObject> pvModels = new ArrayList<PVModelObject>();
+    public static ArrayList<PanelObject> loadPVModels() {
+    	ArrayList<PanelObject> pvModels = new ArrayList<PanelObject>();
         try {
 	        openDB();
 	        rs = stmt.executeQuery("select * from panel_models");
 	        while (rs.next()) {
-	            pvModels.add(new PVModelObject(
+	            pvModels.add(new PanelObject(
 	                rs.getString("modelName"),
 	                rs.getDouble("systemCapacity"),
 	                rs.getDouble("percentLost"),
@@ -139,7 +141,7 @@ public class PowerOutputPredictor {
     }
     
     //takes all API params & variables and returns a single http string
-	private static String compileURL(PVModelObject pvObj) {
+	private static String compileURL(PanelObject pvObj) {
 		if (addressInput != null) {
 			return apiSite + version + format + apiKey + amp
 					 + address + amp
