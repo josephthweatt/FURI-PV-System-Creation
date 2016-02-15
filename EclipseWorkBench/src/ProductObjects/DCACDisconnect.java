@@ -1,12 +1,16 @@
 package ProductObjects;
 
-public class DCACDisconnectObject {
+public class DCACDisconnect {
 	public String name;
 	public double price;
 	public int amps;
 	public int volts;
+	
+	// for nonspecific initialization
+	public DCACDisconnect() {
+	}
 
-	public DCACDisconnectObject(String name, double price, int amps,
+	public DCACDisconnect(String name, double price, int amps,
 			int volts) {
 		this.name = name;
 		this.price = price;

@@ -1,14 +1,18 @@
 package ProductObjects;
 
-public class InverterObject {
+public class Inverter {
 	public String name;
 	public double price;
 	public int efficiency;
 	public int watts;
 	public int inputV; // in volts
 	public int outputV; // also in volts
+	
+	// for nonspecific initialization
+	public Inverter() {
+	}
 
-	public InverterObject(String name, double price, int efficiency, int watts,
+	public Inverter(String name, double price, int efficiency, int watts,
 			int inputV, int outputV) {
 		this.name = name;
 		this.price = price;

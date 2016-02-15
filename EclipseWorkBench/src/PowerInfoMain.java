@@ -55,7 +55,7 @@ public class PowerInfoMain {
 	public static double tiltInput;
 	public static double azimuthInput;
 	public static double size = 1; // default value (is 1 m^2)
-	public static List<PanelObject> pvModels;
+	public static List<Panel> pvModels;
 
 	// JSON Object keys for the PVWatts API
 	final static String JSONOutputs = "outputs"; // gives a JSONObject
@@ -69,6 +69,22 @@ public class PowerInfoMain {
 	private static Statement stmt;
 
 	public static void main(String[] args) throws IOException, JSONException {
+
+		Panel panel = new Panel();
+		Battery battery = new Battery();
+		PVWires wire = new PVWires();
+
+		FullSystem full = new FullSystem(new Panel(), new Inverter(),
+				new Battery(), new BatteryController(), new BatteryMeter(),
+				new PVWires(), new BatteryWire(), new Racking(),
+				new DCACDisconnect());
+		System.out.println(full.isComplete());
+		
+		full = new FullSystem();
+		System.out.println(full.isComplete());
+		
+		System.exit(0);
+
 		// we use Tempe's coordinates for the test case
 		longitudeInput = 111.9431;
 		latitudeInput = 33.4294;
@@ -120,21 +136,17 @@ public class PowerInfoMain {
 		}
 	}
 
-	// inserts pv model data into a List of PVModelObjects
-	public static ArrayList<PanelObject> loadPVModels() {
-		ArrayList<PanelObject> pvModels = new ArrayList<PanelObject>();
+	// TODO: make this method store data into objects
+	public static void loadPVModels() {
 		try {
 			openDB();
-			rs = stmt.executeQuery("select * from panel_models");
+			rs = stmt.executeQuery("select * from");
 			while (rs.next()) {
-				pvModels.add(new PanelObject(rs.getString("modelName"),
-						rs.getDouble("systemCapacity"),
-						rs.getDouble("percentLost"), rs.getInt("moduleType")));
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return pvModels;
 	}
 
 	// gets access to PVModels.db
@@ -144,18 +156,18 @@ public class PowerInfoMain {
 	}
 
 	// takes all API params & variables and returns a single http string
-	private static String compileURL(PanelObject pvObj) {
+	private static String compileURL(FullSystem pvSys) {
 		if (addressInput != null) {
 			return apiSite + version + format + apiKey + amp + address + amp
-					+ systemCap + pvObj.sysCapacity + amp + moduleTyp
-					+ pvObj.moduleType + amp + loss + pvObj.percentLost + amp
+					+ systemCap + pvSys.panel.systemCap + amp + moduleTyp
+					+ pvSys.panel.moduleType + amp + loss + (int) pvSys.loss + amp
 					+ arrayTyp + arrayTypInput + amp + tilt + tiltInput + amp
 					+ azimuth + azimuthInput;
 		} else {
 			return apiSite + version + format + apiKey + amp + latitude
 					+ latitudeInput + amp + longitude + longitudeInput + amp
-					+ systemCap + pvObj.sysCapacity + amp + moduleTyp
-					+ pvObj.moduleType + amp + loss + pvObj.percentLost + amp
+					+ systemCap + pvSys.panel.systemCap+ amp + moduleTyp
+					+ pvSys.panel.moduleType + amp + loss +(int) pvSys.loss + amp
 					+ arrayTyp + arrayTypInput + amp + tilt + tiltInput + amp
 					+ azimuth + azimuthInput;
 		}

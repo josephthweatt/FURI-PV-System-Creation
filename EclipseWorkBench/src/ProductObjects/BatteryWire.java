@@ -1,12 +1,16 @@
 package ProductObjects;
 
-public class BatteryWireObject {
+public class BatteryWire {
 	public String name;
 	public double price;
 	public int lengthInFeet;
 	public String gauge;
+	
+	// for nonspecific initialization
+	public BatteryWire() {
+	}
 
-	public BatteryWireObject(String name, double price, int lengthInFeet,
+	public BatteryWire(String name, double price, int lengthInFeet,
 			String gauge) {
 		this.name = name;
 		this.price = price;

@@ -86,3 +86,20 @@ I compiled all of this into a url and got my data. Here's what came in it:
 About the Database: 
 	*all product info was attained through wholesalesolar.com, using their catalog to get important product information. 
 	*I tried to store 15 products per type, so 15 solar panels, 15 inverters, etc. Hopefully this will provide a good enough variety for the algorithm to work with.
+
+2-24-16
+-Yesterday I created Java objects for each product type listed in PVModels.db. Now I'm going to need an object to pull together these objects to make a full PVSystem. This is going to be the object that I put through the PVWatts API, and the one that will hold the following information: 
+	-price
+	-power output (monthly and yearly)
+	-the names of each product that the user will need to buy
+		*additionally, will need to say whether the user will need to buy multiple of the same product (e.g. 4 panels, 4 batteries, 1 inverter, etc.)
+	-All of the required system-related PVWatts parameters, like
+		*the "loss", or what percent of the energy aquired will be lost (Dr. Sai gave me an equation for this, so I'll use that)
+		*array type
+		*module type
+		*the azimuth angle
+			-until the time comes that we can find the possible azimuth's for each user's location, we will assume that the azimuth is the ideal for that location (so: 180 deg if it's north of the equator, 0 deg for south of eq.)
+		*tilt (will need a method to optimize the tilt of the panels)
+		
+
+-I'm not sure if I want to include this object in the ProductObjects Package or if I should put it in the main Package. For right now, I'll put it in the package, but will take it out if that makes the class too hard to reach for my purposes.

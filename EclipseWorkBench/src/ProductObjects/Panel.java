@@ -1,6 +1,6 @@
 package ProductObjects;
 
-public class PanelObject {
+public class Panel {
 	public String name;
 	public double price;
 	public int systemCap; // this is in KW
@@ -8,8 +8,12 @@ public class PanelObject {
 	public double volts;
 	public int powerTolerance;
 	public int moduleType;
+	
+	// for nonspecific initialization
+	public Panel() {
+	}
 
-	public PanelObject(String name, double price, int systemCap, double amps,
+	public Panel(String name, double price, int systemCap, double amps,
 			double volts, int powerTolerance, int moduleType) {
 		this.name = name;
 		this.price = price;
