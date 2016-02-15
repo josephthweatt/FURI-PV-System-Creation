@@ -69,60 +69,18 @@ public class PowerInfoMain {
 	private static Statement stmt;
 
 	public static void main(String[] args) throws IOException, JSONException {
-
-		Panel panel = new Panel();
-		Battery battery = new Battery();
-		PVWires wire = new PVWires();
-
 		FullSystem full = new FullSystem(new Panel(), new Inverter(),
 				new Battery(), new BatteryController(), new BatteryMeter(),
 				new PVWires(), new BatteryWire(), new Racking(),
 				new DCACDisconnect());
 		System.out.println(full.isComplete());
 		
-		full = new FullSystem();
-		System.out.println(full.isComplete());
-		
-		System.exit(0);
 
 		// we use Tempe's coordinates for the test case
 		longitudeInput = 111.9431;
 		latitudeInput = 33.4294;
 
-		pvModels = loadPVModels();
-		for (int i = 0; i < pvModels.size(); i++) {
-			String url = compileURL(pvModels.get(i));
-			String source = null;
-			try {
-				source = IOUtils.toString(new URL(url),
-						Charset.forName("UTF-8"));
-			} catch (IOException e) {
-				// fixes the 422 error by adding 'intl' to regions outside the
-				// US
-				url += amp + dataset;
-				source = IOUtils.toString(new URL(url),
-						Charset.forName("UTF-8"));
-			}
-			JSONObject mainObject = new JSONObject(source);
-
-			// JSONOutputs gives us the object with all the requested data
-			mainObject = mainObject.getJSONObject(JSONOutputs);
-
-			// now we assign some data to be displayed...
-			double annualAC = mainObject.getDouble(annualACKey) * size;
-			JSONArray monthlyDC = mainObject.getJSONArray(annualDCKey);
-			double annualDC = 0;
-			for (int x = 0; x < 12; x++) {
-				annualDC += monthlyDC.getDouble(x);
-			}
-			annualDC *= size;
-			JSONArray solRad = mainObject.getJSONArray(annualSolRadKey);
-			double solRadJan = solRad.getDouble(0) * size;
-
-			System.out.println("Power Output for: " + pvModels.get(i).name);
-			System.out.printf("\tAnnual AC: %.3f%n", annualAC);
-			System.out.printf("\tAnnual DC: %.3f%n", annualDC);
-			System.out.printf("\tJanuary Solar Radiation: %.3f%n", solRadJan);
+		compileURL(full);
 		}
 	}
 

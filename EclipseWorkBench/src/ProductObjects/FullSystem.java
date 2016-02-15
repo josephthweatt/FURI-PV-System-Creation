@@ -18,6 +18,7 @@ public class FullSystem {
 	public PVWires pvWires;
 
 	// System qualities
+	public double cost;
 	public double loss;
 
 	// for nonspecific initialization
@@ -30,6 +31,7 @@ public class FullSystem {
 		
 		//things to do if the user has entered a full system
 		if (isComplete()) {
+			calculateCost();
 			calculateLoss();
 		}
 	}
@@ -58,8 +60,26 @@ public class FullSystem {
 			}
 		}
 	}
+	
+	// get the total cost of the system 
+	// returns zero if the system is incomplete
+	public double calculateCost() {
+		if (isComplete()) {
+			this.cost += panel.price;
+			this.cost += inverter.price;
+			this.cost += rack.price;
+			this.cost += battery.price;
+			this.cost += batteryControl.price;
+			this.cost += batteryMeter.price;
+			this.cost += dcacDisconnect.price;
+			this.cost += batteryWire.price;
+			this.cost += pvWires.price;
+			return cost;
+		}
+		return 0.0;
+	}
 
-	// calculates precent of energy one expects to lose from
+	// calculates percent of energy one expects to lose from
 	// the system (percent stored as a double from 0 to 100)
 	public void calculateLoss() {
 		if (isComplete() == false) {
