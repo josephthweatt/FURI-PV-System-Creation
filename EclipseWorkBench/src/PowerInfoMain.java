@@ -4,14 +4,15 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 import ProductObjects.*;
 
