@@ -20,6 +20,8 @@ public class FullSystem {
 	// System qualities
 	public double cost;
 	public double loss;
+	private double monthlyDC, yearlyDC;
+	private double monthlyAC, yearlyAC;
 
 	// for nonspecific initialization
 	public FullSystem() {
@@ -28,8 +30,8 @@ public class FullSystem {
 	// constructor to initialize with products
 	public FullSystem(Object... product) {
 		addProduct(product);
-		
-		//things to do if the user has entered a full system
+
+		// things to do if the user has entered a full system
 		if (isComplete()) {
 			calculateCost();
 			calculateLoss();
@@ -60,8 +62,8 @@ public class FullSystem {
 			}
 		}
 	}
-	
-	// get the total cost of the system 
+
+	// get the total cost of the system
 	// returns zero if the system is incomplete
 	public double calculateCost() {
 		if (isComplete()) {
@@ -95,6 +97,40 @@ public class FullSystem {
 
 		this.loss = WIRE_LOSS + LIGHT_DEGREDATION + AGE + invLoss
 				+ panel.powerTolerance;
+	}
+
+	// the AC/DC data is accessed through methods to prevent possible tampering
+	// of data and more rigid assignment requirements
+	public void setYearlyAC(double yearlyAC) {
+		this.yearlyAC = yearlyAC;
+	}
+	
+	public double getYearlyAC() {
+		return yearlyAC;
+	}
+
+	public void setMonthlyAC(int monthlyAC) {
+		this.monthlyAC = monthlyAC;
+	}
+	
+	public double getMonthlyAC() {
+		return monthlyAC;
+	}
+
+	public void setYearlyDC(int yearlyDC) {
+		this.yearlyDC = yearlyDC;
+	}
+	
+	public double getYearlyDC() {
+		return yearlyDC;
+	}
+
+	public void setMonthlyDC(int monthlyDC) {
+		this.monthlyDC = monthlyDC;
+	}
+	
+	public double getMonthlyDC() {
+		return monthlyDC;
 	}
 
 	// method to verify that the system has all the essential parts
