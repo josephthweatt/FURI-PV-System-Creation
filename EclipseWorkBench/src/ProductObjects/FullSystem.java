@@ -16,6 +16,11 @@ public class FullSystem {
 	public DCACDisconnect dcacDisconnect;
 	public BatteryWire batteryWire;
 	public PVWires pvWires;
+	
+	// all the table names that one could expect from the database:
+	public static Object[] productType = { "Panels", "Inverters", "Racking", "Batteries",
+			"BatteryControllers", "BatteryMeter", "DCACDisconnect",
+			"BatteryWires", "PVWires" };
 
 	// System qualities
 	public double cost;
@@ -85,8 +90,8 @@ public class FullSystem {
 	// the system (percent stored as a double from 0 to 100)
 	public void calculateLoss() {
 		if (isComplete() == false) {
-			System.out.println(
-					"Incomplete system. Complete this system to use this method.");
+			System.out
+					.println("Incomplete system. Complete this system to use this method.");
 			return;
 		}
 		final int WIRE_LOSS = 2; // 2% lost from wires
@@ -104,7 +109,7 @@ public class FullSystem {
 	public void setYearlyAC(double yearlyAC) {
 		this.yearlyAC = yearlyAC;
 	}
-	
+
 	public double getYearlyAC() {
 		return yearlyAC;
 	}
@@ -112,7 +117,7 @@ public class FullSystem {
 	public void setMonthlyAC(int monthlyAC) {
 		this.monthlyAC = monthlyAC;
 	}
-	
+
 	public double getMonthlyAC() {
 		return monthlyAC;
 	}
@@ -120,7 +125,7 @@ public class FullSystem {
 	public void setYearlyDC(int yearlyDC) {
 		this.yearlyDC = yearlyDC;
 	}
-	
+
 	public double getYearlyDC() {
 		return yearlyDC;
 	}
@@ -128,7 +133,7 @@ public class FullSystem {
 	public void setMonthlyDC(int monthlyDC) {
 		this.monthlyDC = monthlyDC;
 	}
-	
+
 	public double getMonthlyDC() {
 		return monthlyDC;
 	}

@@ -1,0 +1,22 @@
+package ProductObjects;
+
+import java.sql.Blob;
+
+public class BatteryWire {
+	public String name;
+	public double price;
+	public int lengthInFeet;
+	public String gauge;
+	
+	// for nonspecific initialization
+	public BatteryWire() {
+	}
+
+	public BatteryWire(String name, double price, int lengthInFeet,
+			Blob gauge) {
+		this.name = name;
+		this.price = price;
+		this.lengthInFeet = lengthInFeet;
+		this.gauge = gauge.toString();
+	}
+}

@@ -1,5 +1,8 @@
 package ProductObjects;
 
+import java.sql.Blob;
+import java.sql.SQLException;
+
 public class BatteryWire {
 	public String name;
 	public double price;
@@ -9,8 +12,9 @@ public class BatteryWire {
 	// for nonspecific initialization
 	public BatteryWire() {
 	}
-
-	public BatteryWire(String name, double price, int lengthInFeet,
+	
+	// standard constructor
+	public BatteryWire (String name, double price, int lengthInFeet,
 			String gauge) {
 		this.name = name;
 		this.price = price;

@@ -12,8 +12,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.*;
-
 import ProductObjects.*;
 
 /* Current Version created 2-3-16. 
@@ -64,25 +62,17 @@ public class PowerInfoMain {
 	final static String annualDCKey = "dc_monthly"; // gives a JSONArray
 	final static String annualSolRadKey = "poa_monthly"; // gives a JSONArray
 
-	// SQLite components
-	private static Connection c;
-	private static ResultSet rs;
-	private static Statement stmt;
-
 	public static void main(String[] args) throws IOException, JSONException {
-		FullSystem full = new FullSystem(new Panel(), new Inverter(),
-				new Battery(), new BatteryController(), new BatteryMeter(),
-				new PVWires(), new BatteryWire(), new Racking(),
-				new DCACDisconnect());
-		System.out.println(full.isComplete());
+		//used to test the loadAllProducts method, as well as the setObject method
+		DBExtraction extract = new DBExtraction("PVModels.db");
+		extract.loadAllProducts();
+		System.exit(0);
 		
 
 		// we use Tempe's coordinates for the test case
 		longitudeInput = 111.9431;
 		latitudeInput = 33.4294;
 
-		compileURL(full);
-		}
 	}
 
 	// Method to retrieve API key without showing it on git (for safety reasons)
@@ -93,25 +83,6 @@ public class PowerInfoMain {
 			e.printStackTrace();
 			return "Error retrieving Key: is the file in the GitHub Directory?";
 		}
-	}
-
-	// TODO: make this method store data into objects
-	public static void loadPVModels() {
-		try {
-			openDB();
-			rs = stmt.executeQuery("select * from");
-			while (rs.next()) {
-				
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	// gets access to PVModels.db
-	private static void openDB() throws SQLException {
-		c = DriverManager.getConnection("jdbc:sqlite:PVModels.db");
-		stmt = c.createStatement();
 	}
 
 	// takes all API params & variables and returns a single http string
