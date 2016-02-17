@@ -5,7 +5,7 @@ package ProductObjects;
  * of the package to attain API information and to 
  * provide information on the prospective PV system. */
 
-public class FullSystem {
+public class FullSystem implements java.io.Serializable {
 	// Objects of the system's parts
 	public Panel panel;
 	public Inverter inverter;

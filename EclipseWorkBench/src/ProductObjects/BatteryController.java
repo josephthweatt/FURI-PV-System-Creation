@@ -1,6 +1,6 @@
 package ProductObjects;
 
-public class BatteryController {
+public class BatteryController implements java.io.Serializable {
 	public String name;
 	public double price;
 	public String bankVoltage;

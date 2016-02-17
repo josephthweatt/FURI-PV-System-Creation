@@ -103,3 +103,8 @@ About the Database:
 		
 
 -I'm not sure if I want to include this object in the ProductObjects Package or if I should put it in the main Package. For right now, I'll put it in the package, but will take it out if that makes the class too hard to reach for my purposes.
+
+2-16-16
+-I've created the first draft of the DBExtraction class yesterday. It serves it's main function (to take info out of the database and convert it to objects) but I'm not sure which features to add and which features ought to be made somewhere else--i.e. the class encasing the algorithms.
+-I'm going to figure out these features as I go. My biggest priority is building the algorithms to sort the data. This is going to require more reading, more reviews, and ultimately a master class to handle all of the equations. 
+

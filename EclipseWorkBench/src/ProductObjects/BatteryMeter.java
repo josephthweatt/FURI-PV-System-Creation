@@ -1,6 +1,6 @@
 package ProductObjects;
 
-public class BatteryMeter {
+public class BatteryMeter implements java.io.Serializable {
 	public String name;
 	public double price;
 	public String features;

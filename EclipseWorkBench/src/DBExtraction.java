@@ -1,3 +1,6 @@
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.sql.*;
 import java.util.HashMap;
 
@@ -24,20 +27,41 @@ public class DBExtraction {
 
 	}
 
-	// export product objects to serializable objects
-	public void serializeProduct() {
+	// gets access to PVModels.db
+	private void openDB() {
+		try {
+			c = DriverManager.getConnection("jdbc:sqlite:" + dbName);
+			stmt = c.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
+	// export system objects to serialized objects
+	public void serializeSystem(FullSystem system) {
+		try {
+			FileOutputStream fOut = new FileOutputStream("/SystemStorage");
+			ObjectOutputStream out = new ObjectOutputStream(fOut);
+			out.writeObject(system);
+			out.close();
+			fOut.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	// returns the product to the class using it (does not save the product)
-	// public Object getProductObject(String productName) {
-	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	// }
+	public Object getProductByName(String productName) {
+		return productMap.get(productName);
+	}
 
 	// grabs products and inserts them into a full System (products must
 	// already be made as objects)
-	public void commitProductsToSystem(String... productName) {
-
+	public void commitProductsToSystem(String systemName, Object... product) {
+		systemMap.put(systemName, new FullSystem());
+		for (int i = 0; i < product.length; i++) {
+			systemMap.get(systemName).addProduct(product);
+		}
 	}
 
 	// stores all products in the database into their respective objects
@@ -57,16 +81,6 @@ public class DBExtraction {
 					+ " in database " + dbName);
 		}
 		i++;
-	}
-
-	// gets access to PVModels.db
-	private void openDB() {
-		try {
-			c = DriverManager.getConnection("jdbc:sqlite:" + dbName);
-			stmt = c.createStatement();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public Object setObject(int i) throws SQLException {

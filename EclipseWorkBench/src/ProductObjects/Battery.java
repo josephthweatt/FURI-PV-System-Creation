@@ -1,6 +1,6 @@
 package ProductObjects;
 
-public class Battery {
+public class Battery implements java.io.Serializable {
 	public String name;
 	public double price;
 	public int voltage;

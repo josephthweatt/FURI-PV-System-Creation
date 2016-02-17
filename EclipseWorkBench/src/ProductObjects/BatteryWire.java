@@ -1,9 +1,6 @@
 package ProductObjects;
 
-import java.sql.Blob;
-import java.sql.SQLException;
-
-public class BatteryWire {
+public class BatteryWire implements java.io.Serializable {
 	public String name;
 	public double price;
 	public int lengthInFeet;
