@@ -1,6 +1,6 @@
 package ProductObjects;
 
-public class Racking implements java.io.Serializable {
+public class Racking {
 
 	public String name;
 	public double price;

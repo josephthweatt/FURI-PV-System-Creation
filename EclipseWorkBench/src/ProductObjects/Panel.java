@@ -1,6 +1,6 @@
 package ProductObjects;
 
-public class Panel implements java.io.Serializable {
+public class Panel {
 	public String name;
 	public double price;
 	public int systemCap; // this is in KW

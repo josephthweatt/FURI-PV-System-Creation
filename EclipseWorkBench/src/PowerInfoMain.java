@@ -40,7 +40,8 @@ public class PowerInfoMain {
 	final static private String arrayTyp = "array_type=";
 	final static private String tilt = "tilt=";
 	final static private String azimuth = "azimuth=";
-	final static private String dataset = "dataset=intl"; // only for beyond U.S
+	final static private String dataset = "dataset=intl"; // for places beyond
+															// U.S
 	final static String amp = "&";
 
 	/*
@@ -63,11 +64,11 @@ public class PowerInfoMain {
 	final static String annualSolRadKey = "poa_monthly"; // gives a JSONArray
 
 	public static void main(String[] args) throws IOException, JSONException {
-		//used to test the loadAllProducts method, as well as the setObject method
+		// used to test the loadAllProducts method, as well as the setObject
+		// method
 		DBExtraction extract = new DBExtraction("PVModels.db");
 		extract.loadAllProducts();
 		System.exit(0);
-		
 
 		// we use Tempe's coordinates for the test case
 		longitudeInput = 111.9431;
@@ -90,16 +91,16 @@ public class PowerInfoMain {
 		if (addressInput != null) {
 			return apiSite + version + format + apiKey + amp + address + amp
 					+ systemCap + pvSys.panel.systemCap + amp + moduleTyp
-					+ pvSys.panel.moduleType + amp + loss + (int) pvSys.loss + amp
-					+ arrayTyp + arrayTypInput + amp + tilt + tiltInput + amp
-					+ azimuth + azimuthInput;
+					+ pvSys.panel.moduleType + amp + loss + (int) pvSys.loss
+					+ amp + arrayTyp + arrayTypInput + amp + tilt + tiltInput
+					+ amp + azimuth + azimuthInput;
 		} else {
 			return apiSite + version + format + apiKey + amp + latitude
 					+ latitudeInput + amp + longitude + longitudeInput + amp
-					+ systemCap + pvSys.panel.systemCap+ amp + moduleTyp
-					+ pvSys.panel.moduleType + amp + loss +(int) pvSys.loss + amp
-					+ arrayTyp + arrayTypInput + amp + tilt + tiltInput + amp
-					+ azimuth + azimuthInput;
+					+ systemCap + pvSys.panel.systemCap + amp + moduleTyp
+					+ pvSys.panel.moduleType + amp + loss + (int) pvSys.loss
+					+ amp + arrayTyp + arrayTypInput + amp + tilt + tiltInput
+					+ amp + azimuth + azimuthInput;
 		}
 	}
 }

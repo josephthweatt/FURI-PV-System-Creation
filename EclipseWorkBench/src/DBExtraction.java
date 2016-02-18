@@ -17,6 +17,13 @@ public class DBExtraction {
 	// not exactly sure if these should be private or public
 	private HashMap<String, Object> productMap;
 	private HashMap<String, FullSystem> systemMap;
+	
+	public enum Objectives {
+		COST,
+		EFFICIENCY,
+		OFF_GRID,
+		POWER_OUTPUT
+	}
 
 	// construct dbExtraction by opening the db
 	public DBExtraction(String dbName) {
@@ -69,8 +76,8 @@ public class DBExtraction {
 		int i = 0;
 		try {
 			for (i = 0; i < FullSystem.productType.length; i++) {
-				rs = stmt.executeQuery("select * from "
-						+ FullSystem.productType[i] + ";");
+				rs = stmt.executeQuery(
+						"select * from " + FullSystem.productType[i] + ";");
 				while (rs.next()) {
 					productMap.put(rs.getString("Name"), setObject(i));
 				}
@@ -122,4 +129,18 @@ public class DBExtraction {
 			return null;
 		}
 	}
+	
+	// sends a set of products to be evaluated 
+	public void sendProductsToEvaluation (Objectives intent, int amount, Class<?> product) {
+		if (intent == Objectives.COST) {
+			
+		} else if (intent == Objectives.EFFICIENCY) {
+			
+		} else if (intent == Objectives.OFF_GRID) {
+			
+		} else if (intent == Objectives.POWER_OUTPUT) {
+			
+		}
+	}
+	
 }

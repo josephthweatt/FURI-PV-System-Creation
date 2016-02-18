@@ -1,6 +1,6 @@
 package ProductObjects;
 
-public class Inverter implements java.io.Serializable {
+public class Inverter {
 	public String name;
 	public double price;
 	public int efficiency;

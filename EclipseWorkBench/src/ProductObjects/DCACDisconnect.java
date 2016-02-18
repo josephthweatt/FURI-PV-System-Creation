@@ -1,6 +1,6 @@
 package ProductObjects;
 
-public class DCACDisconnect implements java.io.Serializable {
+public class DCACDisconnect {
 	public String name;
 	public double price;
 	public int amps;

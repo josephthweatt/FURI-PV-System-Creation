@@ -108,3 +108,8 @@ About the Database:
 -I've created the first draft of the DBExtraction class yesterday. It serves it's main function (to take info out of the database and convert it to objects) but I'm not sure which features to add and which features ought to be made somewhere else--i.e. the class encasing the algorithms.
 -I'm going to figure out these features as I go. My biggest priority is building the algorithms to sort the data. This is going to require more reading, more reviews, and ultimately a master class to handle all of the equations. 
 
+2-17-16
+-I'm going to attempt a price sorting algorithm for the price aspect of the software. This will be done in the DBExtraction class (note to self, change the name to express its larger scope as a holder of multiple systems). How my other programs will have acess to these price-organized structure is a bit fuzzy, but I don't have anything I need to do immediately and I want to work on the project before I get to tired (and I want to keep up my current github streak), so its happening tonight!
+-I'll organize the price sorting into groups based on products. The collection of these products might need to be stored in subclasses in order for pvsystems to chose which products are viable.
+-First I will need to create a way to ship all the data of a product type to another class for cleaner handling
+

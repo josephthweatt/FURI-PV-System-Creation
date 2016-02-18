@@ -6,7 +6,7 @@ package ProductObjects;
  * PV cables together, but was too complicated 
  */
 
-public class PVWires implements java.io.Serializable {
+public class PVWires {
 	public String name;
 	public double price;
 	public int lengthInFeet;

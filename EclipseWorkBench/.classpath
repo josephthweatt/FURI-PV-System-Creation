@@ -5,5 +5,8 @@
 	<classpathentry kind="lib" path="C:/Users/jathweat/Documents/Github/Required JARS/org.json-20120521.jar"/>
 	<classpathentry kind="lib" path="C:/Users/jathweat/Documents/Github/Required JARS/sqlite-jdbc-3.8.11.2.jar"/>
 	<classpathentry kind="lib" path="C:/Users/jathweat/Documents/Github/Required JARS/commons-io-2.4/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Family/Documents/GitHub/FURI-PV-System_Creation/Required JARS/commons-io-2.4/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Family/Documents/GitHub/FURI-PV-System_Creation/Required JARS/org.json-20120521.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Family/Documents/GitHub/FURI-PV-System_Creation/Required JARS/sqlite-jdbc-3.8.11.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

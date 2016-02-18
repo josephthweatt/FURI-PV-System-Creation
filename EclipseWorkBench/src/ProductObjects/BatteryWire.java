@@ -1,6 +1,6 @@
 package ProductObjects;
 
-public class BatteryWire implements java.io.Serializable {
+public class BatteryWire {
 	public String name;
 	public double price;
 	public int lengthInFeet;
