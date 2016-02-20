@@ -22,7 +22,7 @@ public class FullSystem implements java.io.Serializable {
 	public PVWires pvWires;
 
 	// all the table names that one could expect from the database:
-	public static Object[] productType = { "Panels", "Inverters", "Racking",
+	public static String[] productType = { "Panels", "Inverters", "Racking",
 			"Batteries", "BatteryControllers", "BatteryMeter", "DCACDisconnect",
 			"BatteryWires", "PVWires" };
 

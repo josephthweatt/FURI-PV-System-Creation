@@ -44,7 +44,9 @@ public class DBExtraction {
 		return productMap.get(productName);
 	}
 
-	
+	public FullSystem getSystemByName(String systemName) {
+		return systemMap.get(systemName);
+	}
 
 	// grabs products and inserts them into a full System (products must
 	// already be made as objects)
