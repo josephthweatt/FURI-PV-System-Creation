@@ -15,22 +15,24 @@ import ProductObjects.*;
 
 public class PowerInfoMain {
 	// we use Tempe's coordinates for the test case
-	public static double latitudeInput = 111.9431;;
-	public static double longitudeInput = 33.4294;
+	public static Location loc;
 
 	public static void main(String[] args) throws IOException, JSONException {
+		PowerInfoMain piMain = new PowerInfoMain();
+		loc = piMain.new Location(33.42, 111.9431);
+
 		// test that FullSystem class works with the api class
 		DBExtraction db = new DBExtraction("PVModels.db");
 		db.loadAllProducts();
 
 		// create a dummy system
-		FullSystem system = db.commitProductsToSystem("newSys", new Panel(),
-				new Battery(), new BatteryMeter(), new BatteryController(),
-				new Inverter(), new DCACDisconnect(), new Racking(),
-				new BatteryWire(), new PVWires());
+		FullSystem system = new FullSystem(loc.getCoordinates(), "newSys",
+				new Panel(), new Battery(), new BatteryMeter(),
+				new BatteryController(), new Inverter(), new DCACDisconnect(),
+				new Racking(), new BatteryWire(), new PVWires());
 
 		// essential assignments for testing PVwatts manager
-		system.panel.systemCap = 5; 
+		system.panel.systemCap = 5;
 		system.loss = 5;
 		system.panel.moduleType = 0;
 
@@ -38,5 +40,44 @@ public class PowerInfoMain {
 		System.out.println("Yearly AC " + system.yearlyAC);
 		System.out.println("Yearly DC " + system.yearlyDC);
 		System.exit(0);
+	}
+
+	// an object to store the location, which can either be an address (String)
+	// or coordinates (Double). Note that the PVWatts class will try to use the
+	// address string before the coordinates
+	public class Location {
+		private String address;
+		private double latitude, longitude;
+
+		public Location() {
+		}
+
+		// takes either an address or coordinates. If coordinates, submit as two
+		// doubles (lat, long). If an address, submit as a url-ready String
+		public Location(Object... location) {
+			setLocation(location);
+		}
+
+		public void setLocation(Object... location) {
+			if (location[0] instanceof Double) { // coordinates
+				latitude = (Double) location[0];
+				longitude = (Double) location[1];
+				address = null;
+			} else if (location[0] instanceof String) { // string address
+				address = (String) location[0];
+				latitude = longitude = 0;
+			} else {
+				System.out.println("Invalid Objects given to setLocation");
+			}
+		}
+
+		public double[] getCoordinates() {
+			double[] coordinates = { latitude, longitude };
+			return coordinates;
+		}
+
+		public String getAddress() {
+			return address;
+		}
 	}
 }
