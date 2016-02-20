@@ -60,6 +60,14 @@ public class PowerInfoMain {
 
 		public void setLocation(Object... location) {
 			if (location[0] instanceof Double) { // coordinates
+				if ((Double) location[0] > 90) {
+					System.out.println("latitude is too big");
+					System.exit(0);
+				} else if ((Double) location[1] > 180) {
+					System.out.println("longitude is too big");
+					System.exit(0);
+				}
+				
 				latitude = (Double) location[0];
 				longitude = (Double) location[1];
 				address = null;
