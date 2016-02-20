@@ -94,7 +94,6 @@ public class PVWattsManager {
 		for (int x = 0; x < 12; x++) {
 			system.yearlyDC += monthlyDC.getDouble(x);
 		}
-
 		system.yearlyDC *= size; // adjusts data to include the system's size
 	}
 

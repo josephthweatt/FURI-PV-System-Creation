@@ -28,9 +28,15 @@ public class PowerInfoMain {
 				new Battery(), new BatteryMeter(), new BatteryController(),
 				new Inverter(), new DCACDisconnect(), new Racking(),
 				new BatteryWire(), new PVWires());
+
+		// essential assignments for testing PVwatts manager
+		system.panel.systemCap = 5; 
+		system.loss = 5;
+		system.panel.moduleType = 0;
+
 		system.getDataFromAPI(null);
-		System.out.println("Yearly AC " + system.yearlyAC + "\nMonthly AC " + system.monthlyAC);
-		System.out.println("Yearly DC " + system.yearlyDC + "\nMonthly DC " + system.monthlyDC);
+		System.out.println("Yearly AC " + system.yearlyAC);
+		System.out.println("Yearly DC " + system.yearlyDC);
 		System.exit(0);
 	}
 }

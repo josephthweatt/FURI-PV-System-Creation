@@ -26,11 +26,5 @@ public class ProductsContainer {
 			
 		}
 	}
-	
-	public void selectionSort(String focus) {
-		for (int i = 0; i < products.length; i++) {
-			double min = products[i].price;
-		}
-	}
 
 }

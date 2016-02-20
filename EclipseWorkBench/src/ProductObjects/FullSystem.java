@@ -22,7 +22,7 @@ public class FullSystem implements java.io.Serializable {
 	public PVWires pvWires;
 
 	// all the table names that one could expect from the database:
-	public static Object[] productType = { "Panels", "Inverters", "Racking",
+	public static String[] productType = { "Panels", "Inverters", "Racking",
 			"Batteries", "BatteryControllers", "BatteryMeter", "DCACDisconnect",
 			"BatteryWires", "PVWires" };
 
@@ -34,8 +34,8 @@ public class FullSystem implements java.io.Serializable {
 
 	public String address;
 	// this is a test case, delete after testing
-	public double latitude = 111.9431;;
-	public double longitude = 33.4294;
+	public double latitude = 33.4294;
+	public double longitude = 111.9431;
 	
 	// for nonspecific initialization
 	public FullSystem() {
