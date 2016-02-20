@@ -1,5 +1,9 @@
 package ProductObjects;
 
+import java.util.HashMap;
+
+import org.json.JSONException;
+
 /* This class can be used to hold variations of the 
  * existing objects in this class. It is used outside 
  * of the package to attain API information and to 
@@ -16,18 +20,23 @@ public class FullSystem implements java.io.Serializable {
 	public DCACDisconnect dcacDisconnect;
 	public BatteryWire batteryWire;
 	public PVWires pvWires;
-	
+
 	// all the table names that one could expect from the database:
-	public static Object[] productType = { "Panels", "Inverters", "Racking", "Batteries",
-			"BatteryControllers", "BatteryMeter", "DCACDisconnect",
+	public static Object[] productType = { "Panels", "Inverters", "Racking",
+			"Batteries", "BatteryControllers", "BatteryMeter", "DCACDisconnect",
 			"BatteryWires", "PVWires" };
 
 	// System qualities
 	public double cost;
 	public double loss;
-	private double monthlyDC, yearlyDC;
-	private double monthlyAC, yearlyAC;
+	public double monthlyDC, yearlyDC;
+	public double monthlyAC, yearlyAC;
 
+	public String address;
+	// this is a test case, delete after testing
+	public double latitude = 111.9431;;
+	public double longitude = 33.4294;
+	
 	// for nonspecific initialization
 	public FullSystem() {
 	}
@@ -90,8 +99,8 @@ public class FullSystem implements java.io.Serializable {
 	// the system (percent stored as a double from 0 to 100)
 	public void calculateLoss() {
 		if (isComplete() == false) {
-			System.out
-					.println("Incomplete system. Complete this system to use this method.");
+			System.out.println(
+					"Incomplete system. Complete this system to use this method.");
 			return;
 		}
 		final int WIRE_LOSS = 2; // 2% lost from wires
@@ -102,40 +111,6 @@ public class FullSystem implements java.io.Serializable {
 
 		this.loss = WIRE_LOSS + LIGHT_DEGREDATION + AGE + invLoss
 				+ panel.powerTolerance;
-	}
-
-	// the AC/DC data is accessed through methods to prevent possible tampering
-	// of data and more rigid assignment requirements
-	public void setYearlyAC(double yearlyAC) {
-		this.yearlyAC = yearlyAC;
-	}
-
-	public double getYearlyAC() {
-		return yearlyAC;
-	}
-
-	public void setMonthlyAC(int monthlyAC) {
-		this.monthlyAC = monthlyAC;
-	}
-
-	public double getMonthlyAC() {
-		return monthlyAC;
-	}
-
-	public void setYearlyDC(int yearlyDC) {
-		this.yearlyDC = yearlyDC;
-	}
-
-	public double getYearlyDC() {
-		return yearlyDC;
-	}
-
-	public void setMonthlyDC(int monthlyDC) {
-		this.monthlyDC = monthlyDC;
-	}
-
-	public double getMonthlyDC() {
-		return monthlyDC;
 	}
 
 	// method to verify that the system has all the essential parts
@@ -161,4 +136,23 @@ public class FullSystem implements java.io.Serializable {
 
 		return true;
 	}
+
+	/************************************************************************
+	 * The Following methods will be used to get data from the PVWatts API
+	 *************************************************************************/
+	// gets power data from the API and inputs extra data with the hashmap
+	public void getDataFromAPI(HashMap<String, Double> extraData) {
+		// method check to see if any additional system data must be entered
+		if (extraData != null) {
+			
+		}
+		
+		PVWattsManager pvWatts = new PVWattsManager(this, latitude, longitude);
+		try {
+			pvWatts.getData();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

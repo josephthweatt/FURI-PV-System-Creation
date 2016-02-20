@@ -1,6 +1,3 @@
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.sql.*;
 import java.util.HashMap;
 
@@ -17,13 +14,6 @@ public class DBExtraction {
 	// not exactly sure if these should be private or public
 	private HashMap<String, Object> productMap;
 	private HashMap<String, FullSystem> systemMap;
-	
-	public enum Objectives {
-		COST,
-		EFFICIENCY,
-		OFF_GRID,
-		POWER_OUTPUT
-	}
 
 	// construct dbExtraction by opening the db
 	public DBExtraction(String dbName) {
@@ -44,17 +34,9 @@ public class DBExtraction {
 		}
 	}
 
-	// export system objects to serialized objects
-	public void serializeSystem(FullSystem system) {
-		try {
-			FileOutputStream fOut = new FileOutputStream("/SystemStorage");
-			ObjectOutputStream out = new ObjectOutputStream(fOut);
-			out.writeObject(system);
-			out.close();
-			fOut.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	// export product objects to serializable objects
+	public void serializeProduct() {
+		
 	}
 
 	// returns the product to the class using it (does not save the product)
@@ -62,13 +44,16 @@ public class DBExtraction {
 		return productMap.get(productName);
 	}
 
+	
+
 	// grabs products and inserts them into a full System (products must
 	// already be made as objects)
-	public void commitProductsToSystem(String systemName, Object... product) {
+	public FullSystem commitProductsToSystem (String systemName, Object... product) {
 		systemMap.put(systemName, new FullSystem());
 		for (int i = 0; i < product.length; i++) {
 			systemMap.get(systemName).addProduct(product);
 		}
+		return systemMap.get(systemName);
 	}
 
 	// stores all products in the database into their respective objects
@@ -76,8 +61,8 @@ public class DBExtraction {
 		int i = 0;
 		try {
 			for (i = 0; i < FullSystem.productType.length; i++) {
-				rs = stmt.executeQuery(
-						"select * from " + FullSystem.productType[i] + ";");
+				rs = stmt.executeQuery("select * from "
+						+ FullSystem.productType[i] + ";");
 				while (rs.next()) {
 					productMap.put(rs.getString("Name"), setObject(i));
 				}
@@ -129,18 +114,4 @@ public class DBExtraction {
 			return null;
 		}
 	}
-	
-	// sends a set of products to be evaluated 
-	public void sendProductsToEvaluation (Objectives intent, int amount, Class<?> product) {
-		if (intent == Objectives.COST) {
-			
-		} else if (intent == Objectives.EFFICIENCY) {
-			
-		} else if (intent == Objectives.OFF_GRID) {
-			
-		} else if (intent == Objectives.POWER_OUTPUT) {
-			
-		}
-	}
-	
 }

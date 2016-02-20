@@ -113,3 +113,9 @@ About the Database:
 -I'll organize the price sorting into groups based on products. The collection of these products might need to be stored in subclasses in order for pvsystems to chose which products are viable.
 -First I will need to create a way to ship all the data of a product type to another class for cleaner handling
 
+
+2-18-16
+I'm going to need to organize tasks into classes. I have the API into what is currently the main method, when it should be working from another class	
+
+2-19-16
+-Starting on class organization. The first thing I want to do is create a class explicitly for using the PVWatts API, and make that class accessible through the FullSystem class
