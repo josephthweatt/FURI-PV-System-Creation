@@ -15,6 +15,10 @@ public class DBExtraction {
 	private HashMap<String, Object> productMap;
 	private HashMap<String, FullSystem> systemMap;
 
+	enum produtType {
+		Panel, Battery, Inverter
+	}
+
 	// construct dbExtraction by opening the db
 	public DBExtraction(String dbName) {
 		this.dbName = dbName;
@@ -36,7 +40,7 @@ public class DBExtraction {
 
 	// export product objects to serializable objects
 	public void serializeProduct() {
-		
+
 	}
 
 	// returns the product to the class using it (does not save the product)
@@ -49,8 +53,9 @@ public class DBExtraction {
 	}
 
 	// grabs products and inserts them into a full System (products must
-	// already be made as objects)
-	public FullSystem commitProductsToSystem (String systemName, Object... product) {
+	// already be made as objects). Will also return a system if it is needed
+	public FullSystem commitProductsToSystem(String systemName,
+			Object... product) {
 		systemMap.put(systemName, new FullSystem());
 		for (int i = 0; i < product.length; i++) {
 			systemMap.get(systemName).addProduct(product);
@@ -63,8 +68,8 @@ public class DBExtraction {
 		int i = 0;
 		try {
 			for (i = 0; i < FullSystem.productType.length; i++) {
-				rs = stmt.executeQuery("select * from "
-						+ FullSystem.productType[i] + ";");
+				rs = stmt.executeQuery(
+						"select * from " + FullSystem.productType[i] + ";");
 				while (rs.next()) {
 					productMap.put(rs.getString("Name"), setObject(i));
 				}
@@ -77,6 +82,7 @@ public class DBExtraction {
 		i++;
 	}
 
+	// used to set product objects into the productMap
 	public Object setObject(int i) throws SQLException {
 		// all product objects will have a name and price...
 		String name = rs.getString("Name");

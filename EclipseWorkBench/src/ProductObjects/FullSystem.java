@@ -43,7 +43,7 @@ public class FullSystem implements java.io.Serializable {
 	public String address;
 	public double latitude;
 	public double longitude;
-	
+
 	// for nonspecific initialization
 	public FullSystem() {
 	}
@@ -60,7 +60,7 @@ public class FullSystem implements java.io.Serializable {
 			calculateLoss();
 		}
 	}
-	
+
 	public FullSystem(String address, Object... product) {
 		this.address = address;
 		addProduct(product);
@@ -162,19 +162,23 @@ public class FullSystem implements java.io.Serializable {
 	 *************************************************************************/
 	// gets power data from the API and inputs extra data with the hashmap
 	public void getDataFromAPI(HashMap<String, Double> extraData) {
-		// method check to see if any additional system data must be entered
+		PVWattsManager pvWatts;
+
+		// method check to see if any non-product data must be entered
 		if (extraData != null) {
-			
+			// will pass the HashMap through if extra Data exists
+			pvWatts = new PVWattsManager(this, extraData);
+		} else {
+			pvWatts = new PVWattsManager(this);
 		}
-		
-		PVWattsManager pvWatts = new PVWattsManager(this);
+
 		try {
 			pvWatts.getData();
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static class PVWattsManager {
 		// API structure for PVWatts power prediction api
 		final static private String apiSite = "http://developer.nrel.gov/api/pvwatts/";
@@ -190,47 +194,84 @@ public class FullSystem implements java.io.Serializable {
 		final static private String arrayTyp = "array_type=";
 		final static private String tilt = "tilt=";
 		final static private String azimuth = "azimuth=";
-		final static private String dataset = "dataset=intl"; // for places beyond
+		final static private String dataset = "dataset=intl"; // for places
+																// beyond
 																// U.S
 		final static String amp = "&";
 
 		/*
-		 * Variables for JSON Params. This is a test case using the Chinese panel It
-		 * will be changeable in later versions
+		 * Variables for JSON Params. This is a test case using the Chinese
+		 * panel It will be changeable in later versions
 		 */
 		public String addressInput;
 		public double latitudeInput;
 		public double longitudeInput;
+
+		/*
+		 * Non-product data (automatically assigned, but changeable) These are
+		 * assigned through the second constructor, using the HashMap<>. The
+		 * HashMap values must be, respectively: 
+		 *  - "arrayType"
+		 *  - "tilt"
+		 *  - "azimuth"
+		 *  - "size"
+		 */
 		public byte arrayTypeInput = 0;
-		public double tiltInput = 45; //default is 45 degrees
-		public double azimuthInput = 180; //default is facing south
+		public double tiltInput = 45; // default is 45 degrees
+		public double azimuthInput = 180; // default is facing south
 		public double size = 1; // default value (is 1 m^2)
-		
+
 		// JSON Object keys for the PVWatts API
 		final static String JSONOutputs = "outputs"; // gives a JSONObject
 		final static String annualACKey = "ac_annual"; // gives a double
 		final static String annualDCKey = "dc_monthly"; // gives a JSONArray
-		final static String annualSolRadKey = "poa_monthly"; // gives a JSONArray
+		final static String annualSolRadKey = "poa_monthly"; // gives a
+																// JSONArray
 
 		protected FullSystem system;
-		
+
 		public PVWattsManager(FullSystem system) {
 			this.system = system;
 			this.latitudeInput = system.latitude;
 			this.longitudeInput = system.longitude;
 		}
-		
+
+		// constructor for entering non-product data
+		public PVWattsManager(FullSystem system,
+				HashMap<String, Double> extraData) {
+			this.system = system;
+			this.latitudeInput = system.latitude;
+			this.longitudeInput = system.longitude;
+
+			if (extraData.containsKey("arrayType")) {
+				this.arrayTypeInput = (byte) extraData.get("arrayType")
+						.doubleValue();
+			}
+			if (extraData.containsKey("tilt")) {
+				this.tiltInput = extraData.get("tilt").doubleValue();
+			} 
+			if (extraData.containsKey("azimuth")) {
+				this.azimuthInput = extraData.get("azimuth").doubleValue();
+			}
+			if (extraData.containsKey("size")) {
+				this.size = extraData.get("azimuth").doubleValue();
+			}
+		}
+
 		// gets information from the API
 		public void getData() throws JSONException {
 			String url = compileURL();
 			String source = null;
 			try {
-				source = IOUtils.toString(new URL(url), Charset.forName("UTF-8"));
+				source = IOUtils.toString(new URL(url),
+						Charset.forName("UTF-8"));
 			} catch (IOException outOfUS) {
-				// fixes the 422 error by adding 'intl' to regions outside the US
+				// fixes the 422 error by adding 'intl' to regions outside the
+				// US
 				url += amp + dataset;
 				try {
-					source = IOUtils.toString(new URL(url), Charset.forName("UTF-8"));
+					source = IOUtils.toString(new URL(url),
+							Charset.forName("UTF-8"));
 				} catch (IOException malformedURL) {
 					malformedURL.printStackTrace();
 				}
@@ -247,13 +288,16 @@ public class FullSystem implements java.io.Serializable {
 			for (int x = 0; x < 12; x++) {
 				system.yearlyDC += monthlyDC.getDouble(x);
 			}
-			system.yearlyDC *= size; // adjusts data to include the system's size
+			system.yearlyDC *= size; // adjusts data to include the system's
+										// size
 		}
 
-		// Method to retrieve API key without showing it on git (for safety reasons)
+		// Method to retrieve API key without showing it on git (for safety
+		// reasons)
 		private static String getPVWattsKey() {
 			try {
-				return Files.readAllLines(Paths.get("C:/PVWattsKey.txt")).get(0);
+				return Files.readAllLines(Paths.get("C:/PVWattsKey.txt"))
+						.get(0);
 			} catch (IOException e) {
 				e.printStackTrace();
 				return "Error retrieving Key: is the file in the GitHub Directory?";
@@ -265,16 +309,16 @@ public class FullSystem implements java.io.Serializable {
 			if (addressInput != null) {
 				return apiSite + version + format + apiKey + amp + address + amp
 						+ systemCap + system.panel.systemCap + amp + moduleTyp
-						+ system.panel.moduleType + amp + loss + (int) system.loss
-						+ amp + arrayTyp + arrayTypeInput + amp + tilt + tiltInput
-						+ amp + azimuth + azimuthInput;
+						+ system.panel.moduleType + amp + loss
+						+ (int) system.loss + amp + arrayTyp + arrayTypeInput
+						+ amp + tilt + tiltInput + amp + azimuth + azimuthInput;
 			} else {
 				return apiSite + version + format + apiKey + amp + latitude
 						+ latitudeInput + amp + longitude + longitudeInput + amp
 						+ systemCap + system.panel.systemCap + amp + moduleTyp
-						+ system.panel.moduleType + amp + loss + (int) system.loss
-						+ amp + arrayTyp + arrayTypeInput + amp + tilt + tiltInput
-						+ amp + azimuth + azimuthInput;
+						+ system.panel.moduleType + amp + loss
+						+ (int) system.loss + amp + arrayTyp + arrayTypeInput
+						+ amp + tilt + tiltInput + amp + azimuth + azimuthInput;
 			}
 		}
 
