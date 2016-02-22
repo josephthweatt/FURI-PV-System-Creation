@@ -2,3 +2,5 @@
 /PowerInfoMain$Location.class
 /DBExtraction$produtType.class
 /SystemManager.class
+/SystemCreator.class
+/SystemManager$SystemCreator.class
