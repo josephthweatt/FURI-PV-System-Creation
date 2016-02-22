@@ -6,16 +6,16 @@ package ProductObjects;
  * PV cables together, but was too complicated 
  */
 
-public class PVWires {
+public class PVWire {
 	public String name;
 	public double price;
 	public int lengthInFeet;
 	
 	// for nonspecific initialization
-	public PVWires() {
+	public PVWire() {
 	}
 
-	public PVWires(String name, double price, int lengthInFeet) {
+	public PVWire(String name, double price, int lengthInFeet) {
 		this.name = name;
 		this.price = price;
 		this.lengthInFeet = lengthInFeet;

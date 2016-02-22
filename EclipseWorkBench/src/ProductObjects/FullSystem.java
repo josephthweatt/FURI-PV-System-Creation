@@ -27,7 +27,7 @@ public class FullSystem implements java.io.Serializable {
 	public BatteryMeter batteryMeter;
 	public DCACDisconnect dcacDisconnect;
 	public BatteryWire batteryWire;
-	public PVWires pvWires;
+	public PVWire pvWires;
 
 	// all the table names that one could expect from the database:
 	public static String[] productType = { "Panels", "Inverters", "Racking",
@@ -91,8 +91,8 @@ public class FullSystem implements java.io.Serializable {
 				dcacDisconnect = (DCACDisconnect) product[i];
 			} else if (product[i].getClass() == BatteryWire.class) {
 				batteryWire = (BatteryWire) product[i];
-			} else if (product[i].getClass() == PVWires.class) {
-				pvWires = (PVWires) product[i];
+			} else if (product[i].getClass() == PVWire.class) {
+				pvWires = (PVWire) product[i];
 			}
 		}
 	}

@@ -12,7 +12,7 @@ public class DBExtraction {
 	public final String dbName;
 
 	// not exactly sure if these should be private or public
-	private HashMap<String, Object> productMap;
+	private static HashMap<String, Object> productMap;
 
 	// construct dbExtraction by opening the db
 	public DBExtraction(String dbName) {
@@ -90,9 +90,13 @@ public class DBExtraction {
 			return new BatteryWire(name, price, rs.getInt("LengthInInches"),
 					rs.getString("Gauge"));
 		case 8:
-			return new PVWires(name, price, rs.getInt("LengthInFeet"));
+			return new PVWire(name, price, rs.getInt("LengthInFeet"));
 		default:
 			return null;
 		}
+	}
+	
+	public static HashMap<String, Object> getProducts() {
+		return productMap;
 	}
 }

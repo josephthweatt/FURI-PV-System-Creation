@@ -1,6 +1,6 @@
 import java.util.HashMap;
 
-import ProductObjects.FullSystem;
+import ProductObjects.*;
 
 public class SystemManager {
 	public SystemCreator systemCreator;
@@ -18,13 +18,49 @@ public class SystemManager {
 	// this subclass is dedicated to creating new PVSystems
 	public class SystemCreator {
 		public ProductsContainer[] containers;
-		
+
 		public SystemCreator() {
 			containers = new ProductsContainer[9];
+			// sets the ClassTypes of the containers
+			containers[0] = new ProductsContainer(Panel.class);
+			containers[1] = new ProductsContainer(Inverter.class);
+			containers[2] = new ProductsContainer(Racking.class);
+			containers[3] = new ProductsContainer(Battery.class);
+			containers[4] = new ProductsContainer(BatteryController.class);
+			containers[5] = new ProductsContainer(BatteryMeter.class);
+			containers[6] = new ProductsContainer(DCACDisconnect.class);
+			containers[7] = new ProductsContainer(BatteryWire.class);
+			containers[8] = new ProductsContainer(PVWire.class); 
 		}
-		
+
+		public void makeContainers() {
+			HashMap<String, Object> productMap = DBExtraction.getProducts();
+			for (Object product : productMap.values()) {
+				if (product instanceof Panel) {
+					containers[0].addProduct(product);
+				} else if (product instanceof Inverter) {
+					containers[1].addProduct(product);
+				} else if (product instanceof Racking) {
+					containers[2].addProduct(product);
+				} else if (product instanceof Battery) {
+					containers[3].addProduct(product);
+				} else if (product instanceof BatteryController) {
+					containers[4].addProduct(product);
+				} else if (product instanceof BatteryMeter) {
+					containers[5].addProduct(product);
+				} else if (product instanceof DCACDisconnect) {
+					containers[6].addProduct(product);
+				} else if (product instanceof BatteryWire) {
+					containers[7].addProduct(product);
+				} else if (product instanceof PVWire) {
+					containers[8].addProduct(product);
+				}
+			}
+		}
+
 		// grabs products and inserts them into a full System (products must
-		// already be made as objects). Will also return a system if it is needed
+		// already be made as objects). Will also return a system if it is
+		// needed
 		public FullSystem commitProductsToSystem(String systemName,
 				Object... product) {
 			systemMap.put(systemName, new FullSystem());

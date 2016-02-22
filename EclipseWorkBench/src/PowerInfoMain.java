@@ -29,7 +29,7 @@ public class PowerInfoMain {
 		FullSystem system = new FullSystem(loc.getCoordinates(), "newSys",
 				new Panel(), new Battery(), new BatteryMeter(),
 				new BatteryController(), new Inverter(), new DCACDisconnect(),
-				new Racking(), new BatteryWire(), new PVWires());
+				new Racking(), new BatteryWire(), new PVWire());
 
 		// essential assignments for testing PVwatts manager
 		system.panel.systemCap = 5;
