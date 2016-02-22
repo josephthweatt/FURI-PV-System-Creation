@@ -13,19 +13,12 @@ public class DBExtraction {
 
 	// not exactly sure if these should be private or public
 	private HashMap<String, Object> productMap;
-	private HashMap<String, FullSystem> systemMap;
-
-	enum produtType {
-		Panel, Battery, Inverter
-	}
 
 	// construct dbExtraction by opening the db
 	public DBExtraction(String dbName) {
 		this.dbName = dbName;
 		openDB();
 		productMap = new HashMap<String, Object>();
-		systemMap = new HashMap<String, FullSystem>();
-
 	}
 
 	// gets access to PVModels.db
@@ -38,29 +31,9 @@ public class DBExtraction {
 		}
 	}
 
-	// export product objects to serializable objects
-	public void serializeProduct() {
-
-	}
-
 	// returns the product to the class using it (does not save the product)
 	public Object getProductByName(String productName) {
 		return productMap.get(productName);
-	}
-
-	public FullSystem getSystemByName(String systemName) {
-		return systemMap.get(systemName);
-	}
-
-	// grabs products and inserts them into a full System (products must
-	// already be made as objects). Will also return a system if it is needed
-	public FullSystem commitProductsToSystem(String systemName,
-			Object... product) {
-		systemMap.put(systemName, new FullSystem());
-		for (int i = 0; i < product.length; i++) {
-			systemMap.get(systemName).addProduct(product);
-		}
-		return systemMap.get(systemName);
 	}
 
 	// stores all products in the database into their respective objects
@@ -71,7 +44,7 @@ public class DBExtraction {
 				rs = stmt.executeQuery(
 						"select * from " + FullSystem.productType[i] + ";");
 				while (rs.next()) {
-					productMap.put(rs.getString("Name"), setObject(i));
+					productMap.put(rs.getString("Name"), setObjectToMap(i));
 				}
 			}
 		} catch (SQLException e) {
@@ -83,7 +56,7 @@ public class DBExtraction {
 	}
 
 	// used to set product objects into the productMap
-	public Object setObject(int i) throws SQLException {
+	public Object setObjectToMap(int i) throws SQLException {
 		// all product objects will have a name and price...
 		String name = rs.getString("Name");
 		double price = rs.getDouble("Price");
