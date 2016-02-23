@@ -6,16 +6,27 @@ public class SystemManager {
 	public SystemCreator systemCreator;
 	private HashMap<String, FullSystem> systemMap;
 
+	public PowerInfoMain.Location location;
+
 	public SystemManager() {
 		systemCreator = new SystemCreator();
 		systemMap = new HashMap<String, FullSystem>();
+	}
+
+	public SystemManager(PowerInfoMain.Location location) {
+		systemCreator = new SystemCreator();
+		systemMap = new HashMap<String, FullSystem>();
+		location = location;
 	}
 
 	public FullSystem getSystemByName(String systemName) {
 		return systemMap.get(systemName);
 	}
 
-	// this subclass is dedicated to creating new PVSystems
+	/******************************************************************************
+	 * The SystemCreator subclass is dedicated to creating new PVSystems. It is
+	 * also the primary implementor of the ProductsContainer class
+	 ******************************************************************************/
 	public class SystemCreator {
 		public ProductsContainer[] containers;
 
@@ -30,7 +41,7 @@ public class SystemManager {
 			containers[5] = new ProductsContainer(BatteryMeter.class);
 			containers[6] = new ProductsContainer(DCACDisconnect.class);
 			containers[7] = new ProductsContainer(BatteryWire.class);
-			containers[8] = new ProductsContainer(PVWire.class); 
+			containers[8] = new ProductsContainer(PVWire.class);
 		}
 
 		public void makeContainers() {
@@ -63,9 +74,12 @@ public class SystemManager {
 		// needed
 		public FullSystem commitProductsToSystem(String systemName,
 				Object... product) {
-			systemMap.put(systemName, new FullSystem());
-			for (int i = 0; i < product.length; i++) {
-				systemMap.get(systemName).addProduct(product);
+			try {
+				systemMap.put(systemName,
+						new FullSystem(location.getAddress(), product));
+			} catch (NullPointerException e) {
+				systemMap.put(systemName,
+						new FullSystem(location.getCoordinates(), product));
 			}
 			return systemMap.get(systemName);
 		}
