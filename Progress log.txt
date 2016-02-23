@@ -130,3 +130,10 @@ I'm going to need to organize tasks into classes. I have the API into what is cu
 	return (String) productType.getDeclaredField("name").get(products.get(0));
 -this would allow Product Container to freely access any datatypes of the objects it currently holds
 	* the methods within Products Container will need to throw the IllegalAccessException & the NoSuchFieldException
+
+-Before I go further with the implementation of Fields, I must also recollect what it is I want ProductContainer to do with them. For the next commit, the class will be able to:
+	*organize any comparable field from highest to lowest, or from lowest to highest
+	*get field data from various objects (possibly by using a parameter to find the field)
+	*return product objects (sometimes in arrays (as in rankings))
+-looking at all my product objects, the various datatypes are between String, int, and doulbe (there is one boolean instance with the Racking object, but besides that everything can be organized)
+	*some of the string variables might require parsing to attain more detailed info. If parsing is needed, then I will put the method in its respective object and make it public.

@@ -74,6 +74,8 @@ public class SystemManager {
 		// needed
 		public FullSystem commitProductsToSystem(String systemName,
 				Object... product) {
+			// try-catch will determine whether the System will use an address
+			// or coordinates
 			try {
 				systemMap.put(systemName,
 						new FullSystem(location.getAddress(), product));
