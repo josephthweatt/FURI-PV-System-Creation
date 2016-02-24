@@ -24,12 +24,12 @@ public class PowerInfoMain {
 		db.loadAllProducts();
 		sysMan.systemCreator.makeContainersWithDB();
 		ProductsContainer pc = sysMan.systemCreator.containers[0];
-		pc.quicksortHiToLoInt(pc.products, 0, pc.products.size() - 1,
-				"systemCap");
+		pc.quicksortHiToLoDouble(pc.products, 0, pc.products.size() - 1,
+				"amps");
 
 		// print
 		for (int i = 0; i < pc.products.size(); i++) {
-			System.out.println(pc.getIntFromField("systemCap", i));
+			System.out.println(pc.getDoubleFromField("amps", i));
 		}
 	}
 

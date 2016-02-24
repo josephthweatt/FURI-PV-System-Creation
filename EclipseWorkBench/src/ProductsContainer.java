@@ -142,7 +142,7 @@ public class ProductsContainer {
 		return pIndex;
 	}
 
-	// stores smallest number of "Field" to the first location
+	// stores largest number of "Field" to the first location
 	public ArrayList<Object> quicksortHiToLoInt(ArrayList<Object> array,
 			int start, int end, String fieldName) {
 		if (start >= end) {
@@ -198,6 +198,38 @@ public class ProductsContainer {
 			parser = getDoubleFromField(fieldName, i);
 			// if parser is lexicographically before or the same as the pivot
 			if (parser <= pivot) {
+				swap(i, pIndex);
+				pIndex++;
+			}
+		}
+		swap(pIndex, end);
+
+		return pIndex;
+	}
+
+	// stores largest number of "Field" to the first location
+	public ArrayList<Object> quicksortHiToLoDouble(ArrayList<Object> array,
+			int start, int end, String fieldName) {
+		if (start >= end) {
+			return array;
+		}
+		int pIndex = partitionHiToLoDouble(array, start, end, fieldName);
+
+		quicksortHiToLoDouble(array, start, pIndex - 1, fieldName);
+		quicksortHiToLoDouble(array, pIndex + 1, end, fieldName);
+
+		return array;
+	}
+	
+	public int partitionHiToLoDouble(ArrayList<Object> array, int start, int end,
+			String fieldName) {
+		double pivot = getDoubleFromField(fieldName, end);
+		double parser;
+		int pIndex = start;
+		for (int i = start; i < end; i++) {
+			parser = getDoubleFromField(fieldName, i);
+			// if parser is lexicographically before or the same as the pivot
+			if (parser >= pivot) {
 				swap(i, pIndex);
 				pIndex++;
 			}
