@@ -24,7 +24,7 @@ public class PowerInfoMain {
 		db.loadAllProducts();
 		sysMan.systemCreator.makeContainersWithDB();
 		ProductsContainer pc = sysMan.systemCreator.containers[0];
-		pc.quicksortLoToHiInt(pc.products, 0, pc.products.size() - 1,
+		pc.quicksortHiToLoInt(pc.products, 0, pc.products.size() - 1,
 				"systemCap");
 
 		// print

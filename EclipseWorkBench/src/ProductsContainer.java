@@ -124,8 +124,8 @@ public class ProductsContainer {
 		return array;
 	}
 
-	public int partitionLoToHiInt(ArrayList<Object> array,
-			int start, int end, String fieldName) {
+	public int partitionLoToHiInt(ArrayList<Object> array, int start, int end,
+			String fieldName) {
 		int pivot = getIntFromField(fieldName, end);
 		int parser;
 		int pIndex = start;
@@ -133,6 +133,38 @@ public class ProductsContainer {
 			parser = getIntFromField(fieldName, i);
 			// if parser is lexicographically before or the same as the pivot
 			if (parser <= pivot) {
+				swap(i, pIndex);
+				pIndex++;
+			}
+		}
+		swap(pIndex, end);
+
+		return pIndex;
+	}
+
+	// stores smallest number of "Field" to the first location
+	public ArrayList<Object> quicksortHiToLoInt(ArrayList<Object> array,
+			int start, int end, String fieldName) {
+		if (start >= end) {
+			return array;
+		}
+		int pIndex = partitionHiToLoInt(array, start, end, fieldName);
+
+		quicksortHiToLoInt(array, start, pIndex - 1, fieldName);
+		quicksortHiToLoInt(array, pIndex + 1, end, fieldName);
+
+		return array;
+	}
+
+	public int partitionHiToLoInt(ArrayList<Object> array, int start, int end,
+			String fieldName) {
+		int pivot = getIntFromField(fieldName, end);
+		int parser;
+		int pIndex = start;
+		for (int i = start; i < end; i++) {
+			parser = getIntFromField(fieldName, i);
+			// if parser is lexicographically before or the same as the pivot
+			if (parser >= pivot) {
 				swap(i, pIndex);
 				pIndex++;
 			}
