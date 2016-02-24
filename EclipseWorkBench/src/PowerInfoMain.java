@@ -18,28 +18,18 @@ public class PowerInfoMain {
 	public static Location loc;
 
 	public static void main(String[] args) throws IOException, JSONException {
-		PowerInfoMain piMain = new PowerInfoMain();
-		loc = piMain.new Location(33.42, 111.9431);
-
-		// test that FullSystem class works with the api class
+		// this test method will try to sort all data in the container by name
+		SystemManager sysMan = new SystemManager(loc);
 		DBExtraction db = new DBExtraction("PVModels.db");
 		db.loadAllProducts();
-
-		// create a dummy system
-		FullSystem system = new FullSystem(loc.getCoordinates(), "newSys",
-				new Panel(), new Battery(), new BatteryMeter(),
-				new BatteryController(), new Inverter(), new DCACDisconnect(),
-				new Racking(), new BatteryWire(), new PVWire());
-
-		// essential assignments for testing PVwatts manager
-		system.panel.systemCap = 5;
-		system.loss = 5;
-		system.panel.moduleType = 0;
-
-		system.getDataFromAPI(null);
-		System.out.println("Yearly AC " + system.yearlyAC);
-		System.out.println("Yearly DC " + system.yearlyDC);
-		System.exit(0);
+		sysMan.systemCreator.makeContainersWithDB();
+		ProductsContainer pc = sysMan.systemCreator.containers[0];
+		pc.quicksortLoToHiString(pc.products, 0, pc.products.size() - 1, "name");
+		
+		// print
+		for (int i = 0; i < pc.products.size(); i++) {
+			System.out.println(pc.getStringFromField("name", i));
+		}
 	}
 
 	// an object to store the location, which can either be an address (String)

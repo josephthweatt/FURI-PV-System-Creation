@@ -44,7 +44,7 @@ public class SystemManager {
 			containers[8] = new ProductsContainer(PVWire.class);
 		}
 
-		public void makeContainers() {
+		public void makeContainersWithDB() {
 			HashMap<String, Object> productMap = DBExtraction.getProducts();
 			for (Object product : productMap.values()) {
 				if (product instanceof Panel) {

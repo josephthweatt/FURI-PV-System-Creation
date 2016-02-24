@@ -56,7 +56,7 @@ public class DBExtraction {
 	}
 
 	// used to set product objects into the productMap
-	public Object setObjectToMap(int i) throws SQLException {
+	private Object setObjectToMap(int i) throws SQLException {
 		// all product objects will have a name and price...
 		String name = rs.getString("Name");
 		double price = rs.getDouble("Price");
@@ -96,6 +96,7 @@ public class DBExtraction {
 		}
 	}
 	
+	// returns all products
 	public static HashMap<String, Object> getProducts() {
 		return productMap;
 	}
