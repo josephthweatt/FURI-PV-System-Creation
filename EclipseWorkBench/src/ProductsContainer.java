@@ -25,7 +25,7 @@ public class ProductsContainer {
 
 	public void addProduct(Object product) {
 		// checks if the container has a designation
-		if (productType != null) { 
+		if (productType != null) {
 			this.products.add(product);
 		} else {
 			System.out.println("Product Type must be initialized");
@@ -35,55 +35,17 @@ public class ProductsContainer {
 	/***************************************************************************
 	 * The sorting algorithms will sort the ArrayList according to the fieldName
 	 * passed in the parameters. All 4 algorithms are Quicksort, categorized as
-	 * high or low and number or string
-	 **************************************************************************/
-	// The following methods are non-recursive methods to call the actual
-	// recursive Quicksort algorithms
-	public void sortLoToHiString(String fieldName) {
-
-		// this 'if' checks if the fieldName is a String
-		if (getStringFromField(fieldName, 0) != null) {
-			// we work with the string compare if we're using strings
-			quicksortLoToHiString(products, 0, products.size(), fieldName);
-		}
-	}
-
-	public void sortHiToLoInt(String fieldName) {
-
-	}
-
-	public void sortHiToLoDouble(String fieldName) {
-
-	}
-
-	public void sortHiToLoString(String fieldName) {
-		// this 'if' checks if the fieldName is a String
-		if (getStringFromField(fieldName, 0) != null) {
-			// we work with the string compare if we're using strings
-			for (int i = 0; i < products.size(); i++) {
-
-			}
-		}
-	}
-
-	public void sortLoToHighInt(String fieldName) {
-
-	}
-
-	public void sortLoToHighDouble(String fieldName) {
-
-	}
-
-	/**************************************************************************
-	 * The actual Quicksort algorithms. These return ArrayLists in a recursive
-	 * method
+	 * high or low and number or string. The methods here return ArrayLists in a
+	 * recursive method. There exists three parts to each quicksort: 
+	 * 1. The main quicksorting method 
+	 * 2. The partition 
+	 * 3. The swap method (not special toquicksort)
 	 * 
-	 * @throws SecurityException
-	 * @throws NoSuchFieldException
-	 * @throws IllegalAccessException
-	 * @throws IllegalArgumentException
+	 * I'll put each partition method with each quicksort, and leave the swap at
+	 * the bottom
 	 *************************************************************************/
 
+	// stores what is lexicographically earliest to the first location
 	public ArrayList<Object> quicksortLoToHiString(ArrayList<Object> array,
 			int start, int end, String fieldName) {
 		if (start >= end) {
@@ -123,7 +85,13 @@ public class ProductsContainer {
 		products.set(location2, temp);
 	}
 
-	/***************************************************************************/
+	/***************************************************************************
+	 * The following methods return values of different datatypes from an object
+	 * 
+	 * @param fieldName
+	 * @param position
+	 * @return
+	 **************************************************************************/
 
 	public String getStringFromField(String fieldName, int position) {
 		try {
