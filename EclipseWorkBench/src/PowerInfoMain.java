@@ -24,11 +24,12 @@ public class PowerInfoMain {
 		db.loadAllProducts();
 		sysMan.systemCreator.makeContainersWithDB();
 		ProductsContainer pc = sysMan.systemCreator.containers[0];
-		pc.quicksortHiToLoString(pc.products, 0, pc.products.size() - 1, "name");
-		
+		pc.quicksortLoToHiInt(pc.products, 0, pc.products.size() - 1,
+				"systemCap");
+
 		// print
 		for (int i = 0; i < pc.products.size(); i++) {
-			System.out.println(pc.getStringFromField("name", i));
+			System.out.println(pc.getIntFromField("systemCap", i));
 		}
 	}
 
@@ -57,7 +58,7 @@ public class PowerInfoMain {
 					System.out.println("longitude is too big");
 					System.exit(0);
 				}
-				
+
 				latitude = (Double) location[0];
 				longitude = (Double) location[1];
 				address = null;

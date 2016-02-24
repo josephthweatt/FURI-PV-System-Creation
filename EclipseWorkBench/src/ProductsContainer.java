@@ -36,10 +36,9 @@ public class ProductsContainer {
 	 * The sorting algorithms will sort the ArrayList according to the fieldName
 	 * passed in the parameters. All 4 algorithms are Quicksort, categorized as
 	 * high or low and number or string. The methods here return ArrayLists in a
-	 * recursive method. There exists three parts to each quicksort: 
-	 * 1. The main quicksorting method 
-	 * 2. The partition 
-	 * 3. The swap method (not special toquicksort)
+	 * recursive method. There exists three parts to each quicksort: 1. The main
+	 * quicksorting method 2. The partition 3. The swap method (not special
+	 * toquicksort)
 	 * 
 	 * I'll put each partition method with each quicksort, and leave the swap at
 	 * the bottom
@@ -77,7 +76,7 @@ public class ProductsContainer {
 
 		return pIndex;
 	}
-	
+
 	// stores what is lexicographically latest to the first location
 	public ArrayList<Object> quicksortHiToLoString(ArrayList<Object> array,
 			int start, int end, String fieldName) {
@@ -102,6 +101,71 @@ public class ProductsContainer {
 			parser = getStringFromField(fieldName, i);
 			// if parser is lexicographically before or the same as the pivot
 			if (parser.toLowerCase().compareTo(pivot.toLowerCase()) >= 0) {
+				swap(i, pIndex);
+				pIndex++;
+			}
+		}
+		swap(pIndex, end);
+
+		return pIndex;
+	}
+
+	// stores smallest number of "Field" to the first location
+	public ArrayList<Object> quicksortLoToHiInt(ArrayList<Object> array,
+			int start, int end, String fieldName) {
+		if (start >= end) {
+			return array;
+		}
+		int pIndex = partitionLoToHiInt(array, start, end, fieldName);
+
+		quicksortLoToHiInt(array, start, pIndex - 1, fieldName);
+		quicksortLoToHiInt(array, pIndex + 1, end, fieldName);
+
+		return array;
+	}
+
+	public int partitionLoToHiInt(ArrayList<Object> array,
+			int start, int end, String fieldName) {
+		int pivot = getIntFromField(fieldName, end);
+		int parser;
+		int pIndex = start;
+		for (int i = start; i < end; i++) {
+			parser = getIntFromField(fieldName, i);
+			// if parser is lexicographically before or the same as the pivot
+			if (parser <= pivot) {
+				swap(i, pIndex);
+				pIndex++;
+			}
+		}
+		swap(pIndex, end);
+
+		return pIndex;
+	}
+
+	// stores smallest number of "Field" to the first location
+	public ArrayList<Object> quicksortLoToHiDouble(ArrayList<Object> array,
+			int start, int end, String fieldName) {
+		if (start >= end) {
+			return array;
+		}
+		int pIndex = partitionLoToHiDouble(array, start, end, fieldName);
+
+		quicksortLoToHiDouble(array, start, pIndex - 1, fieldName);
+		quicksortLoToHiDouble(array, pIndex + 1, end, fieldName);
+
+		return array;
+	}
+
+	private int partitionLoToHiDouble(ArrayList<Object> array, int start,
+			int end, String fieldName) {
+
+		double pivot = getDoubleFromField(fieldName, end);
+		double parser;
+		int pIndex = start;
+		for (int i = start; i < end; i++) {
+			parser = getDoubleFromField(fieldName, i);
+			// if parser is lexicographically before or the same as the pivot
+			if (parser <= pivot) {
 				swap(i, pIndex);
 				pIndex++;
 			}
@@ -141,7 +205,7 @@ public class ProductsContainer {
 		return null;
 	}
 
-	private int getIntFromField(String fieldName, int position) {
+	public int getIntFromField(String fieldName, int position) {
 		try {
 			return (int) productType.getDeclaredField(fieldName)
 					.get(products.get(position));
@@ -154,7 +218,7 @@ public class ProductsContainer {
 		return 0; // if the program fails to find the field
 	}
 
-	private double getDoubleFromField(String fieldName, int position) {
+	public double getDoubleFromField(String fieldName, int position) {
 		try {
 			return (double) productType.getDeclaredField(fieldName)
 					.get(products.get(position));
