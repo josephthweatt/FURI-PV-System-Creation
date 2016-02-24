@@ -77,6 +77,39 @@ public class ProductsContainer {
 
 		return pIndex;
 	}
+	
+	// stores what is lexicographically latest to the first location
+	public ArrayList<Object> quicksortHiToLoString(ArrayList<Object> array,
+			int start, int end, String fieldName) {
+		if (start >= end) {
+			return array;
+		}
+		int pIndex = partitionHiToLoString(array, start, end, fieldName);
+
+		quicksortHiToLoString(array, start, pIndex - 1, fieldName);
+		quicksortHiToLoString(array, pIndex + 1, end, fieldName);
+
+		return array;
+	}
+
+	private int partitionHiToLoString(ArrayList<Object> array, int start,
+			int end, String fieldName) {
+
+		String pivot = getStringFromField(fieldName, end);
+		String parser;
+		int pIndex = start;
+		for (int i = start; i < end; i++) {
+			parser = getStringFromField(fieldName, i);
+			// if parser is lexicographically before or the same as the pivot
+			if (parser.toLowerCase().compareTo(pivot.toLowerCase()) >= 0) {
+				swap(i, pIndex);
+				pIndex++;
+			}
+		}
+		swap(pIndex, end);
+
+		return pIndex;
+	}
 
 	// swaps arrayList objects
 	private void swap(int location1, int location2) {

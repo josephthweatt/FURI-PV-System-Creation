@@ -24,7 +24,7 @@ public class PowerInfoMain {
 		db.loadAllProducts();
 		sysMan.systemCreator.makeContainersWithDB();
 		ProductsContainer pc = sysMan.systemCreator.containers[0];
-		pc.quicksortLoToHiString(pc.products, 0, pc.products.size() - 1, "name");
+		pc.quicksortHiToLoString(pc.products, 0, pc.products.size() - 1, "name");
 		
 		// print
 		for (int i = 0; i < pc.products.size(); i++) {
