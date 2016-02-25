@@ -4,17 +4,17 @@ import java.lang.reflect.Field;
 
 // made for storing multiple products of the same type
 // used for ranking individual objects and narrowing down the options
-public class ProductsContainer {
+public class ProductContainer {
 	public Class<?> productType;
 	public ArrayList<Object> products;
 
-	public ProductsContainer(Class<?> productType) {
+	public ProductContainer(Class<?> productType) {
 		this.productType = productType;
 		products = new ArrayList<Object>();
 	}
 
 	// constructor with products
-	public ProductsContainer(Class<?> productType, Object[] products) {
+	public ProductContainer(Class<?> productType, Object[] products) {
 		this.productType = productType;
 		this.products = new ArrayList<Object>();
 		// casts products as their original objects, then adds them to ArrayList

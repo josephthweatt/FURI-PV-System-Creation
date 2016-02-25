@@ -23,7 +23,7 @@ public class SystemManager {
 		return systemMap.get(systemName);
 	}
 	
-	public ProductsContainer getContainer(int i) {
+	public ProductContainer getContainer(int i) {
 		return systemCreator.containers[i];
 	}
 
@@ -32,24 +32,24 @@ public class SystemManager {
 	 * also the primary implementor of the ProductsContainer class
 	 ******************************************************************************/
 	public class SystemCreator {
-		public ProductsContainer[] containers;
+		public ProductContainer[] containers;
 		public DBExtraction db;
 
 		public SystemCreator() {
 			db = new DBExtraction("PVModels.db");
 			db.loadAllProducts();
 			
-			containers = new ProductsContainer[9];
+			containers = new ProductContainer[9];
 			// sets the ClassTypes of the containers
-			containers[0] = new ProductsContainer(Panel.class);
-			containers[1] = new ProductsContainer(Inverter.class);
-			containers[2] = new ProductsContainer(Racking.class);
-			containers[3] = new ProductsContainer(Battery.class);
-			containers[4] = new ProductsContainer(BatteryController.class);
-			containers[5] = new ProductsContainer(BatteryMeter.class);
-			containers[6] = new ProductsContainer(DCACDisconnect.class);
-			containers[7] = new ProductsContainer(BatteryWire.class);
-			containers[8] = new ProductsContainer(PVWire.class);
+			containers[0] = new ProductContainer(Panel.class);
+			containers[1] = new ProductContainer(Inverter.class);
+			containers[2] = new ProductContainer(Racking.class);
+			containers[3] = new ProductContainer(Battery.class);
+			containers[4] = new ProductContainer(BatteryController.class);
+			containers[5] = new ProductContainer(BatteryMeter.class);
+			containers[6] = new ProductContainer(DCACDisconnect.class);
+			containers[7] = new ProductContainer(BatteryWire.class);
+			containers[8] = new ProductContainer(PVWire.class);
 			
 			makeContainersWithDB(); // sets db informaiton into containers
 		}

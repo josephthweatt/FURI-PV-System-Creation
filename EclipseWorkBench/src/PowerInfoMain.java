@@ -20,7 +20,7 @@ public class PowerInfoMain {
 	public static void main(String[] args) throws IOException, JSONException {
 		// this test method will try to sort all data in the container by name
 		SystemManager sysMan = new SystemManager(loc);
-		ProductsContainer pc = sysMan.getContainer(0);
+		ProductContainer pc = sysMan.getContainer(0);
 		
 		//changes db (though this is really the same one)
 		sysMan.systemCreator.setNewDatabase("PVModels.db"); 
