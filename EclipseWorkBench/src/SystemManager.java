@@ -32,7 +32,7 @@ public class SystemManager {
 	 * also the primary implementor of the ProductsContainer class
 	 ******************************************************************************/
 	public class SystemCreator {
-		public ProductContainer[] containers;
+		private ProductContainer[] containers;
 		public DBExtraction db;
 
 		public SystemCreator() {
