@@ -16,11 +16,15 @@ public class SystemManager {
 	public SystemManager(PowerInfoMain.Location location) {
 		systemCreator = new SystemCreator();
 		systemMap = new HashMap<String, FullSystem>();
-		location = location;
+		this.location = location;
 	}
 
 	public FullSystem getSystemByName(String systemName) {
 		return systemMap.get(systemName);
+	}
+	
+	public ProductsContainer getContainer(int i) {
+		return systemCreator.containers[i];
 	}
 
 	/******************************************************************************
@@ -29,8 +33,12 @@ public class SystemManager {
 	 ******************************************************************************/
 	public class SystemCreator {
 		public ProductsContainer[] containers;
+		public DBExtraction db;
 
 		public SystemCreator() {
+			db = new DBExtraction("PVModels.db");
+			db.loadAllProducts();
+			
 			containers = new ProductsContainer[9];
 			// sets the ClassTypes of the containers
 			containers[0] = new ProductsContainer(Panel.class);
@@ -42,6 +50,14 @@ public class SystemManager {
 			containers[6] = new ProductsContainer(DCACDisconnect.class);
 			containers[7] = new ProductsContainer(BatteryWire.class);
 			containers[8] = new ProductsContainer(PVWire.class);
+			
+			makeContainersWithDB(); // sets db informaiton into containers
+		}
+		
+		//changes the DBExtraction's database, also resets the 
+		public void setNewDatabase(String dbName) {
+			db = new DBExtraction(dbName);
+			makeContainersWithDB();
 		}
 
 		public void makeContainersWithDB() {

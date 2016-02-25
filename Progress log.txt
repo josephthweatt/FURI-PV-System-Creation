@@ -141,3 +141,10 @@ I'm going to need to organize tasks into classes. I have the API into what is cu
 -In preparing to make the sorting algorithm, I looked through the various types of algorithms that could be used. Quicksort seems to be the best for comparison-based sorting with a big O of O(n log(n)). I'll learn how to implement this in java, and then apply it to the hiToLo and loToHi methods
 	*some of the string variables might require parsing to attain more detailed info. If parsing is needed, then I will put the method in its respective object and make it public.
 -I am going to need 4 variations of the quickSort to access all datatypes in the ProductObjects package. I implemented the first one (the lowToHiString), and am debuging the code now
+
+2-24-16
+-I am going to finish up the info processing phase of this project with some standard debugging. The objectives here include:
+	1. better cohesion
+	2. making the systemCreator easy to access from other classes (while still keeping the sysManager class necessary for handling instances of the FullSystem class)
+	3. setting up an area to run the algorithms for deciding which products to use (I'm thinking these could go in the SystemCreator subclass)
+	4. 

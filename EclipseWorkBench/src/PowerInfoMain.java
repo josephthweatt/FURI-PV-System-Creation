@@ -20,16 +20,17 @@ public class PowerInfoMain {
 	public static void main(String[] args) throws IOException, JSONException {
 		// this test method will try to sort all data in the container by name
 		SystemManager sysMan = new SystemManager(loc);
-		DBExtraction db = new DBExtraction("PVModels.db");
-		db.loadAllProducts();
-		sysMan.systemCreator.makeContainersWithDB();
-		ProductsContainer pc = sysMan.systemCreator.containers[0];
-		pc.quicksortHiToLoDouble(pc.products, 0, pc.products.size() - 1,
-				"amps");
-
+		ProductsContainer pc = sysMan.getContainer(0);
+		
+		//changes db (though this is really the same one)
+		sysMan.systemCreator.setNewDatabase("PVModels.db"); 
+		
+		pc.quicksortHiToLoString(pc.products, 0, pc.products.size() - 1,
+				"name");
+		
 		// print
 		for (int i = 0; i < pc.products.size(); i++) {
-			System.out.println(pc.getDoubleFromField("amps", i));
+			System.out.println(pc.getStringFromField("name", i));
 		}
 	}
 
