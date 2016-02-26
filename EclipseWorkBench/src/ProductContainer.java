@@ -44,6 +44,44 @@ public class ProductContainer {
 	 * the bottom
 	 *************************************************************************/
 
+	/***************************************************************************
+	 * The quicksort is passed through one of two head methods, which determines
+	 * which data type exists in the field. This passes these to one of the six
+	 * quicksort methods.
+	 ***************************************************************************/
+
+	public void loToHi(String fieldName) {
+		try {
+			getStringFromField(fieldName, 0);
+			quicksortLoToHiString(this.products, 0, products.size() - 1,
+					fieldName);
+			return;
+		} catch (NullPointerException e) {
+		} // field is not a String, keep going
+		try {
+			// this 'if' exits the 'try' if there is no such field
+			if (getIntFromField(fieldName, 0) == 0) {
+				throw new ClassCastException();
+			}
+			quicksortLoToHiInt(this.products, 0, products.size() - 1,
+					fieldName);
+			return;
+		} catch (ClassCastException e) {
+		} // field is not an int, keep going
+		try {
+			// this 'if' exits the 'try' if there is no such field
+			if (getDoubleFromField(fieldName, 0) == 0) {
+				throw new ClassCastException();
+			}
+			quicksortLoToHiDouble(this.products, 0, products.size() - 1,
+					fieldName);
+			return;
+		} catch (ClassCastException e) {
+		} // field is not a double, say the field doesn't exist
+
+		System.out.println("Field does not exist");
+	}
+
 	// stores what is lexicographically earliest to the first location
 	public ArrayList<Object> quicksortLoToHiString(ArrayList<Object> array,
 			int start, int end, String fieldName) {
@@ -220,9 +258,9 @@ public class ProductContainer {
 
 		return array;
 	}
-	
-	public int partitionHiToLoDouble(ArrayList<Object> array, int start, int end,
-			String fieldName) {
+
+	public int partitionHiToLoDouble(ArrayList<Object> array, int start,
+			int end, String fieldName) {
 		double pivot = getDoubleFromField(fieldName, end);
 		double parser;
 		int pIndex = start;
@@ -261,11 +299,9 @@ public class ProductContainer {
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (NoSuchFieldException e) {
-			e.printStackTrace();
 		} catch (ClassCastException e) {
 			// do nothing here, the method returns null at this point
 		}
-		System.out.println("Invaid Field: Field should be a String");
 		return null;
 	}
 
@@ -276,9 +312,8 @@ public class ProductContainer {
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (NoSuchFieldException e) {
-			e.printStackTrace();
+			return 0;
 		}
-		System.out.println("Invaid Field: Field should be an int");
 		return 0; // if the program fails to find the field
 	}
 
@@ -289,9 +324,8 @@ public class ProductContainer {
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (NoSuchFieldException e) {
-			e.printStackTrace();
+			return 0;
 		}
-		System.out.println("Invaid Field: Field should be a double");
 		return 0; // if the program fails to find the field
 	}
 

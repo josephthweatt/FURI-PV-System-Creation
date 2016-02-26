@@ -21,13 +21,9 @@ public class PowerInfoMain {
 		// this test method will try to sort all data in the container by name
 		SystemManager sysMan = new SystemManager(loc);
 		ProductContainer pc = sysMan.getContainer(0);
-		
-		//changes db (though this is really the same one)
-		sysMan.systemCreator.setNewDatabase("PVModels.db"); 
-		
-		pc.quicksortHiToLoString(pc.products, 0, pc.products.size() - 1,
-				"name");
-		
+
+		pc.loToHi("powerTolerance");
+
 		// print
 		for (int i = 0; i < pc.products.size(); i++) {
 			System.out.println(pc.getStringFromField("name", i));
