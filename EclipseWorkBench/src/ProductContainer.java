@@ -153,7 +153,7 @@ public class ProductContainer {
 	}
 
 	// stores what is lexicographically latest to the first location
-	public ArrayList<Object> quicksortHiToLoString(ArrayList<Object> array,
+	private ArrayList<Object> quicksortHiToLoString(ArrayList<Object> array,
 			int start, int end, String fieldName) {
 		if (start >= end) {
 			return array;
@@ -199,7 +199,7 @@ public class ProductContainer {
 		return array;
 	}
 
-	public int partitionLoToHiInt(ArrayList<Object> array, int start, int end,
+	private int partitionLoToHiInt(ArrayList<Object> array, int start, int end,
 			String fieldName) {
 		int pivot = getIntFromField(fieldName, end);
 		int parser;
@@ -218,7 +218,7 @@ public class ProductContainer {
 	}
 
 	// stores largest number of "Field" to the first location
-	public ArrayList<Object> quicksortHiToLoInt(ArrayList<Object> array,
+	private ArrayList<Object> quicksortHiToLoInt(ArrayList<Object> array,
 			int start, int end, String fieldName) {
 		if (start >= end) {
 			return array;
@@ -231,7 +231,7 @@ public class ProductContainer {
 		return array;
 	}
 
-	public int partitionHiToLoInt(ArrayList<Object> array, int start, int end,
+	private int partitionHiToLoInt(ArrayList<Object> array, int start, int end,
 			String fieldName) {
 		int pivot = getIntFromField(fieldName, end);
 		int parser;
@@ -283,7 +283,7 @@ public class ProductContainer {
 	}
 
 	// stores largest number of "Field" to the first location
-	public ArrayList<Object> quicksortHiToLoDouble(ArrayList<Object> array,
+	private ArrayList<Object> quicksortHiToLoDouble(ArrayList<Object> array,
 			int start, int end, String fieldName) {
 		if (start >= end) {
 			return array;
@@ -296,7 +296,7 @@ public class ProductContainer {
 		return array;
 	}
 
-	public int partitionHiToLoDouble(ArrayList<Object> array, int start,
+	private int partitionHiToLoDouble(ArrayList<Object> array, int start,
 			int end, String fieldName) {
 		double pivot = getDoubleFromField(fieldName, end);
 		double parser;
