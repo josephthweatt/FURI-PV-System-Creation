@@ -81,6 +81,43 @@ public class ProductContainer {
 
 		System.out.println("Field does not exist");
 	}
+	
+	public void hiToLo(String fieldName) {
+		try {
+			getStringFromField(fieldName, 0);
+			quicksortHiToLoString(this.products, 0, products.size() - 1,
+					fieldName);
+			return;
+		} catch (NullPointerException e) {
+		} // field is not a String, keep going
+		try {
+			// this 'if' exits the 'try' if there is no such field
+			if (getIntFromField(fieldName, 0) == 0) {
+				throw new ClassCastException();
+			}
+			quicksortHiToLoInt(this.products, 0, products.size() - 1,
+					fieldName);
+			return;
+		} catch (ClassCastException e) {
+		} // field is not an int, keep going
+		try {
+			// this 'if' exits the 'try' if there is no such field
+			if (getDoubleFromField(fieldName, 0) == 0) {
+				throw new ClassCastException();
+			}
+			quicksortHiToLoDouble(this.products, 0, products.size() - 1,
+					fieldName);
+			return;
+		} catch (ClassCastException e) {
+		} // field is not a double, say the field doesn't exist
+
+		System.out.println("Field does not exist");
+	}
+
+	/**************************************************************************
+	 * Private algorithms implemented to do the quicksort operations. These
+	 * include the main quicksort, the partition, and the swap.
+	 *************************************************************************/
 
 	// stores what is lexicographically earliest to the first location
 	private ArrayList<Object> quicksortLoToHiString(ArrayList<Object> array,
