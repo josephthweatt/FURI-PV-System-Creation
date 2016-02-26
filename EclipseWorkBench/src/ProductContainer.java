@@ -83,7 +83,7 @@ public class ProductContainer {
 	}
 
 	// stores what is lexicographically earliest to the first location
-	public ArrayList<Object> quicksortLoToHiString(ArrayList<Object> array,
+	private ArrayList<Object> quicksortLoToHiString(ArrayList<Object> array,
 			int start, int end, String fieldName) {
 		if (start >= end) {
 			return array;
@@ -149,7 +149,7 @@ public class ProductContainer {
 	}
 
 	// stores smallest number of "Field" to the first location
-	public ArrayList<Object> quicksortLoToHiInt(ArrayList<Object> array,
+	private ArrayList<Object> quicksortLoToHiInt(ArrayList<Object> array,
 			int start, int end, String fieldName) {
 		if (start >= end) {
 			return array;
@@ -213,7 +213,7 @@ public class ProductContainer {
 	}
 
 	// stores smallest number of "Field" to the first location
-	public ArrayList<Object> quicksortLoToHiDouble(ArrayList<Object> array,
+	private ArrayList<Object> quicksortLoToHiDouble(ArrayList<Object> array,
 			int start, int end, String fieldName) {
 		if (start >= end) {
 			return array;
