@@ -153,6 +153,6 @@ I'm going to need to organize tasks into classes. I have the API into what is cu
 -Today begins the next phase of the research: the algorithm design phase (aka the core of the reasearch project). To begin, I'll create a prototype algorithm for the "Price" objective, which will sort ten viable PV systems based on their affordability. Doing this will allow me to see what additional methods stll need to be included in the code for the algorithms to work. Presently I can think of one method I will be needing (mentioned in the list below), but will think about what other changes could be made as I create my prototype algorithm.
 
 Additional methods I will need to add (still expanding):
-	-Method to calculate total PV output given x square meters of paneling
+	*Method to calculate total PV output given x square meters of paneling
 
 *To make matters worse, I caught a cold just before the break started. I'm just now recovering from this, but have kept busy in the meantime. Namely, I finished the Codecademy course for Python, which will come in use if I find the time to make a server on my Raspberry Pi, and I made my computer a dualboot system for Windows & Ubuntu.
