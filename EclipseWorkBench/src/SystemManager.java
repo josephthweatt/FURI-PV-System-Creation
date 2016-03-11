@@ -89,15 +89,13 @@ public class SystemManager {
 		// already be made as objects). Will also return a system if it is
 		// needed
 		public FullSystem commitProductsToSystem(String systemName,
-				Object... product) {
-			// try-catch will determine whether the System will use an address
-			// or coordinates
-			try {
-				systemMap.put(systemName,
-						new FullSystem(location.getAddress(), product));
-			} catch (NullPointerException e) {
+				Object... product) {			
+			if (location.getAddress() == null) {
 				systemMap.put(systemName,
 						new FullSystem(location.getCoordinates(), product));
+			} else {
+				systemMap.put(systemName,
+						new FullSystem(location.getAddress(), product));
 			}
 			return systemMap.get(systemName);
 		}
