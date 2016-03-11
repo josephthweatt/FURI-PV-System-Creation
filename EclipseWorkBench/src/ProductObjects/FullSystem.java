@@ -17,7 +17,7 @@ import org.json.JSONObject;
  * of the package to attain API information and to 
  * provide information on the prospective PV system. */
 
-public class FullSystem implements java.io.Serializable {
+public class FullSystem implements Cloneable {
 	// Objects of the system's parts
 	public Panel panel;
 	public Inverter inverter;
@@ -58,7 +58,7 @@ public class FullSystem implements java.io.Serializable {
 		this.latitude = coordinates[0];
 		this.longitude = coordinates[1];
 		addProduct(product);
-		
+
 		getDataFromAPI(null);
 
 		// things to do if the user has entered a full system
@@ -74,7 +74,7 @@ public class FullSystem implements java.io.Serializable {
 		addProduct(product);
 
 		getDataFromAPI(null);
-		
+
 		// things to do if the user has entered a full system
 		if (isComplete()) {
 			calculateCost();
@@ -131,15 +131,15 @@ public class FullSystem implements java.io.Serializable {
 		// first, copy this object into one that can have its variables modified
 		FullSystem copySystem = null;
 		try {
-			Object copy = this.clone();
+			Object copy = cloneFullSystem();
 			copySystem = (FullSystem) copy;
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
 		PVWattsManager pvwManager = new PVWattsManager(copySystem);
-		
+
 		// assigns size to that of one panel
-		pvwManager.size = panel.metersSquared; 
+		pvwManager.size = panel.metersSquared;
 		try {
 			pvwManager.getData();
 		} catch (JSONException e) {
@@ -368,6 +368,13 @@ public class FullSystem implements java.io.Serializable {
 			}
 		}
 
+	}
+
+	/************************************************************************
+	 * Private, technical methods only to be used by this class
+	 ************************************************************************/
+	private Object cloneFullSystem() throws CloneNotSupportedException { 
+		return super.clone();
 	}
 
 }
