@@ -37,8 +37,9 @@ public class FullSystem implements java.io.Serializable {
 	// System qualities
 	public double cost;
 	public double loss;
-	public double monthlyDC, yearlyDC;
-	public double monthlyAC, yearlyAC;
+	public double yearlyDC;
+	public double yearlyAC;
+	public double yearlyEnergy;
 
 	public String address;
 	public double latitude;
@@ -221,11 +222,11 @@ public class FullSystem implements java.io.Serializable {
 		// JSON Object keys for the PVWatts API
 		final static String JSONOutputs = "outputs"; // gives a JSONObject
 		final static String annualACKey = "ac_annual"; // gives a double
-		final static String annualDCKey = "dc_monthly"; // gives a JSONArray
+		final static String monthlyDCKey = "dc_monthly"; // gives a JSONArray
 
 		// poa is the monthly kWh per meters squared so it must be multiplied by
 		// the Systems total area
-		final static String annualSolRadKey = "poa_monthly"; // gives a
+		final static String monthlySolRadKey = "poa_monthly"; // gives a
 																// JSONArray
 
 		protected FullSystem system;
@@ -285,10 +286,22 @@ public class FullSystem implements java.io.Serializable {
 
 			// now we assign some data to be displayed...
 			system.yearlyAC = mainObject.getDouble(annualACKey);
-			JSONArray monthlyDC = mainObject.getJSONArray(annualDCKey);
+			JSONArray monthlyDC = mainObject.getJSONArray(monthlyDCKey);
 			system.yearlyDC = 0;
 			for (int x = 0; x < 12; x++) {
 				system.yearlyDC += monthlyDC.getDouble(x);
+			}
+
+			// checks to see if the monthly plane of array (poa) was included in
+			// the API. Energy is multiplied by size to account for the system's
+			// area.
+			if (mainObject.has(monthlySolRadKey)) {
+				JSONArray monthlySolRad = mainObject
+						.getJSONArray(monthlySolRadKey);
+				system.yearlyEnergy = 0;
+				for (int x = 0; x < 12; x++) {
+					system.yearlyEnergy += monthlySolRad.getDouble(x) * size;
+				}
 			}
 		}
 
