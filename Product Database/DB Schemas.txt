@@ -2,9 +2,10 @@ CREATE TABLE Inverters(Name STRING, Price DOUBLE, Efficiency int, Watts int, Inp
 	Notes:	* InputV is stored as Volts in DC
 		* OutputV is stored as Volts in AC
 	
-CREATE TABLE Panels (Name STRING, Price DOUBLE, SystemCap INT, Amps DOUBLE, Volts Double, PowerTolerance INT, module_type INT);
+CREATE TABLE Panels (Name STRING, Price DOUBLE, SystemCap INT, Amps DOUBLE, Volts Double, PowerTolerance INT, module_type INT, Dimensions STRING);
 	Notes: 	* the power tolerance factors into the TOTAL LOSS of a system's power.
 		* module_type corresponds to the PVWatts ranking for panel efficiency.
+		* Dimensions are measured in inches, separated by '/'
 
 CREATE TABLE Batteries (Name STRING, Price DOUBLE, Voltage INT, AmpHours INT);
 
