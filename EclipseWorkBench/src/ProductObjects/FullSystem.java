@@ -60,6 +60,7 @@ public class FullSystem implements Cloneable {
 		this.longitude = coordinates[1];
 		addProduct(product);
 
+		findRealPanelArea();
 		getDataFromAPI(null);
 
 		// things to do if the user has entered a full system
@@ -74,6 +75,7 @@ public class FullSystem implements Cloneable {
 		this.address = address;
 		addProduct(product);
 
+		findRealPanelArea();
 		getDataFromAPI(null);
 
 		// things to do if the user has entered a full system
@@ -105,6 +107,20 @@ public class FullSystem implements Cloneable {
 			} else if (product[i].getClass() == PVWire.class) {
 				pvWires = (PVWire) product[i];
 			}
+		}
+	}
+
+	// This method assigns the panelCount and changes the data that it affects.
+	// It is still possible to change the panel count by accessing it as a public
+	// variable, but IT IS NOT RECOMMENDED!!!
+	public void changePanelAmount(int panelCount) {
+		this.panelCount = panelCount;
+		findRealPanelArea();
+		getDataFromAPI(null);
+		
+		if (isComplete()) {
+			calculateCost();
+			calculateLoss();
 		}
 	}
 
@@ -281,7 +297,7 @@ public class FullSystem implements Cloneable {
 			this.system = system;
 			this.latitudeInput = system.latitude;
 			this.longitudeInput = system.longitude;
-			this.size = system.panel.metersSquared;
+			this.size = system.realPanelArea;
 		}
 
 		// constructor for entering non-product data
@@ -290,7 +306,7 @@ public class FullSystem implements Cloneable {
 			this.system = system;
 			this.latitudeInput = system.latitude;
 			this.longitudeInput = system.longitude;
-			this.size = system.panel.metersSquared;
+			this.size = system.realPanelArea;
 
 			if (extraData.containsKey("arrayType")) {
 				this.arrayTypeInput = (byte) extraData.get("arrayType")

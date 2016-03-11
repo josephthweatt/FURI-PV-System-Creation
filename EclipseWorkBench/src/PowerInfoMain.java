@@ -35,12 +35,12 @@ public class PowerInfoMain {
 				sysMan.getContainer(8).products.get(0));
 
 		FullSystem fullSys = sysMan.getSystemByName("My System");
-		fullSys.panelCount = 5; // say there are five panels in the system
+		fullSys.changePanelAmount(5); // say there are five panels in the system
 
 		// display square meters of the system (should be for five panel)
-		double meterSquared = fullSys.panel.metersSquared;
+		double size = fullSys.realPanelArea;
 		fullSys.findAnnualKWhPerPanel();
-		System.out.println("MetersSquared: " + meterSquared + "\nAnnual kwH: "
+		System.out.println("MetersSquared: " + size + "\nAnnual kwH: "
 				+ fullSys.yearlyEnergy + "\nAverage Energy Per Panel: "
 				+ fullSys.annualKWhPerPanel);
 	}
