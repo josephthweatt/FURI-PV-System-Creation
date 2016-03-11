@@ -158,7 +158,7 @@ Additional methods I will need to add (still expanding):
 	-be able to store Panel size (X)
 	-be able to pass panel size into the PVWatts API portion of the full system (X)
 	-be able to use the users desired power output to find the real Panel Span (I'll explain in detail later)
-		*this will require the poewr output of a single panel model
+		*this will require the power output of a single panel model
 	-be able to convert side in feet or inches squared to meters squared (X) 
 	-a method (or possibly several) to verify whether two parts are compatible in terms of matching voltage or power. Example) an Inverter cannot have a lower input voltage than the voltage a Panel outputs. 
 

@@ -15,17 +15,35 @@ import ProductObjects.*;
 
 public class PowerInfoMain {
 	// we use Tempe's coordinates for the test case
-	public static Location loc;
+	public Location loc;
 
 	public static void main(String[] args) throws IOException, JSONException {
-		// Using product container to compute the meters squared of its panels
-		SystemManager sysMan = new SystemManager(loc);
-		ProductContainer pc = sysMan.getContainer(0);
 
-		Panel p = (Panel) pc.products.get(0);
-		p.stringToMeters();
-		System.out.printf("String: %s\narea is: %.2f", p.dimensions,
-				p.metersSquared);
+		// Using product container to compute the meters squared of its panels
+		SystemManager sysMan = new SystemManager(
+				(new PowerInfoMain()).new Location(33.4294, 111.9431));
+
+		// make a fullsystem testcase
+		sysMan.systemCreator.commitProductsToSystem("My System",
+				sysMan.getContainer(0).products.get(0),
+				sysMan.getContainer(1).products.get(0),
+				sysMan.getContainer(2).products.get(0),
+				sysMan.getContainer(3).products.get(0),
+				sysMan.getContainer(4).products.get(0),
+				sysMan.getContainer(5).products.get(0),
+				sysMan.getContainer(6).products.get(0),
+				sysMan.getContainer(7).products.get(0),
+				sysMan.getContainer(8).products.get(0));
+
+		FullSystem fullSys = sysMan.getSystemByName("My System");
+		fullSys.panelCount = 5; // say there are five panels in the system
+
+		// display square meters of the system (should be for five panel)
+		double meterSquared = fullSys.panel.metersSquared;
+		fullSys.findAnnualKWhPerPanel();
+		System.out.println("MetersSquared: " + meterSquared + "\nAnnual kwH: "
+				+ fullSys.yearlyEnergy + "\nAverage Energy Per Panel: "
+				+ fullSys.annualKWhPerPanel);
 	}
 
 	// an object to store the location, which can either be an address (String)

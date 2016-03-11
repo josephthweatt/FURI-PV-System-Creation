@@ -45,6 +45,10 @@ public class FullSystem implements java.io.Serializable {
 	public double latitude;
 	public double longitude;
 
+	// Additional Panel information
+	public int panelCount = 1;
+	public double annualKWhPerPanel;
+
 	// for nonspecific initialization
 	public FullSystem() {
 	}
@@ -54,11 +58,14 @@ public class FullSystem implements java.io.Serializable {
 		this.latitude = coordinates[0];
 		this.longitude = coordinates[1];
 		addProduct(product);
+		
+		getDataFromAPI(null);
 
 		// things to do if the user has entered a full system
 		if (isComplete()) {
 			calculateCost();
 			calculateLoss();
+			findAnnualKWhPerPanel();
 		}
 	}
 
@@ -66,6 +73,8 @@ public class FullSystem implements java.io.Serializable {
 		this.address = address;
 		addProduct(product);
 
+		getDataFromAPI(null);
+		
 		// things to do if the user has entered a full system
 		if (isComplete()) {
 			calculateCost();
@@ -102,7 +111,7 @@ public class FullSystem implements java.io.Serializable {
 	// returns zero if the system is incomplete
 	public double calculateCost() {
 		if (isComplete()) {
-			this.cost += panel.price;
+			this.cost += panel.price * panelCount;
 			this.cost += inverter.price;
 			this.cost += rack.price;
 			this.cost += battery.price;
@@ -114,6 +123,28 @@ public class FullSystem implements java.io.Serializable {
 			return cost;
 		}
 		return 0.0;
+	}
+
+	// This method will find the annual kWh of the system where the panel count
+	// is 1
+	public double findAnnualKWhPerPanel() {
+		// first, copy this object into one that can have its variables modified
+		FullSystem copySystem = null;
+		try {
+			Object copy = this.clone();
+			copySystem = (FullSystem) copy;
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		PVWattsManager pvwManager = new PVWattsManager(copySystem);
+		
+		// assigns size to that of one panel
+		pvwManager.size = panel.metersSquared; 
+		try {
+			pvwManager.getData();
+		} catch (JSONException e) {
+		}
+		return annualKWhPerPanel = copySystem.yearlyEnergy;
 	}
 
 	// calculates percent of energy one expects to lose from
@@ -159,7 +190,9 @@ public class FullSystem implements java.io.Serializable {
 	}
 
 	/************************************************************************
-	 * The Following methods will be used to get data from the PVWatts API
+	 * The Following methods will be used to get data from the PVWatts API NOTE:
+	 * The extraData HashMap adds API variables that are not necessary to
+	 * getting a response, but return useful information
 	 *************************************************************************/
 	// gets power data from the API and inputs extra data with the hashmap
 	public void getDataFromAPI(HashMap<String, Double> extraData) {

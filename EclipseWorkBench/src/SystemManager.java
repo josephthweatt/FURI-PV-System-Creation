@@ -22,7 +22,7 @@ public class SystemManager {
 	public FullSystem getSystemByName(String systemName) {
 		return systemMap.get(systemName);
 	}
-	
+
 	public ProductContainer getContainer(int i) {
 		return systemCreator.containers[i];
 	}
@@ -38,7 +38,7 @@ public class SystemManager {
 		public SystemCreator() {
 			db = new DBExtraction("PVModels.db");
 			db.loadAllProducts();
-			
+
 			containers = new ProductContainer[9];
 			// sets the ClassTypes of the containers
 			containers[0] = new ProductContainer(Panel.class);
@@ -50,11 +50,11 @@ public class SystemManager {
 			containers[6] = new ProductContainer(DCACDisconnect.class);
 			containers[7] = new ProductContainer(BatteryWire.class);
 			containers[8] = new ProductContainer(PVWire.class);
-			
+
 			makeContainersWithDB(); // sets db informaiton into containers
 		}
-		
-		//changes the DBExtraction's database, also resets the 
+
+		// changes the DBExtraction's database, also resets the
 		public void setNewDatabase(String dbName) {
 			db = new DBExtraction(dbName);
 			makeContainersWithDB();
@@ -101,6 +101,5 @@ public class SystemManager {
 			}
 			return systemMap.get(systemName);
 		}
-
 	}
 }
