@@ -18,16 +18,14 @@ public class PowerInfoMain {
 	public static Location loc;
 
 	public static void main(String[] args) throws IOException, JSONException {
-		// this test method will try to sort all data in the container by name
+		// Using product container to compute the meters squared of its panels
 		SystemManager sysMan = new SystemManager(loc);
 		ProductContainer pc = sysMan.getContainer(0);
 
-		pc.loToHi("dimensions");
-
-		// print
-		for (int i = 0; i < pc.products.size(); i++) {
-			System.out.println(pc.getStringFromField("name", i));
-		}
+		Panel p = (Panel) pc.products.get(0);
+		p.stringToMeters();
+		System.out.printf("String: %s\narea is: %.2f", p.dimensions,
+				p.metersSquared);
 	}
 
 	// an object to store the location, which can either be an address (String)
