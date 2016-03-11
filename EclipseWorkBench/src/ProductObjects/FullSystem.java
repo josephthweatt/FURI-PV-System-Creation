@@ -210,11 +210,8 @@ public class FullSystem implements java.io.Serializable {
 		/*
 		 * Non-product data (automatically assigned, but changeable) These are
 		 * assigned through the second constructor, using the HashMap<>. The
-		 * HashMap values must be, respectively: 
-		 *  - "arrayType"
-		 *  - "tilt"
-		 *  - "azimuth"
-		 *  - "size"
+		 * HashMap values must be, respectively: - "arrayType" - "tilt" -
+		 * "azimuth" - "size"
 		 */
 		public byte arrayTypeInput = 0;
 		public double tiltInput = 45; // default is 45 degrees
@@ -225,6 +222,9 @@ public class FullSystem implements java.io.Serializable {
 		final static String JSONOutputs = "outputs"; // gives a JSONObject
 		final static String annualACKey = "ac_annual"; // gives a double
 		final static String annualDCKey = "dc_monthly"; // gives a JSONArray
+
+		// poa is the monthly kWh per meters squared so it must be multiplied by
+		// the Systems total area
 		final static String annualSolRadKey = "poa_monthly"; // gives a
 																// JSONArray
 
@@ -251,12 +251,12 @@ public class FullSystem implements java.io.Serializable {
 			}
 			if (extraData.containsKey("tilt")) {
 				this.tiltInput = extraData.get("tilt").doubleValue();
-			} 
+			}
 			if (extraData.containsKey("azimuth")) {
 				this.azimuthInput = extraData.get("azimuth").doubleValue();
 			}
 			if (extraData.containsKey("size")) {
-				this.size = extraData.get("azimuth").doubleValue();
+				this.size = extraData.get("size").doubleValue();
 			}
 		}
 
@@ -284,14 +284,12 @@ public class FullSystem implements java.io.Serializable {
 			mainObject = mainObject.getJSONObject(JSONOutputs);
 
 			// now we assign some data to be displayed...
-			system.yearlyAC = mainObject.getDouble(annualACKey) * size;
+			system.yearlyAC = mainObject.getDouble(annualACKey);
 			JSONArray monthlyDC = mainObject.getJSONArray(annualDCKey);
 			system.yearlyDC = 0;
 			for (int x = 0; x < 12; x++) {
 				system.yearlyDC += monthlyDC.getDouble(x);
 			}
-			system.yearlyDC *= size; // adjusts data to include the system's
-										// size
 		}
 
 		// Method to retrieve API key without showing it on git (for safety

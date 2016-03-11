@@ -155,12 +155,15 @@ I'm going to need to organize tasks into classes. I have the API into what is cu
 Quick Reminder To Self (IMPORTANT): It seems I have forgotten to include the panel size in my database test case. This is going to be a problem for more reasons than I care to list. I'm going to have to copy over the DB information from the existing db to another db with the same colum, then refactor the code to account for these changes. I will need to do this later tonight.
 
 Additional methods I will need to add (still expanding):
-	-Method to calculate total PV output given x square meters of paneling
-	-be able to store Panel size
-	-be able to pass panel size into the PVWatts API portion of the full system
+	-be able to store Panel size (X)
+	-be able to pass panel size into the PVWatts API portion of the full system (X)
 	-be able to use the users desired power output to find the real Panel Span (I'll explain in detail later)
 		*this will require the poewr output of a single panel model
-	-be able to convert side in feet or inches squared to meters squared 
+	-be able to convert side in feet or inches squared to meters squared (X) 
 	-a method (or possibly several) to verify whether two parts are compatible in terms of matching voltage or power. Example) an Inverter cannot have a lower input voltage than the voltage a Panel outputs. 
 
 *To make matters worse, I caught a cold just before the break started. I'm just now recovering from this, but have kept busy in the meantime. Namely, I finished the Codecademy course for Python, which will come in use if I find the time to make a server on my Raspberry Pi, and I made my computer a dualboot system for Windows & Ubuntu.
+
+3-10-16
+-Today I added the Dimensions column to the Panels table, as well as a size value to the Panel object. I am now trying to get the size to work with the rest of my code.
+-I am changing around the PVWattsManager so that it will be able to accurately know what to do with system size. I found that I was using size to multiply the AC and DC of the system, when it should have been multiplying itself to the poa (plane of array), which is in kWh per m^2. 
