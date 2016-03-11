@@ -48,6 +48,7 @@ public class FullSystem implements Cloneable {
 	// Additional Panel information
 	public int panelCount = 1;
 	public double annualKWhPerPanel;
+	public double realPanelArea = 1; // default 1 (in meter)
 
 	// for nonspecific initialization
 	public FullSystem() {
@@ -107,6 +108,11 @@ public class FullSystem implements Cloneable {
 		}
 	}
 
+	/************************************************************************
+	 * The following are calculation methods for various aspects of the
+	 * photovoltaic system, such as costs, sizes and other measurements
+	 ************************************************************************/
+
 	// get the total cost of the system
 	// returns zero if the system is incomplete
 	public double calculateCost() {
@@ -163,6 +169,13 @@ public class FullSystem implements Cloneable {
 
 		this.loss = WIRE_LOSS + LIGHT_DEGREDATION + AGE + invLoss
 				+ panel.powerTolerance;
+	}
+
+	// finds the REAL panel area, which is the total square meters the panels
+	// will take up. This is opposed to the RELATIVE panel area, or how much the
+	// panels ought to cover in order to absorb the required amount of energy
+	public double findRealPanelArea() {
+		return realPanelArea = panelCount * panel.metersSquared;
 	}
 
 	// method to verify that the system has all the essential parts
@@ -373,7 +386,7 @@ public class FullSystem implements Cloneable {
 	/************************************************************************
 	 * Private, technical methods only to be used by this class
 	 ************************************************************************/
-	private Object cloneFullSystem() throws CloneNotSupportedException { 
+	private Object cloneFullSystem() throws CloneNotSupportedException {
 		return super.clone();
 	}
 
