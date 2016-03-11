@@ -66,7 +66,8 @@ public class DBExtraction {
 		case 0:
 			return new Panel(name, price, rs.getInt("SystemCap"),
 					rs.getDouble("Amps"), rs.getDouble("Volts"),
-					rs.getInt("PowerTolerance"), rs.getInt("module_type"));
+					rs.getInt("PowerTolerance"), rs.getInt("module_type"),
+					rs.getString("Dimensions"));
 		case 1:
 			return new Inverter(name, price, rs.getInt("Efficiency"),
 					rs.getInt("Watts"), rs.getInt("InputV"),
@@ -95,7 +96,7 @@ public class DBExtraction {
 			return null;
 		}
 	}
-	
+
 	// returns all products
 	public static HashMap<String, Object> getProducts() {
 		return productMap;

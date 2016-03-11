@@ -8,13 +8,14 @@ public class Panel {
 	public double volts;
 	public int powerTolerance;
 	public int moduleType;
+	public String dimensions;
 	
 	// for nonspecific initialization
 	public Panel() {
 	}
 
 	public Panel(String name, double price, int systemCap, double amps,
-			double volts, int powerTolerance, int moduleType) {
+			double volts, int powerTolerance, int moduleType, String dimensions) {
 		this.name = name;
 		this.price = price;
 		this.systemCap = systemCap;
@@ -22,5 +23,6 @@ public class Panel {
 		this.volts = volts;
 		this.powerTolerance = powerTolerance;
 		this.moduleType = moduleType;
+		this.dimensions = dimensions;
 	}
 }

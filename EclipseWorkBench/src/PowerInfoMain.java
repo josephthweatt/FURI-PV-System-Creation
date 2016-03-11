@@ -22,7 +22,7 @@ public class PowerInfoMain {
 		SystemManager sysMan = new SystemManager(loc);
 		ProductContainer pc = sysMan.getContainer(0);
 
-		pc.loToHi("name");
+		pc.loToHi("dimensions");
 
 		// print
 		for (int i = 0; i < pc.products.size(); i++) {
