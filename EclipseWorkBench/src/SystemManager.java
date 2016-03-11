@@ -6,14 +6,14 @@ public class SystemManager {
 	public SystemCreator systemCreator;
 	private HashMap<String, FullSystem> systemMap;
 
-	public PowerInfoMain.Location location;
+	public Location location;
 
 	public SystemManager() {
 		systemCreator = new SystemCreator();
 		systemMap = new HashMap<String, FullSystem>();
 	}
 
-	public SystemManager(PowerInfoMain.Location location) {
+	public SystemManager(Location location) {
 		systemCreator = new SystemCreator();
 		systemMap = new HashMap<String, FullSystem>();
 		this.location = location;
