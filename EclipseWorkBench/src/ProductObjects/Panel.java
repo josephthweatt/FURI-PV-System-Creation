@@ -27,6 +27,8 @@ public class Panel {
 		this.powerTolerance = powerTolerance;
 		this.moduleType = moduleType;
 		this.dimensions = dimensions;
+		
+		stringToMeters();
 	}
 
 	/*
@@ -34,7 +36,7 @@ public class Panel {
 	 * are separated by '/') and multiplies them to get the Panel's square
 	 * meters. This is passed in as the PVWatts 'size' parameter
 	 */
-	public void stringToMeters() {
+	public double stringToMeters() {
 		dimensions.trim();
 		String[] dims = dimensions.split("/");
 		
@@ -46,6 +48,6 @@ public class Panel {
 		double heightMeters = heightInches / 39.370;
 		double widthMeters = widthInches / 39.370;
 		
-		metersSquared = heightMeters * widthMeters;
+		return metersSquared = heightMeters * widthMeters;
 	}
 }

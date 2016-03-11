@@ -234,6 +234,7 @@ public class FullSystem implements java.io.Serializable {
 			this.system = system;
 			this.latitudeInput = system.latitude;
 			this.longitudeInput = system.longitude;
+			this.size = system.panel.metersSquared;
 		}
 
 		// constructor for entering non-product data
@@ -242,6 +243,7 @@ public class FullSystem implements java.io.Serializable {
 			this.system = system;
 			this.latitudeInput = system.latitude;
 			this.longitudeInput = system.longitude;
+			this.size = system.panel.metersSquared;
 
 			if (extraData.containsKey("arrayType")) {
 				this.arrayTypeInput = (byte) extraData.get("arrayType")
