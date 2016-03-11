@@ -159,6 +159,7 @@ Additional methods I will need to add (still expanding):
 	-be able to pass panel size into the PVWatts API portion of the full system (X)
 	-be able to use the users desired power output to find the real Panel Span (I'll explain in detail later)
 		*this will require the power output of a single panel model
+		*such a method needs to be placed within the SystemManager
 	-be able to convert side in feet or inches squared to meters squared (X) 
 	-a method (or possibly several) to verify whether two parts are compatible in terms of matching voltage or power. Example) an Inverter cannot have a lower input voltage than the voltage a Panel outputs. 
 
@@ -167,3 +168,8 @@ Additional methods I will need to add (still expanding):
 3-10-16
 -Today I added the Dimensions column to the Panels table, as well as a size value to the Panel object. I am now trying to get the size to work with the rest of my code.
 -I am changing around the PVWattsManager so that it will be able to accurately know what to do with system size. I found that I was using size to multiply the AC and DC of the system, when it should have been multiplying itself to the poa (plane of array), which is in kWh per m^2. 
+
+3-11-16
+-Now I'm going to get the FullSystem Object to find the annual energy of a single panel in the system. From here, we can find how many panels we need, and how much room the panels will take up
+-So that's completed. What we have now is a system that can take the amount of Panels, find their area in square meters, and find how much each panel will produce given all other components remain the same.
+-Now I'm going to work to bring the Price-oriented algorithm to the program. I'll work on this away from my computer, and update the Progress log when I think it's ready for implementation.

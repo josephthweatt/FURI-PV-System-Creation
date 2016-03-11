@@ -37,7 +37,7 @@ public class PowerInfoMain {
 		FullSystem fullSys = sysMan.getSystemByName("My System");
 		fullSys.changePanelAmount(5); // say there are five panels in the system
 
-		// display square meters of the system (should be for five panel)
+		// display square meters of the system (should be for five panels)
 		double size = fullSys.realPanelArea;
 		fullSys.findAnnualKWhPerPanel();
 		System.out.println("MetersSquared: " + size + "\nAnnual kwH: "
