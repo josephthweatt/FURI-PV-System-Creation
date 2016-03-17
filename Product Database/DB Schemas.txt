@@ -1,6 +1,8 @@
 CREATE TABLE Inverters(Name STRING, Price DOUBLE, Efficiency int, Watts int, InputV int, OutputV int);
 	Notes:	* InputV is stored as Volts in DC
 		* OutputV is stored as Volts in AC
+		* Watts concern how much power will be available at any given time
+			-For example, an inverter that is consistently outputting 60 Watts (no additional power being supplied) it will be able to power a 60 Watt appliance until the power supply ceases to produce energy.
 	
 CREATE TABLE Panels (Name STRING, Price DOUBLE, SystemCap INT, Amps DOUBLE, Volts Double, PowerTolerance INT, module_type INT, Dimensions STRING);
 	Notes: 	* the power tolerance factors into the TOTAL LOSS of a system's power.

@@ -173,3 +173,10 @@ Additional methods I will need to add (still expanding):
 -Now I'm going to get the FullSystem Object to find the annual energy of a single panel in the system. From here, we can find how many panels we need, and how much room the panels will take up
 -So that's completed. What we have now is a system that can take the amount of Panels, find their area in square meters, and find how much each panel will produce given all other components remain the same.
 -Now I'm going to work to bring the Price-oriented algorithm to the program. I'll work on this away from my computer, and update the Progress log when I think it's ready for implementation.
+
+-The Algorithm is going to require Inputs of budget, desired energy, area for construction and location. It will first start by finding viable panels, which can be determined by:
+	*Searching to see how much space the panels would take up (do not include them if they exceed the max. space requirement).
+
+3-17-16
+I am going to create a Algorithms class to manage the various algorithms designated for the program (Price, off-grid, etc.) this may either contain multiple subclasses or be used as an abstract method. I'll weight the benefits of each decision later, I mainly want to find out the unifying methods & data structures that every algorithm is going to need
+	*It'll probably be an abstract class
