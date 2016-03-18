@@ -9,6 +9,8 @@ public class Algorithms {
 	public double availableSpace; // in square meters
 	public double energyInVolts; // an optional field. I may delete it later
 
+	public ProductContainer[] containers; // this is used to evaluate products
+
 	/*
 	 * ViableProductLists will contain all products that have the potential to
 	 * be used in a system, it will be used to experiment with viable systems
@@ -25,19 +27,22 @@ public class Algorithms {
 	public ArrayList<PVWire> viablePVWires;
 
 	public Algorithms(double budget, double energyInWatts,
-			double availableSpace) {
+			double availableSpace, ProductContainer[] containers) {
 		this.budget = budget;
 		this.energyInWatts = energyInWatts;
 		this.availableSpace = availableSpace;
+		this.containers = containers;
 	}
 
 	// constructor called when the user wishes to have a specific voltage
 	public Algorithms(double budget, double energyInWatts,
-			double availableSpace, double energyInVolts) {
+			double availableSpace, double energyInVolts,
+			ProductContainer[] containers) {
 		this.budget = budget;
 		this.energyInWatts = energyInWatts;
 		this.availableSpace = availableSpace;
 		this.energyInVolts = energyInVolts;
+		this.containers = containers;
 	}
 
 	// looks for panels that might work in the system
