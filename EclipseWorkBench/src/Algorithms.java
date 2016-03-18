@@ -1,23 +1,43 @@
+import java.util.ArrayList;
+
 import ProductObjects.*;
 
 public class Algorithms {
 
 	public double budget;
 	public double energyInWatts;
-	public double availableSpace; //in square meters
-	public double energyInVolts; //an optional field. I may delete it later
+	public double availableSpace; // in square meters
+	public double energyInVolts; // an optional field. I may delete it later
 
-	public Algorithms(double budget, double energyInWatts, double availableSpace) {
+	/*
+	 * ViableProductLists will contain all products that have the potential to be
+	 * used in a system, it will be used to experiment with viable systems and
+	 * pass them into the systemCreator
+	 */
+	public ArrayList<Panel> viablePanels;
+	public ArrayList<Inverter> viableInverters;
+	public ArrayList<Racking> viableRacks;
+	public ArrayList<Battery> viableBatteries;
+	public ArrayList<BatteryController> viableBatteryControllers;
+	public ArrayList<BatteryMeter> viableBatteryMeters;
+	public ArrayList<DCACDisconnect> viableDCACDisconnects;
+	public ArrayList<BatteryWire> viableBatteryWires;
+	public ArrayList<PVWire> viablePVWires;
+	
+	public Algorithms(double budget, double energyInWatts,
+			double availableSpace) {
 		this.budget = budget;
 		this.energyInWatts = energyInWatts;
 		this.availableSpace = availableSpace;
-	} 
+	}
 
-	public Algorithms(double budget, double energyInWatts, double availableSpace, double energyInVolts) {
+	// constructor called when the user wishes to have a specific voltage
+	public Algorithms(double budget, double energyInWatts,
+			double availableSpace, double energyInVolts) {
 		this.budget = budget;
 		this.energyInWatts = energyInWatts;
 		this.availableSpace = availableSpace;
 		this.energyInVolts = energyInVolts;
-	} 
+	}
 
 }

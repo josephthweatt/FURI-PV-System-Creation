@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 
-import java.lang.reflect.Field;
-
 // made for storing multiple products of the same type
 // used for ranking individual objects and narrowing down the options
 public class ProductContainer {

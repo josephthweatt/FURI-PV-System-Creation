@@ -180,3 +180,4 @@ Additional methods I will need to add (still expanding):
 3-17-16
 I am going to create a Algorithms class to manage the various algorithms designated for the program (Price, off-grid, etc.) this may either contain multiple subclasses or be used as an abstract method. I'll weight the benefits of each decision later, I mainly want to find out the unifying methods & data structures that every algorithm is going to need
 	*It'll probably be an abstract class
+-the algortihms class will be implemented in the systemManager's systemCreator subclass as a way of creating the systems. I'll add this in later once I have a clearer idea of what Algorithms is supposed to return.
