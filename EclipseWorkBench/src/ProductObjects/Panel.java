@@ -10,15 +10,15 @@ public class Panel {
 	public int moduleType;
 	public String dimensions;
 
-	public double metersSquared; // found with stringToMeters
+	public double areaInMeters; // the area of the panel
+	private double estimatedEnergyPerPanel;
 
 	// for nonspecific initialization
 	public Panel() {
 	}
 
 	public Panel(String name, double price, int systemCap, double amps,
-			double volts, int powerTolerance, int moduleType,
-			String dimensions) {
+			double volts, int powerTolerance, int moduleType, String dimensions) {
 		this.name = name;
 		this.price = price;
 		this.systemCap = systemCap;
@@ -27,7 +27,7 @@ public class Panel {
 		this.powerTolerance = powerTolerance;
 		this.moduleType = moduleType;
 		this.dimensions = dimensions;
-		
+
 		stringToMeters();
 	}
 
@@ -39,15 +39,49 @@ public class Panel {
 	public double stringToMeters() {
 		dimensions.trim();
 		String[] dims = dimensions.split("/");
-		
+
 		// the dimensions string gives us measurements in inches:
 		double heightInches = Double.parseDouble(dims[0]);
 		double widthInches = Double.parseDouble(dims[1]);
-		
+
 		// now we convert it to meters (39.370 inches = 1 meter)
 		double heightMeters = heightInches / 39.370;
 		double widthMeters = widthInches / 39.370;
-		
-		return metersSquared = heightMeters * widthMeters;
+
+		return areaInMeters = heightMeters * widthMeters;
+	}
+
+	/*
+	 * gives an estimate of how much energy one can expect per panel by using
+	 * the panels efficiency and systemCapacity. This is used when trying to
+	 * estimate the Panels performance, and does not account for factors like
+	 * location and other parts of the system. This returns energy in KWatts
+	 */
+	public double estimatedEnergyPerPanel() {
+		if (estimatedEnergyPerPanel < 0) {
+			return estimatedEnergyPerPanel;
+		}
+		// if est. EnergyPerPanel hasn't been found yet, we find it here...
+		double approximateEfficiency = 0;
+		double wattToKW = .001;
+
+		if (moduleType == 0) {
+			// moduleType 0 is standard efficiency (15%)
+			approximateEfficiency = .15;
+		} else if (moduleType == 1) {
+			// moduleType 1 is premium efficiency (19%)
+			approximateEfficiency = .19;
+		} else if (moduleType == 2) {
+			// moduleType 2 is thin film Panels (10% efficiency)
+			approximateEfficiency = .10;
+		} else {
+			// if the module type is something else, print the error and
+			// exit the program
+			System.out.println("Error: Invalid module type on the panel: "
+					+ name + "\nType given: " + moduleType);
+			System.exit(0);
+		}
+		return estimatedEnergyPerPanel = systemCap * approximateEfficiency
+				* wattToKW;
 	}
 }

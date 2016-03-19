@@ -5,8 +5,12 @@ CREATE TABLE Inverters(Name STRING, Price DOUBLE, Efficiency int, Watts int, Inp
 			-For example, an inverter that is consistently outputting 60 Watts (no additional power being supplied) it will be able to power a 60 Watt appliance until the power supply ceases to produce energy.
 	
 CREATE TABLE Panels (Name STRING, Price DOUBLE, SystemCap INT, Amps DOUBLE, Volts Double, PowerTolerance INT, module_type INT, Dimensions STRING);
-	Notes: 	* the power tolerance factors into the TOTAL LOSS of a system's power.
-		* module_type corresponds to the PVWatts ranking for panel efficiency.
+	Notes: 	* systemCap is written in WATTS, so it can be converted to KW by multiplying itself by .001
+		* the power tolerance factors into the TOTAL LOSS of a system's power.
+		* module_type corresponds to the PVWatts ranking for panel efficiency. Here are the different types:
+			type 0: standard, 15% efficiency
+			type 1: premium, 19% efficiency
+			type 2: thin-film, 10% efficiency (these will not be used on roof mounted systems)
 		* Dimensions are measured in inches, separated by '/'
 
 CREATE TABLE Batteries (Name STRING, Price DOUBLE, Voltage INT, AmpHours INT);

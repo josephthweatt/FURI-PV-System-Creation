@@ -1,0 +1,142 @@
+import java.util.ArrayList;
+
+import ProductObjects.*;
+
+public class Algorithms {
+
+	public double budget;
+	public double energyInKW; // user's desired energy
+	public double availableSpace; // in square meters
+	public double energyInVolts; // an optional field. I may delete it later
+
+	public ProductContainer[] containers; // this is used to evaluate products
+
+	/*
+	 * ViableProductLists will contain all products that have the potential to
+	 * be used in a system, it will be used to experiment with viable systems
+	 * and pass them into the systemCreator
+	 */
+	public ArrayList<Panel> viablePanels;
+	public ArrayList<Inverter> viableInverters;
+	public ArrayList<Racking> viableRacks;
+	public ArrayList<Battery> viableBatteries;
+	public ArrayList<BatteryController> viableBatteryControllers;
+	public ArrayList<BatteryMeter> viableBatteryMeters;
+	public ArrayList<DCACDisconnect> viableDCACDisconnects;
+	public ArrayList<BatteryWire> viableBatteryWires;
+	public ArrayList<PVWire> viablePVWires;
+
+	public Algorithms(double budget, double energyInKW, double availableSpace,
+			ProductContainer[] containers) {
+		this.budget = budget;
+		this.energyInKW = energyInKW;
+		this.availableSpace = availableSpace;
+		this.containers = containers;
+	}
+
+	// constructor called when the user wishes to have a specific voltage
+	public Algorithms(double budget, double energyInKW, double availableSpace,
+			double energyInVolts, ProductContainer[] containers) {
+		this.budget = budget;
+		this.energyInKW = energyInKW;
+		this.availableSpace = availableSpace;
+		this.energyInVolts = energyInVolts;
+		this.containers = containers;
+	}
+
+	// looks for panels that might work in the system
+	public void findViablePanels() {
+		Panel panel;
+		int panelsNeeded;
+		double temp;
+		double budget;
+
+		// checks through ALL panels in the database
+		for (int i = 0; i < containers[0].products.size(); i++) {
+			panel = (Panel) containers[0].products.get(i);
+
+			// first we must check how many panels are needed to get the user's
+			// desired energy (in KW).
+			temp = energyInKW / panel.estimatedEnergyPerPanel();
+
+			// temp is created so that we can decide whether the Panel count
+			// should be rounded up. We round up if there is a remainder in
+			// temp, because that would indicate that temp holds one less than
+			// the amount of Panels needed to satisfy energy requirements.
+			if (temp % 1 != 0) {
+				panelsNeeded = (int) temp + 1;
+			} else {
+				panelsNeeded = (int) temp;
+			}
+
+			// if the amount of panels we need do not fit into our available
+			// space, we move on to the next product
+			if (panelsNeeded * panel.areaInMeters > availableSpace) {
+				continue;
+			}
+
+			/*
+			 * now, we will need to check that the price of all the panels are
+			 * significantly lower than the budget (the budget must also account
+			 * for other parts of the system). NOTE: This step exists so that
+			 * expensive panels don't accidently get added to the viable
+			 * products list, it is not a definite estimation of the entire
+			 * system's cost.
+			 */
+			budget = this.budget;
+			budget -= 1500; // average cost of inverter
+			budget -= 1500; // average cost of battery
+			budget -= 100; // the approx. cost of a cheap battery meter
+			budget -= 500; // average cost of battery controller
+			budget -= 500; // average cost of DCAC disconnect
+			
+			if (panelsNeeded * panel.price > budget) {
+				continue;
+			}
+
+			// if these three conditions are satisfied, we will add the product
+			// to the viablePanels list
+		}
+	}
+
+	// looks for inverters that might work in the system
+	public void findViableInverters() {
+
+	}
+
+	// looks for racks that might work in the system
+	public void findViableRacks() {
+
+	}
+
+	// looks for batteries that might work in the system
+	public void findViableBatteries() {
+
+	}
+
+	// looks for battery controllers that might work in the system
+	public void findViableBatteryControllers() {
+
+	}
+
+	// looks for battery meters that might work in the system
+	public void findViableBatteryMeters() {
+
+	}
+
+	// looks for DCACDisconnect that might work in the system
+	public void findViableDCACDisconnet() {
+
+	}
+
+	// looks for battery wires that might work in the system
+	public void findViableBatteryWires() {
+
+	}
+
+	// looks for PVWires that might work in the system
+	public void findViablePVWires() {
+
+	}
+
+}

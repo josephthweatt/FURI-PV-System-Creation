@@ -41,7 +41,7 @@ First test case (using SPR-E20-327-COM)
 	-address of where I'm setting up the panels
 	-system capacity: otherwise known as nominal capacity, nominal power, power rating, etc. It's how much power a solar panel can produce under ideal conditions (my datasheets call this thing nominal power)
 	-module type: with selection of std, premium, or thin film. I'll assume the modules are std if it's not mentioned.
-	-loses: the percent (as an integer) of energy lost in converting power from DC to AC. I don't know this for my test systems of the bat (something I will need to talk to a professor about later) so I'll assume ten percent loss (10%)
+	-loses: the percent (as an integer) of energy lost in converting power from DC to AC. I don't know this for my test systems off the bat (something I will need to talk to a professor about later) so I'll assume ten percent loss (10%)
 	-array_type: the array type. I'll assume fixed-open rack for right now
 	-tilt (set to 0)
 	-azimuth: this is the angle of the object with respect to the plane it rests on (earth). 0 degrees is an object aligned directly north, and its angle increases with clockwise pivoting. For the test case, I'll assume it has a 0 degree angle (this variable is currently unneeded, as there is no tilt on the test case module)
@@ -181,3 +181,7 @@ Additional methods I will need to add (still expanding):
 I am going to create a Algorithms class to manage the various algorithms designated for the program (Price, off-grid, etc.) this may either contain multiple subclasses or be used as an abstract method. I'll weight the benefits of each decision later, I mainly want to find out the unifying methods & data structures that every algorithm is going to need
 	*It'll probably be an abstract class
 -the algortihms class will be implemented in the systemManager's systemCreator subclass as a way of creating the systems. I'll add this in later once I have a clearer idea of what Algorithms is supposed to return.
+
+3-18-16
+-I am currently working on the Panel check, which is the method that will see which panels in the database are viable models for the algorithm
+-It just occured to me that I will need to have the Algorithm class be extended to a Price Algorithm class. The methods I am currently creating, even the Panel check, are simply too specific to be used amongst other algorithms. What I'm going to do is create the findViablePanelMethod for the Price algorithm, commit, and then copy it over to an abstract class.  
