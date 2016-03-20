@@ -161,7 +161,7 @@ public class FullSystem implements Cloneable {
 		PVWattsManager pvwManager = new PVWattsManager(copySystem);
 
 		// assigns size to that of one panel
-		pvwManager.size = panel.metersSquared;
+		pvwManager.size = panel.areaInMeters;
 		try {
 			pvwManager.getData();
 		} catch (JSONException e) {
@@ -191,7 +191,7 @@ public class FullSystem implements Cloneable {
 	// will take up. This is opposed to the RELATIVE panel area, or how much the
 	// panels ought to cover in order to absorb the required amount of energy
 	public double findRealPanelArea() {
-		return realPanelArea = panelCount * panel.metersSquared;
+		return realPanelArea = panelCount * panel.areaInMeters;
 	}
 
 	// method to verify that the system has all the essential parts
