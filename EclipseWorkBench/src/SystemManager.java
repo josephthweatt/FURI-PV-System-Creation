@@ -33,7 +33,7 @@ public class SystemManager {
 	 ******************************************************************************/
 	public class SystemCreator {
 		private ProductContainer[] containers;
-		public DBExtraction db;
+		private DBExtraction db;
 
 		public SystemCreator() {
 			db = new DBExtraction("PVModels.db");

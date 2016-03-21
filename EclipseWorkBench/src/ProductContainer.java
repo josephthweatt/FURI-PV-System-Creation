@@ -56,7 +56,7 @@ public class ProductContainer {
 			return;
 		} catch (NullPointerException e) {
 		} // field is not a String, keep going
-		
+
 		try {
 			// this 'if' exits the 'try' if there is no such field
 			if (getIntFromField(fieldName, 0) == 0) {
@@ -65,9 +65,10 @@ public class ProductContainer {
 			quicksortLoToHiInt(this.products, 0, products.size() - 1,
 					fieldName);
 			return;
+		} catch (IllegalArgumentException e) {
 		} catch (ClassCastException e) {
 		} // field is not an int, keep going
-		
+
 		try {
 			// this 'if' exits the 'try' if there is no such field
 			if (getDoubleFromField(fieldName, 0) == 0) {
@@ -76,12 +77,13 @@ public class ProductContainer {
 			quicksortLoToHiDouble(this.products, 0, products.size() - 1,
 					fieldName);
 			return;
+		} catch (IllegalArgumentException e) {
 		} catch (ClassCastException e) {
 		} // field is not a double, say the field doesn't exist
 
 		System.out.println("Field does not exist");
 	}
-	
+
 	public void hiToLo(String fieldName) {
 		try {
 			getStringFromField(fieldName, 0);
@@ -344,8 +346,8 @@ public class ProductContainer {
 
 	public int getIntFromField(String fieldName, int position) {
 		try {
-			return (int) productType.getDeclaredField(fieldName)
-					.get(products.get(position));
+			return productType.getDeclaredField(fieldName)
+					.getInt(products.get(position));
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (NoSuchFieldException e) {
@@ -356,8 +358,8 @@ public class ProductContainer {
 
 	public double getDoubleFromField(String fieldName, int position) {
 		try {
-			return (double) productType.getDeclaredField(fieldName)
-					.get(products.get(position));
+			return productType.getDeclaredField(fieldName)
+					.getDouble(products.get(position));
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (NoSuchFieldException e) {
