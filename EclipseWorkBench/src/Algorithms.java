@@ -100,13 +100,14 @@ public abstract class Algorithms {
 			return false;
 		} else if (parameters.valid == true) {
 			System.out.println(
-					"Restrictive input found: " + parameters.badParameter);
+					"Restrictive input(s) found: " + parameters.badParameter);
 			return true;
 		}
 		return false;
 	}
 
 	/****************************************************************************
+	 * ImpossibleParameters looks for user input that may be considered
 	 * "restrictive". "Restrictive" in this case means that the algorithm cannot
 	 * find an acceptable PV system to meet their requirements (e.g. the budget
 	 * is too low. available space is too small)
@@ -123,13 +124,15 @@ public abstract class Algorithms {
 		}
 
 		// method to acknowledge restrictive inputs
-		public void badParameter(Field field) {
+		public void badParameter(String... fieldName) {
 			valid = true;
 			// bad Parameter can store multiple restrictive fields
-			if (badParameter == null) {
-				badParameter = field.getName();
-			} else {
-				badParameter += " and " + field.getName();
+			for (int i = 0; i < fieldName.length; i++) {
+				if (badParameter == null) {
+					badParameter = fieldName[i];
+				} else {
+					badParameter += " and " + fieldName[i];
+				}
 			}
 		}
 

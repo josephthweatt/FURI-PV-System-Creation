@@ -67,5 +67,9 @@ public class Pricing extends Algorithms {
 			// to the viablePanels list
 			viablePanels.add(panel);
 		}
+		// if no viable Panels were found in the database, we make note of it
+		if (viablePanels.size() == 0) {
+			parameters.badParameter("budget", "energyInKW", "availableSpace");
+		}
 	}
 }

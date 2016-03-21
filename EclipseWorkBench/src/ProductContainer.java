@@ -56,6 +56,7 @@ public class ProductContainer {
 			return;
 		} catch (NullPointerException e) {
 		} // field is not a String, keep going
+		
 		try {
 			// this 'if' exits the 'try' if there is no such field
 			if (getIntFromField(fieldName, 0) == 0) {
@@ -66,6 +67,7 @@ public class ProductContainer {
 			return;
 		} catch (ClassCastException e) {
 		} // field is not an int, keep going
+		
 		try {
 			// this 'if' exits the 'try' if there is no such field
 			if (getDoubleFromField(fieldName, 0) == 0) {
