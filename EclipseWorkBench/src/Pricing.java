@@ -13,6 +13,7 @@ public class Pricing extends Algorithms {
 		super(budget, energyInKW, availableSpace, energyInVolts, containers);
 	}
 
+	@Override
 	// looks for panels that might work in the system
 	public void findViablePanels() {
 		Panel panel;
@@ -74,15 +75,17 @@ public class Pricing extends Algorithms {
 		}
 	}
 
+	@Override
 	public void findViableRacks() {
 		Racking rack;
 		String[] panelDims, rackDims;
 		double rackLengthInches;
 		double panelHeightInches, panelWidthInches;
 
-		for (int i = 0; i < containers[1].products.size(); i++) {
+		for (int i = 0; i < containers[2].products.size(); i++) {
+			rack = (Racking) containers[2].products.get(i);
+
 			// First checks to see if the racking is made for roof mounting
-			rack = (Racking) containers[i].products.get(i);
 			if (!rack.roofMounted) {
 				continue; // stop evaluating the current rack
 			}
@@ -110,6 +113,41 @@ public class Pricing extends Algorithms {
 		// if no viable Racks were found in the database, we make note of it
 		if (viableRacks.size() == 0) {
 			parameters.badParameter("Racking");
+		}
+	}
+
+	@Override 
+	public void findViableInverters() {
+		Inverter inverter;
+		Boolean viable;
+
+		for (int i = 0; i < containers[1].products.size(); i++) {
+			inverter = (Inverter) containers[1].products.get(i);
+
+			/**************************** ENERGY *******************************/
+			// Verify that the inverter can receive as many or more volts as at
+			// least one viable Panel
+			viable = false;
+			for (int j = 0; j < viablePanels.size(); j++) {
+				if (inverter.inputV >= viablePanels.get(i).volts) {
+					viable = true;
+					break;
+				}
+			}
+			if (!viable) {
+				continue; // skips to the next product
+			} else {
+				viable = false; // resets the validity check
+			}
+
+			// Verify the inverter will output enough energy to meet the user's
+			// energy requirement
+			if (inverter.watts * 1000 >= energyInKW) {
+				viableInverters.add(inverter);
+			}
+		}
+		if (viableInverters.size() == 0) {
+			parameters.badParameter("Inverter", "energyInKW");
 		}
 	}
 }

@@ -1,4 +1,3 @@
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import ProductObjects.*;
@@ -55,14 +54,10 @@ public abstract class Algorithms {
 	public abstract void findViablePanels();
 
 	// looks for racks that might work in the system
-	public void findViableRacks() {
-
-	}
+	public abstract void findViableRacks();
 
 	// looks for inverters that might work in the system
-	public void findViableInverters() {
-
-	}
+	public abstract void findViableInverters();
 
 	// looks for batteries that might work in the system
 	public void findViableBatteries() {
@@ -150,6 +145,5 @@ public abstract class Algorithms {
 				restrictedProduct += " and " + product;
 			}
 		}
-
 	}
 }
