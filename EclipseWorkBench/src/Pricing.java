@@ -11,7 +11,6 @@ public class Pricing extends Algorithms {
 	public Pricing(double budget, double energyInKW, double availableSpace,
 			double energyInVolts, ProductContainer[] containers) {
 		super(budget, energyInKW, availableSpace, energyInVolts, containers);
-
 	}
 	
 	// looks for panels that might work in the system

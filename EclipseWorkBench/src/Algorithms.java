@@ -1,3 +1,4 @@
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import ProductObjects.*;
@@ -26,12 +27,16 @@ public abstract class Algorithms {
 	public ArrayList<BatteryWire> viableBatteryWires;
 	public ArrayList<PVWire> viablePVWires;
 
+	protected ImpossibleParameters parameters;
+
 	public Algorithms(double budget, double energyInKW, double availableSpace,
 			ProductContainer[] containers) {
 		this.budget = budget;
 		this.energyInKW = energyInKW;
 		this.availableSpace = availableSpace;
 		this.containers = containers;
+
+		parameters = new ImpossibleParameters();
 	}
 
 	// constructor called when the user wishes to have a specific voltage
@@ -42,18 +47,20 @@ public abstract class Algorithms {
 		this.availableSpace = availableSpace;
 		this.energyInVolts = energyInVolts;
 		this.containers = containers;
+
+		parameters = new ImpossibleParameters();
 	}
 
 	// looks for panels that might work in the system
 	public abstract void findViablePanels();
 
-	// looks for inverters that might work in the system
-	public void findViableInverters() {
+	// looks for racks that might work in the system
+	public void findViableRacks() {
 
 	}
 
-	// looks for racks that might work in the system
-	public void findViableRacks() {
+	// looks for inverters that might work in the system
+	public void findViableInverters() {
 
 	}
 
@@ -87,4 +94,44 @@ public abstract class Algorithms {
 
 	}
 
+	// returns 'true' when user parameters cannot generate viable Systems
+	public Boolean impossibleParameters() {
+		if (parameters.valid == false) {
+			return false;
+		} else if (parameters.valid == true) {
+			System.out.println(
+					"Restrictive input found: " + parameters.badParameter);
+			return true;
+		}
+		return false;
+	}
+
+	/****************************************************************************
+	 * "restrictive". "Restrictive" in this case means that the algorithm cannot
+	 * find an acceptable PV system to meet their requirements (e.g. the budget
+	 * is too low. available space is too small)
+	 ***************************************************************************/
+	protected class ImpossibleParameters {
+		// 'flase' means that there is at least one restrictive user input
+		protected Boolean valid;
+
+		protected String badParameter; // a string to hold the restrictive input
+
+		public ImpossibleParameters() {
+			valid = false;
+			badParameter = null;
+		}
+
+		// method to acknowledge restrictive inputs
+		public void badParameter(Field field) {
+			valid = true;
+			// bad Parameter can store multiple restrictive fields
+			if (badParameter == null) {
+				badParameter = field.getName();
+			} else {
+				badParameter += " and " + field.getName();
+			}
+		}
+
+	}
 }
