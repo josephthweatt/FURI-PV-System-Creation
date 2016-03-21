@@ -101,6 +101,8 @@ public abstract class Algorithms {
 		} else if (parameters.valid == true) {
 			System.out.println(
 					"Restrictive input(s) found: " + parameters.badParameter);
+			System.out.println("No viable products found for: "
+					+ parameters.restrictedProduct);
 			return true;
 		}
 		return false;
@@ -117,22 +119,31 @@ public abstract class Algorithms {
 		protected Boolean valid;
 
 		protected String badParameter; // a string to hold the restrictive input
+		protected String restrictedProduct; // products with no viable options
 
 		public ImpossibleParameters() {
 			valid = false;
-			badParameter = null;
+			badParameter = "";
+			restrictedProduct = "";
 		}
 
 		// method to acknowledge restrictive inputs
-		public void badParameter(String... fieldName) {
+		public void badParameter(String product, String... fieldName) {
 			valid = true;
 			// bad Parameter can store multiple restrictive fields
 			for (int i = 0; i < fieldName.length; i++) {
-				if (badParameter == null) {
+				if (badParameter.equals("")) {
 					badParameter = fieldName[i];
 				} else {
 					badParameter += " and " + fieldName[i];
 				}
+			}
+
+			// makes note of which products couldn't work
+			if (restrictedProduct.equals("")) {
+				restrictedProduct += product;
+			} else {
+				restrictedProduct += " and " + product;
 			}
 		}
 

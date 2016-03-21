@@ -1,3 +1,5 @@
+This doc contains all schemas within the PVModels database, along with aditional notes about the variables
+
 CREATE TABLE Inverters(Name STRING, Price DOUBLE, Efficiency int, Watts int, InputV int, OutputV int);
 	Notes:	* InputV is stored as Volts in DC
 		* OutputV is stored as Volts in AC
