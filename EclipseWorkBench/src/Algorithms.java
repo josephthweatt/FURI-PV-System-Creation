@@ -50,41 +50,31 @@ public abstract class Algorithms {
 		parameters = new ImpossibleParameters();
 	}
 
-	// looks for panels that might work in the system
+	// below algorithms look for viable products in the system
+
 	public abstract void findViablePanels();
 
-	// looks for racks that might work in the system
 	public abstract void findViableRacks();
 
-	// looks for inverters that might work in the system
 	public abstract void findViableInverters();
 
-	// looks for batteries that might work in the system
-	public void findViableBatteries() {
+	public abstract void findViableBatteries();
 
-	}
+	public abstract void findViableBatteryControllers();
 
-	// looks for battery controllers that might work in the system
-	public void findViableBatteryControllers() {
+	public abstract void findViableDCACDisconnet();
 
-	}
+	// the following non-abstract methods will just store the cheapest product
+	// to their respective list unless otherwise changed
 
-	// looks for battery meters that might work in the system
 	public void findViableBatteryMeters() {
 
 	}
 
-	// looks for DCACDisconnect that might work in the system
-	public void findViableDCACDisconnet() {
-
-	}
-
-	// looks for battery wires that might work in the system
 	public void findViableBatteryWires() {
 
 	}
 
-	// looks for PVWires that might work in the system
 	public void findViablePVWires() {
 
 	}
