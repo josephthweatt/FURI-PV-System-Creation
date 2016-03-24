@@ -4,7 +4,7 @@ public class Battery {
 	public String name;
 	public double price;
 	public int voltage;
-	public int ampHours;
+	public int ampHours; // in Ah
 	
 	// for nonspecific initialization
 	public Battery() {

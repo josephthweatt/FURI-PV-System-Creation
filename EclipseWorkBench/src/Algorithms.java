@@ -62,7 +62,7 @@ public abstract class Algorithms {
 
 	public abstract void findViableBatteryControllers();
 
-	public abstract void findViableDCACDisconnet();
+	public abstract void findViableDCACDisconnect();
 
 	// the following non-abstract methods will just store the cheapest product
 	// to their respective list unless otherwise changed

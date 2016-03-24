@@ -44,13 +44,14 @@ public class Pricing extends Algorithms {
 				continue;
 			}
 
-			/******************************
-			 * BUDGET ****************************** now, we will need to check
-			 * that the price of all the panels are significantly lower than the
-			 * budget (the budget must also account for other parts of the
-			 * system). NOTE: This step exists so that expensive panels don't
-			 * accidently get added to the viable products list, it is not a
-			 * definite estimation of the entire system's cost.
+			/***************************** BUDGET ******************************/
+			/*******************************************************************
+			 * now, we will need to check that the price of all the panels are
+			 * significantly lower than the budget (the budget must also account
+			 * for other parts of the system). NOTE: This step exists so that
+			 * expensive panels don't accidently get added to the viable
+			 * products list, it is not a definite estimation of the entire
+			 * system's cost.
 			 *******************************************************************/
 			budget = this.budget;
 			budget -= 1500; // average cost of inverter
@@ -184,14 +185,14 @@ public class Pricing extends Algorithms {
 		final int NIGHT_HOURS = 12;
 		double KWhours;
 
-		for (int i = 0; i < containers[3].products.size(); i++, validVoltage = false) {
+		for (int i = 0; i < containers[3].products
+				.size(); i++, validVoltage = false) {
 			battery = (Battery) containers[3].products.get(i);
 			KWhours = (battery.ampHours * battery.voltage) / 1000;
 
 			/**************************** ENERGY *******************************/
 			// check that the battery can handle the system's voltage
-			for (int j = 0; j < containers[0].products
-					.size(); j++) {
+			for (int j = 0; j < viablePanels.size(); j++) {
 				if (battery.voltage >= viablePanels.get(j).volts) {
 					validVoltage = true;
 					break;
@@ -208,6 +209,28 @@ public class Pricing extends Algorithms {
 		}
 		if (viableBatteries.size() == 0) {
 			parameters.badParameter("Batteries", "energyInKW");
+		}
+	}
+
+	public void findViableDCACDisconnect() {
+		DCACDisconnect disconnect;
+
+		for (int i = 0; i < containers[5].products.size(); i++) {
+			disconnect = (DCACDisconnect) containers[5].products.get(i);
+
+			/**************************** ENERGY *******************************/
+			// check that disconnect can handle the amps & volts of a system
+			for (int j = 0; j < viablePanels.size(); j++) {
+				if (disconnect.amps >= viablePanels.get(i).amps) {
+					if (disconnect.volts >= viablePanels.get(i).volts) {
+						viableDCACDisconnects.add(disconnect);
+						break;
+					}
+				}
+			}
+		}
+		if (viablePanels.size() == 0) {
+			parameters.badParameter("DCACDisconnect");
 		}
 	}
 }
