@@ -26,6 +26,10 @@ public class SystemManager {
 	public ProductContainer getContainer(int i) {
 		return systemCreator.containers[i];
 	}
+	
+	public ProductContainer[] getContainers() {
+		return systemCreator.containers;
+	}
 
 	/******************************************************************************
 	 * The SystemCreator subclass is dedicated to creating new PVSystems. It is

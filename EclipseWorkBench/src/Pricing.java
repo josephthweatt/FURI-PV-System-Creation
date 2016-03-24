@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import ProductObjects.*;
 
 public class Pricing extends Algorithms {
@@ -11,10 +13,13 @@ public class Pricing extends Algorithms {
 			double energyInVolts, ProductContainer[] containers) {
 		super(budget, energyInKW, availableSpace, energyInVolts, containers);
 	}
-
+	
+	
+	/****************************** FINDVIABLE() METHODS ***********************/
 	@Override
 	// looks for panels that might work in the system
 	public void findViablePanels() {
+		viablePanels = new ArrayList<Panel>();
 		Panel panel;
 		int panelsNeeded;
 		double temp;
@@ -77,6 +82,7 @@ public class Pricing extends Algorithms {
 
 	@Override
 	public void findViableRacks() {
+		viableRacks = new ArrayList<Racking>();
 		Racking rack;
 		String[] panelDims, rackDims;
 		double rackLengthInches;
@@ -118,6 +124,7 @@ public class Pricing extends Algorithms {
 
 	@Override
 	public void findViableInverters() {
+		viableInverters = new ArrayList<Inverter>();
 		Inverter inverter;
 		Boolean viable;
 
@@ -153,6 +160,7 @@ public class Pricing extends Algorithms {
 
 	@Override
 	public void findViableBatteryControllers() {
+		viableBatteryControllers = new ArrayList<BatteryController>();
 		BatteryController control;
 		int controlHighestVoltage;
 
@@ -180,6 +188,7 @@ public class Pricing extends Algorithms {
 
 	@Override
 	public void findViableBatteries() {
+		viableBatteries= new ArrayList<Battery>();
 		Battery battery;
 		Boolean validVoltage = false;
 		final int NIGHT_HOURS = 12;
@@ -213,6 +222,7 @@ public class Pricing extends Algorithms {
 	}
 
 	public void findViableDCACDisconnect() {
+		viableDCACDisconnects = new ArrayList<DCACDisconnect>();
 		DCACDisconnect disconnect;
 
 		for (int i = 0; i < containers[6].products.size(); i++) {

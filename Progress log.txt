@@ -197,3 +197,6 @@ In other words, the kwH we find will output "Desired energy" in Kw for "night ho
 Resources:
 	*https://lazycackle.com/Convert_from_Ah_to_KWh___Online_Calculator.html
 	*http://all-about-lead-acid-batteries.capnfatz.com/all-about-lead-acid-batteries/lead-acid-battery-fundamentals/amp-hours-vs-kilowatt-hours/
+
+3-24-16
+-With the findViable() methods done, I'm going to run a couple test cases just to verify there are no runtime errors in the code. I'll make a test in the PowerInfoMain class and try to print out viable products for different constraints.
