@@ -68,15 +68,18 @@ public abstract class Algorithms {
 	// to their respective list unless otherwise changed
 
 	public void findViableBatteryMeters() {
-
+		containers[5].loToHi("price");
+		viableBatteryMeters.add((BatteryMeter) containers[5].products.get(0));
 	}
 
 	public void findViableBatteryWires() {
-
+		containers[7].loToHi("pricing");
+		viableBatteryWires.add((BatteryWire) containers[7].products.get(0));
 	}
 
 	public void findViablePVWires() {
-
+		containers[8].loToHi("price");
+		viablePVWires.add((PVWire) containers[8].products.get(0));
 	}
 
 	// returns 'true' when user parameters cannot generate viable Systems

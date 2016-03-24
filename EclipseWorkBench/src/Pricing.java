@@ -215,8 +215,8 @@ public class Pricing extends Algorithms {
 	public void findViableDCACDisconnect() {
 		DCACDisconnect disconnect;
 
-		for (int i = 0; i < containers[5].products.size(); i++) {
-			disconnect = (DCACDisconnect) containers[5].products.get(i);
+		for (int i = 0; i < containers[6].products.size(); i++) {
+			disconnect = (DCACDisconnect) containers[6].products.get(i);
 
 			/**************************** ENERGY *******************************/
 			// check that disconnect can handle the amps & volts of a system
