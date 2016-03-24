@@ -5,7 +5,6 @@ public class Pricing extends Algorithms {
 	public Pricing(double budget, double energyInKW, double availableSpace,
 			ProductContainer[] containers) {
 		super(budget, energyInKW, availableSpace, containers);
-
 	}
 
 	public Pricing(double budget, double energyInKW, double availableSpace,
@@ -156,14 +155,16 @@ public class Pricing extends Algorithms {
 		BatteryController control;
 		int controlHighestVoltage;
 
-		for (int i = 0; i < containers[3].products.size(); i++) {
-			control = (BatteryController) containers[3].products.get(i);
+		for (int i = 0; i < containers[4].products.size(); i++) {
+			control = (BatteryController) containers[4].products.get(i);
 
 			/**************************** ENERGY *******************************/
-			// Verify that the controller will support at least one panel voltage
+			// Verify that the controller will support at least one panel
+			// voltage
 			String[] voltages = control.bankVoltage.split("/");
-			controlHighestVoltage = Integer.parseInt(
-					voltages[voltages.length - 1]); // highest bank voltage
+			controlHighestVoltage = Integer
+					.parseInt(voltages[voltages.length - 1]); // highest bank
+																// voltage
 			for (int j = 0; j < viablePanels.size(); j++) {
 				if (controlHighestVoltage >= viablePanels.get(j).volts) {
 					viableBatteryControllers.add(control);
@@ -173,6 +174,40 @@ public class Pricing extends Algorithms {
 		}
 		if (viableBatteryControllers.size() == 0) {
 			parameters.badParameter("Battery Controller");
+		}
+	}
+
+	@Override
+	public void findViableBatteries() {
+		Battery battery;
+		Boolean validVoltage = false;
+		final int NIGHT_HOURS = 12;
+		double KWhours;
+
+		for (int i = 0; i < containers[3].products.size(); i++, validVoltage = false) {
+			battery = (Battery) containers[3].products.get(i);
+			KWhours = (battery.ampHours * battery.voltage) / 1000;
+
+			/**************************** ENERGY *******************************/
+			// check that the battery can handle the system's voltage
+			for (int j = 0; j < containers[0].products
+					.size(); j++) {
+				if (battery.voltage >= viablePanels.get(j).volts) {
+					validVoltage = true;
+					break;
+				}
+			}
+			// we need to see if the battery will be able to cover the
+			// amount of Watt hours used in a night. For more
+			// information, see the Progress log entry for 3-23-16
+			if (validVoltage) { // makes sure voltage requirements were met
+				if (KWhours >= NIGHT_HOURS * energyInKW) {
+					viableBatteries.add(battery);
+				}
+			}
+		}
+		if (viableBatteries.size() == 0) {
+			parameters.badParameter("Batteries", "energyInKW");
 		}
 	}
 }

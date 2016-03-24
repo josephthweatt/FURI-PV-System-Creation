@@ -185,3 +185,15 @@ I am going to create a Algorithms class to manage the various algorithms designa
 3-18-16
 -I am currently working on the Panel check, which is the method that will see which panels in the database are viable models for the algorithm
 -It just occured to me that I will need to have the Algorithm class be extended to a Price Algorithm class. The methods I am currently creating, even the Panel check, are simply too specific to be used amongst other algorithms. What I'm going to do is create the findViablePanelMethod for the Price algorithm, commit, and then copy it over to an abstract class.  
+
+3-23-16
+-I'm currently going through the Battery check and wanted to make a note on the amphours portion of the check. The battery (or two of the same battery, if necessary) should be able to provide an output of 'x' kilowatts for about 12 hours. To figure this out, we take the amp hours of the selected battery and the voltage of the battery and multiply them together:
+	kW hours = Amp hours * voltage
+How many kW hours are needed? Well, if we know the average of night hours per year (which we do, it's twelve), then we can just multiply that by the desired energy output to get our kWh
+	kWh = night hours * Desired energy
+In other words, the kwH we find will output "Desired energy" in Kw for "night hours" hours
+-I should also note that AmpHours * volts gives you WATT HOURS, not Kilowatt hours. To get that, divide watt hours by 1000
+
+Resources:
+	*https://lazycackle.com/Convert_from_Ah_to_KWh___Online_Calculator.html
+	*http://all-about-lead-acid-batteries.capnfatz.com/all-about-lead-acid-batteries/lead-acid-battery-fundamentals/amp-hours-vs-kilowatt-hours/
