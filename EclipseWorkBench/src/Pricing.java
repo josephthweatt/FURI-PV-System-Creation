@@ -13,9 +13,10 @@ public class Pricing extends Algorithms {
 			double energyInVolts, ProductContainer[] containers) {
 		super(budget, energyInKW, availableSpace, energyInVolts, containers);
 	}
-	
-	
-	/****************************** FINDVIABLE() METHODS ***********************/
+
+	/******************************
+	 * FINDVIABLE() METHODS
+	 ***********************/
 	@Override
 	// looks for panels that might work in the system
 	public void findViablePanels() {
@@ -100,8 +101,9 @@ public class Pricing extends Algorithms {
 			// Verify that a rack can span at least one viable panel.
 			// We look at both dimensions to see if both sides fits
 			for (int j = 0; j < viablePanels.size(); j++) {
-				rackDims = rack.sizePerModule.split("/");
-				rackLengthInches = Double.parseDouble(rackDims[0]);
+				rackDims = rack.sizePerModule.split("X");
+				rackLengthInches = Double.parseDouble(
+						rackDims[0].substring(0, rackDims[0].indexOf("\"")));
 
 				viablePanels.get(j).dimensions.trim();
 				panelDims = viablePanels.get(j).dimensions.split("/");
@@ -188,32 +190,22 @@ public class Pricing extends Algorithms {
 
 	@Override
 	public void findViableBatteries() {
-		viableBatteries= new ArrayList<Battery>();
+		viableBatteries = new ArrayList<Battery>();
 		Battery battery;
-		Boolean validVoltage = false;
-		final int NIGHT_HOURS = 12;
+		final int NIGHT_HOURS = 9;
 		double KWhours;
 
 		for (int i = 0; i < containers[3].products
-				.size(); i++, validVoltage = false) {
+				.size(); i++) {
 			battery = (Battery) containers[3].products.get(i);
 			KWhours = (battery.ampHours * battery.voltage) / 1000;
 
 			/**************************** ENERGY *******************************/
-			// check that the battery can handle the system's voltage
-			for (int j = 0; j < viablePanels.size(); j++) {
-				if (battery.voltage >= viablePanels.get(j).volts) {
-					validVoltage = true;
-					break;
-				}
-			}
 			// we need to see if the battery will be able to cover the
 			// amount of Watt hours used in a night. For more
 			// information, see the Progress log entry for 3-23-16
-			if (validVoltage) { // makes sure voltage requirements were met
-				if (KWhours >= NIGHT_HOURS * energyInKW) {
-					viableBatteries.add(battery);
-				}
+			if (KWhours >= NIGHT_HOURS * energyInKW) {
+				viableBatteries.add(battery);
 			}
 		}
 		if (viableBatteries.size() == 0) {

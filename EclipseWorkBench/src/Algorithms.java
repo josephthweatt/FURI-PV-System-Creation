@@ -123,12 +123,11 @@ public abstract class Algorithms {
 			valid = true;
 			// bad Parameter can store multiple restrictive fields
 			for (int i = 0; i < fieldName.length; i++) {
-				// skip any parameters which have already been added
-				if (badParameter.contains(fieldName[i])) {
-					continue;
-				}
 				if (badParameter.equals("")) {
 					badParameter = fieldName[i];
+				} else if (badParameter.contains(fieldName[i])) {
+					// skip any parameters which have already been added
+					continue;
 				} else {
 					badParameter += " and " + fieldName[i];
 				}
@@ -138,6 +137,7 @@ public abstract class Algorithms {
 			if (restrictedProduct.equals("")) {
 				restrictedProduct += product;
 			} else {
+				restrictedProduct = restrictedProduct.replaceAll(" and ", ", ");
 				restrictedProduct += " and " + product;
 			}
 		}

@@ -64,7 +64,7 @@ public class SystemManager {
 			makeContainersWithDB();
 		}
 
-		public void makeContainersWithDB() {
+		private void makeContainersWithDB() {
 			HashMap<String, Object> productMap = DBExtraction.getProducts();
 			for (Object product : productMap.values()) {
 				if (product instanceof Panel) {

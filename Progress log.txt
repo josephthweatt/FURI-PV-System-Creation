@@ -200,3 +200,5 @@ Resources:
 
 3-24-16
 -With the findViable() methods done, I'm going to run a couple test cases just to verify there are no runtime errors in the code. I'll make a test in the PowerInfoMain class and try to print out viable products for different constraints.
+	*The arraylist holding the viable Products needed to be initialized. Ill commit this change right now
+	*It appears I've oversimplified the Battery criteria. The batteries will almost always be lower than the panels themselves. I thought that batteries should be able to "match" the voltage of the panels, but that really isn't the case. The battery controller between the panels and the batteries should take care of any differences in the voltage. For right now, I'll delete the "volt-checking" from the findViableBatteries method, but I think I'll want to mention this to Sai when I meet him next.
