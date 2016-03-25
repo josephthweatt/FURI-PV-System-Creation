@@ -13,13 +13,14 @@ public class Pricing extends Algorithms {
 			double energyInVolts, ProductContainer[] containers) {
 		super(budget, energyInKW, availableSpace, energyInVolts, containers);
 	}
+	
+	
 
-	/******************************
-	 * FINDVIABLE() METHODS
-	 ***********************/
+	/**************** FINDVIABLE() METHODS *********************************/
+
 	@Override
 	// looks for panels that might work in the system
-	public void findViablePanels() {
+	protected void findViablePanels() {
 		viablePanels = new ArrayList<Panel>();
 		Panel panel;
 		int panelsNeeded;
@@ -82,7 +83,7 @@ public class Pricing extends Algorithms {
 	}
 
 	@Override
-	public void findViableRacks() {
+	protected void findViableRacks() {
 		viableRacks = new ArrayList<Racking>();
 		Racking rack;
 		String[] panelDims, rackDims;
@@ -102,8 +103,8 @@ public class Pricing extends Algorithms {
 			// We look at both dimensions to see if both sides fits
 			for (int j = 0; j < viablePanels.size(); j++) {
 				rackDims = rack.sizePerModule.split("X");
-				rackLengthInches = Double.parseDouble(
-						rackDims[0].substring(0, rackDims[0].indexOf("\"")));
+				rackLengthInches = Double.parseDouble(rackDims[0].substring(0,
+						rackDims[0].indexOf("\"")));
 
 				viablePanels.get(j).dimensions.trim();
 				panelDims = viablePanels.get(j).dimensions.split("/");
@@ -125,7 +126,7 @@ public class Pricing extends Algorithms {
 	}
 
 	@Override
-	public void findViableInverters() {
+	protected void findViableInverters() {
 		viableInverters = new ArrayList<Inverter>();
 		Inverter inverter;
 		Boolean viable;
@@ -161,7 +162,7 @@ public class Pricing extends Algorithms {
 	}
 
 	@Override
-	public void findViableBatteryControllers() {
+	protected void findViableBatteryControllers() {
 		viableBatteryControllers = new ArrayList<BatteryController>();
 		BatteryController control;
 		int controlHighestVoltage;
@@ -189,14 +190,13 @@ public class Pricing extends Algorithms {
 	}
 
 	@Override
-	public void findViableBatteries() {
+	protected void findViableBatteries() {
 		viableBatteries = new ArrayList<Battery>();
 		Battery battery;
 		final int NIGHT_HOURS = 9;
 		double KWhours;
 
-		for (int i = 0; i < containers[3].products
-				.size(); i++) {
+		for (int i = 0; i < containers[3].products.size(); i++) {
 			battery = (Battery) containers[3].products.get(i);
 			KWhours = (battery.ampHours * battery.voltage) / 1000;
 
@@ -213,7 +213,7 @@ public class Pricing extends Algorithms {
 		}
 	}
 
-	public void findViableDCACDisconnect() {
+	protected void findViableDCACDisconnect() {
 		viableDCACDisconnects = new ArrayList<DCACDisconnect>();
 		DCACDisconnect disconnect;
 

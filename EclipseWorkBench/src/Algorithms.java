@@ -50,39 +50,11 @@ public abstract class Algorithms {
 		parameters = new ImpossibleParameters();
 	}
 
-	// below algorithms look for viable products in the system
+	/************************* public methods **********************************/
 
-	public abstract void findViablePanels();
+	// have not yet decided if this will return anything
+	public void runAlgorithm() {
 
-	public abstract void findViableRacks();
-
-	public abstract void findViableInverters();
-
-	public abstract void findViableBatteries();
-
-	public abstract void findViableBatteryControllers();
-
-	public abstract void findViableDCACDisconnect();
-
-	// the following non-abstract methods will just store the cheapest product
-	// to their respective list unless otherwise changed
-
-	public void findViableBatteryMeters() {
-		viableBatteryMeters = new ArrayList<BatteryMeter>();
-		containers[5].loToHi("price");
-		viableBatteryMeters.add((BatteryMeter) containers[5].products.get(0));
-	}
-
-	public void findViableBatteryWires() {
-		viableBatteryWires = new ArrayList<BatteryWire>();
-		containers[7].loToHi("price");
-		viableBatteryWires.add((BatteryWire) containers[7].products.get(0));
-	}
-
-	public void findViablePVWires() {
-		viablePVWires = new ArrayList<PVWire>();
-		containers[8].loToHi("price");
-		viablePVWires.add((PVWire) containers[8].products.get(0));
 	}
 
 	// returns 'true' when user parameters cannot generate viable Systems
@@ -90,13 +62,50 @@ public abstract class Algorithms {
 		if (parameters.valid == false) {
 			return false;
 		} else if (parameters.valid == true) {
-			System.out.println(
-					"Restrictive input(s) found: " + parameters.badParameter);
+			System.out.println("Restrictive input(s) found: "
+					+ parameters.badParameter);
 			System.out.println("No viable products found for: "
 					+ parameters.restrictedProduct);
 			return true;
 		}
 		return false;
+	}
+
+	/********************** private/protected methods **************************/
+
+	// below algorithms look for viable products in the system
+
+	protected abstract void findViablePanels();
+
+	protected abstract void findViableRacks();
+
+	protected abstract void findViableInverters();
+
+	protected abstract void findViableBatteries();
+
+	protected abstract void findViableBatteryControllers();
+
+	protected abstract void findViableDCACDisconnect();
+
+	// the following non-abstract methods will just store the cheapest product
+	// to their respective list unless otherwise changed
+
+	protected void findViableBatteryMeters() {
+		viableBatteryMeters = new ArrayList<BatteryMeter>();
+		containers[5].loToHi("price");
+		viableBatteryMeters.add((BatteryMeter) containers[5].products.get(0));
+	}
+
+	protected void findViableBatteryWires() {
+		viableBatteryWires = new ArrayList<BatteryWire>();
+		containers[7].loToHi("price");
+		viableBatteryWires.add((BatteryWire) containers[7].products.get(0));
+	}
+
+	protected void findViablePVWires() {
+		viablePVWires = new ArrayList<PVWire>();
+		containers[8].loToHi("price");
+		viablePVWires.add((PVWire) containers[8].products.get(0));
 	}
 
 	/****************************************************************************
