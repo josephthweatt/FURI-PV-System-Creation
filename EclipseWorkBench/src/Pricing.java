@@ -14,7 +14,11 @@ public class Pricing extends Algorithms {
 		super(budget, energyInKW, availableSpace, energyInVolts, containers);
 	}
 	
-	
+	@Override
+	public void runAlgorithm() {
+		super.runAlgorithm();
+		// perform the rest of the instructions
+	}
 
 	/**************** FINDVIABLE() METHODS *********************************/
 

@@ -23,29 +23,13 @@ public class PowerInfoMain {
 		// budget: 9000 desired energy: .5KW available space: 30 m^2
 		Algorithms alg = new Pricing(9000.0, .5, 30.0, sysMan.getContainers());
 		// NOTE: this method should always be the first FindViable() called
-		alg.findViablePanels();
-		alg.findViableRacks();
-		alg.findViableInverters();
-		alg.findViableBatteryControllers();
-		alg.findViableBatteries();
-		alg.findViableDCACDisconnect();
-		alg.findViableBatteryMeters();
-		alg.findViablePVWires();
-		alg.findViableBatteryWires();
 
 		// verify there was no issue with the parameters
 		if (alg.impossibleParameters()) {
 			System.exit(0);
 		}
-		
-		for (Object product : DBExtraction.getProducts().values()) {
-			if (product instanceof BatteryWire) {
-				BatteryWire wire = (BatteryWire) product;
-				System.out.println(wire.name);
-			}
-		}
 
-		/* print a few products to see if everything's working
+		// print a few products to see if everything's working
 		System.out.println("Panels: ");
 		for (int i = 0; i < alg.viablePanels.size(); i++) {
 			System.out.println(alg.viablePanels.get(i).name + " | "
@@ -60,7 +44,7 @@ public class PowerInfoMain {
 		for (int i = 0; i < alg.viableInverters.size(); i++) {
 			System.out.println(alg.viableInverters.get(i).name + " | "
 					+ alg.viableInverters.get(i).price);
-		}*/
+		}
 		// from non abstract methods
 		System.out.println("BatteryWires: " + alg.viableBatteryWires.get(0).name
 				+ " | " + alg.viableBatteryWires.get(0).price);

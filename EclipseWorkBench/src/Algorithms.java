@@ -54,7 +54,16 @@ public abstract class Algorithms {
 
 	// have not yet decided if this will return anything
 	public void runAlgorithm() {
-
+		// Overriding this method ought to implement 'super' to call findViables
+		findViablePanels();
+		findViableRacks();
+		findViableInverters();
+		findViableBatteryControllers();
+		findViableBatteries();
+		findViableDCACDisconnect();
+		findViableBatteryMeters();
+		findViablePVWires();
+		findViableBatteryWires();
 	}
 
 	// returns 'true' when user parameters cannot generate viable Systems
