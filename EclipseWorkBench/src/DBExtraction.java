@@ -9,10 +9,11 @@ public class DBExtraction {
 	private static Connection c;
 	private static ResultSet rs;
 	private static Statement stmt;
-	public final String dbName;
+	public String dbName = null;
 
 	// not exactly sure if these should be private or public
 	private static HashMap<String, Object> productMap;
+	private String duplicateName; // used when names are duplicates
 
 	// construct dbExtraction by opening the db
 	public DBExtraction(String dbName) {
@@ -39,12 +40,18 @@ public class DBExtraction {
 	// stores all products in the database into their respective objects
 	public void loadAllProducts() {
 		int i = 0;
+		Object obj;
 		try {
 			for (i = 0; i < FullSystem.productType.length; i++) {
 				rs = stmt.executeQuery(
 						"select * from " + FullSystem.productType[i] + ";");
 				while (rs.next()) {
-					productMap.put(rs.getString("Name"), setObjectToMap(i));
+					obj = setObjectToMap(i);
+					productMap.put(rs.getString("Name") + duplicateName, obj);
+					// sets the duplicate name to null if it was used
+					if (duplicateName != null) {
+						duplicateName = null;
+					}
 				}
 			}
 		} catch (SQLException e) {
@@ -52,7 +59,6 @@ public class DBExtraction {
 			System.out.println("Problem at " + FullSystem.productType[i]
 					+ " in database " + dbName);
 		}
-		i++;
 	}
 
 	// used to set product objects into the productMap
@@ -73,6 +79,7 @@ public class DBExtraction {
 					rs.getInt("Watts"), rs.getInt("InputV"),
 					rs.getInt("OutputV"));
 		case 2:
+			duplicateName = " " + rs.getString("SizePerModule");
 			return new Racking(name, price, rs.getString("SizePerModule"),
 					rs.getInt("RoofMounted"));
 		case 3:
@@ -88,9 +95,11 @@ public class DBExtraction {
 			return new DCACDisconnect(name, price, rs.getInt("Amps"),
 					rs.getInt("Volts"));
 		case 7:
+			duplicateName = " " + Integer.toString(rs.getInt("LengthInInches"));
 			return new BatteryWire(name, price, rs.getInt("LengthInInches"),
 					rs.getString("Gauge"));
 		case 8:
+			duplicateName = " " + Integer.toString(rs.getInt("LengthInFeet"));
 			return new PVWire(name, price, rs.getInt("LengthInFeet"));
 		default:
 			return null;

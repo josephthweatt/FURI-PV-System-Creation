@@ -61,6 +61,7 @@ public class SystemManager {
 		// changes the DBExtraction's database, also resets the
 		public void setNewDatabase(String dbName) {
 			db = new DBExtraction(dbName);
+			db.loadAllProducts();
 			makeContainersWithDB();
 		}
 
@@ -85,6 +86,8 @@ public class SystemManager {
 					containers[7].addProduct(product);
 				} else if (product instanceof PVWire) {
 					containers[8].addProduct(product);
+				} else {
+					System.out.println("could not place product!");
 				}
 			}
 		}

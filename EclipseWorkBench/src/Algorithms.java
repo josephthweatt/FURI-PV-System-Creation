@@ -75,7 +75,7 @@ public abstract class Algorithms {
 
 	public void findViableBatteryWires() {
 		viableBatteryWires = new ArrayList<BatteryWire>();
-		containers[7].loToHi("pricing");
+		containers[7].loToHi("price");
 		viableBatteryWires.add((BatteryWire) containers[7].products.get(0));
 	}
 
