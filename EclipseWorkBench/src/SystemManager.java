@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import ProductObjects.*;
@@ -20,14 +21,14 @@ public class SystemManager {
 		systemMap = new HashMap<String, FullSystem>();
 		this.location = location;
 	}
-	
+
 	public SystemManager(Location location, Goal goal) {
 		systemCreator = new SystemCreator();
 		systemMap = new HashMap<String, FullSystem>();
 		this.location = location;
 		this.setGoal(goal);
 	}
-	
+
 	// sets the goal for what kind of systems to search for
 	public void setGoal(Goal goal) {
 		this.goal = goal;
@@ -46,6 +47,12 @@ public class SystemManager {
 
 	public ProductContainer[] getContainers() {
 		return systemCreator.containers;
+	}
+	
+	// called to put the found systems into the systemMap
+	public void setSystemsFromAlgorithm() {
+		algorithm.runAlgorithm();
+		systemMap = algorithm.getSystems();
 	}
 
 	/******************************************************************************
@@ -75,9 +82,7 @@ public class SystemManager {
 			makeContainersWithDB(); // sets db informaiton into containers
 		}
 
-		// grabs products and inserts them into a full System (products must
-		// already be made as objects). Will also return a system if it is
-		// needed
+		// grabs products and inserts them into a full System
 		public FullSystem commitProductsToSystem(String systemName,
 				Object... product) {
 			if (location.getAddress() == null) {

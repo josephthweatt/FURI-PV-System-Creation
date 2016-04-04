@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import ProductObjects.*;
 
@@ -27,6 +28,7 @@ public abstract class Algorithms {
 	protected ArrayList<BatteryWire> viableBatteryWires;
 	protected ArrayList<PVWire> viablePVWires;
 
+	protected ArrayList<FullSystem> viableSystems; // runAlgorithm() finds these
 	protected ImpossibleParameters parameters;
 
 	// constructor called when the user wishes to have a specific voltage
@@ -37,7 +39,7 @@ public abstract class Algorithms {
 		if (goal.energyInVolts != -1) {
 			this.energyInVolts = goal.energyInVolts;
 		}
-		
+
 		this.containers = containers;
 
 		parameters = new ImpossibleParameters();
@@ -61,6 +63,20 @@ public abstract class Algorithms {
 		if (impossibleParameters()) {
 			return;
 		}
+	}
+
+	// ranks the systems according to the goal
+	protected abstract void rankSystems();
+
+	// returns the ranked systems, the map may contain more than 10
+	public HashMap<String, FullSystem> getSystems() {
+		HashMap<String, FullSystem> systems = new HashMap<String, FullSystem>();
+		for (int i = 0; i < viableSystems.size(); i++) {
+			// keys are saved as "panel: cost" to prevent overwriting values
+			systems.put(systems.get(i).panel + ": " + systems.get(i).cost,
+					systems.get(i));
+		}
+		return systems;
 	}
 
 	// returns 'true' when user parameters cannot generate viable Systems
