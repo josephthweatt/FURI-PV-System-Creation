@@ -5,8 +5,10 @@ import ProductObjects.*;
 public class SystemManager {
 	public SystemCreator systemCreator;
 	private HashMap<String, FullSystem> systemMap;
+	private Algorithms algorithm;
 
-	public Location location;
+	private Location location;
+	private Goal goal;
 
 	public SystemManager() {
 		systemCreator = new SystemCreator();
@@ -17,6 +19,21 @@ public class SystemManager {
 		systemCreator = new SystemCreator();
 		systemMap = new HashMap<String, FullSystem>();
 		this.location = location;
+	}
+	
+	public SystemManager(Location location, Goal goal) {
+		systemCreator = new SystemCreator();
+		systemMap = new HashMap<String, FullSystem>();
+		this.location = location;
+		this.setGoal(goal);
+	}
+	
+	// sets the goal for what kind of systems to search for
+	public void setGoal(Goal goal) {
+		this.goal = goal;
+		if (goal.equals("pricing")) {
+			algorithm = new Pricing(goal, systemCreator.containers);
+		} // more will be added here as different algorithms are made
 	}
 
 	public FullSystem getSystemByName(String systemName) {

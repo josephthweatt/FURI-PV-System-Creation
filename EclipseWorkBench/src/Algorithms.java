@@ -29,23 +29,15 @@ public abstract class Algorithms {
 
 	protected ImpossibleParameters parameters;
 
-	public Algorithms(double budget, double energyInKW, double availableSpace,
-			ProductContainer[] containers) {
-		this.budget = budget;
-		this.energyInKW = energyInKW;
-		this.availableSpace = availableSpace;
-		this.containers = containers;
-
-		parameters = new ImpossibleParameters();
-	}
-
 	// constructor called when the user wishes to have a specific voltage
-	public Algorithms(double budget, double energyInKW, double availableSpace,
-			double energyInVolts, ProductContainer[] containers) {
-		this.budget = budget;
-		this.energyInKW = energyInKW;
-		this.availableSpace = availableSpace;
-		this.energyInVolts = energyInVolts;
+	public Algorithms(Goal goal, ProductContainer[] containers) {
+		this.budget = goal.budget;
+		this.energyInKW = goal.energyInKW;
+		this.availableSpace = goal.availableSpace;
+		if (goal.energyInVolts != -1) {
+			this.energyInVolts = goal.energyInVolts;
+		}
+		
 		this.containers = containers;
 
 		parameters = new ImpossibleParameters();

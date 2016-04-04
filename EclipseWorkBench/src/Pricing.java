@@ -4,16 +4,11 @@ import ProductObjects.*;
 
 public class Pricing extends Algorithms {
 
-	public Pricing(double budget, double energyInKW, double availableSpace,
+	public Pricing(Goal goal,
 			ProductContainer[] containers) {
-		super(budget, energyInKW, availableSpace, containers);
+		super(goal, containers);
 	}
-
-	public Pricing(double budget, double energyInKW, double availableSpace,
-			double energyInVolts, ProductContainer[] containers) {
-		super(budget, energyInKW, availableSpace, energyInVolts, containers);
-	}
-
+	
 	@Override
 	public void runAlgorithm() {
 		super.runAlgorithm();
