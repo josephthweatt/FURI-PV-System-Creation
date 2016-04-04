@@ -225,3 +225,7 @@ Resources:
 		viable Inverters * (1) * viable Batteries * viable Battery Controllers * viable DCACDisconnects
 
 	Now, all of these systems would need to be tested against the user's location using PVWatt's to ultimately decide if the system is viable. After that, we would need to rank the systems for the application (in our case, we would do it by budget). This all seems pretty straightforward, the implementation (and how it ought to be integrated within the larger program) is what I'll need to figure out next.
+
+-Here's how the program is going to organize all of the SYstems it has found:
+	*Subclasses of the Algorithms class (e.g. the pricing algorithms class) will sort through the Product Objects containers to create viable systems. It will then store those systems into an arraylist within the Algorithms class, and at the end of the runAlgorithm() method, it will forward the list to the SystemCreator subclass of the systemManager class. The systemManager class will then organize those systems accoriding to the desired "goal" of the user (Pricing, max. Power, etc). 
+		-In doing this, I realize that SystemManager will at somepoint need to receive a directive to find the Systems according to user goals. This could be implemented as its own method, though I think that it could be called by the constructor (or it can be optional as a constructor parameter).
