@@ -1,8 +1,6 @@
 import java.io.IOException;
 import java.util.HashMap;
 
-import org.json.JSONException;
-
 import ProductObjects.BatteryWire;
 
 /* 
@@ -14,7 +12,7 @@ public class PowerInfoMain {
 	// we use Tempe's coordinates for the test case
 	public Location loc;
 
-	public static void main(String[] args) throws IOException, JSONException {
+	public static void main(String[] args) throws IOException {
 
 		// Using product container to compute the meters squared of its panels
 		SystemManager sysMan = new SystemManager(

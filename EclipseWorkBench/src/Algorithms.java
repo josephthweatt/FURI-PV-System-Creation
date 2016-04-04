@@ -9,22 +9,23 @@ public abstract class Algorithms {
 	public double availableSpace; // in square meters
 	public double energyInVolts; // an optional field. I may delete it later
 
-	public ProductContainer[] containers; // this is used to evaluate products
+	protected ProductContainer[] containers; // this is used to evaluate
+												// products
 
 	/*
 	 * ViableProductLists will contain all products that have the potential to
 	 * be used in a system, it will be used to experiment with viable systems
 	 * and pass them into the systemCreator
 	 */
-	public ArrayList<Panel> viablePanels;
-	public ArrayList<Inverter> viableInverters;
-	public ArrayList<Racking> viableRacks;
-	public ArrayList<Battery> viableBatteries;
-	public ArrayList<BatteryController> viableBatteryControllers;
-	public ArrayList<BatteryMeter> viableBatteryMeters;
-	public ArrayList<DCACDisconnect> viableDCACDisconnects;
-	public ArrayList<BatteryWire> viableBatteryWires;
-	public ArrayList<PVWire> viablePVWires;
+	protected ArrayList<Panel> viablePanels;
+	protected ArrayList<Inverter> viableInverters;
+	protected ArrayList<Racking> viableRacks;
+	protected ArrayList<Battery> viableBatteries;
+	protected ArrayList<BatteryController> viableBatteryControllers;
+	protected ArrayList<BatteryMeter> viableBatteryMeters;
+	protected ArrayList<DCACDisconnect> viableDCACDisconnects;
+	protected ArrayList<BatteryWire> viableBatteryWires;
+	protected ArrayList<PVWire> viablePVWires;
 
 	protected ImpossibleParameters parameters;
 
@@ -64,6 +65,10 @@ public abstract class Algorithms {
 		findViableBatteryMeters();
 		findViablePVWires();
 		findViableBatteryWires();
+
+		if (impossibleParameters()) {
+			return;
+		}
 	}
 
 	// returns 'true' when user parameters cannot generate viable Systems

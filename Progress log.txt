@@ -204,3 +204,24 @@ Resources:
 	*It appears I've oversimplified the Battery criteria. The batteries will almost always be lower than the panels themselves. I thought that batteries should be able to "match" the voltage of the panels, but that really isn't the case. The battery controller between the panels and the batteries should take care of any differences in the voltage. For right now, I'll delete the "volt-checking" from the findViableBatteries method, but I think I'll want to mention this to Sai when I meet him next.
 -FINALLY fixed the error that was causing the non-abstract findViable methods to store the priciest product in the database. Apparently, trying to store a key twice in a Hashmap makes the origional value disappear, which happened when I was storing the wires because many of those names are the same. 
 	*This was a very frustrating bug. If I hadn't finished it now, I wouldn't have slept all night. Seriously, today, out of the blue my sister  told me she was getting married and that was the second most confounding thing I've experienced today. So I guess that's three soul-crushing hours of my life I'll never get back, but... now I know.
+
+4-3-16
+-Coming back after a week of exams and a terrible flu. It's finally time to start "creating systems" with the viableProduct lists". I'm going to sketch out a few ideas on paper on how to do this. Ideally, I would like to create systems without needing to copy preexisting products in the "viable product" lists. Rather, I could have something similar to a C pointer to reference the object. I just don't want to use to much memory.
+	* it just occured to me that copying an object in java actually doesn't "clone" the object (they have other stuff for that). So adding the product object to a FullSystem object won't likely have much a toll on memory
+
+-My idea on how to organize all available systems:
+	Every PV system is, at its core, a panel, or a network of panels. Now, every "viable" panel may have one or several "viable" products which can be implemented with it to create an ideal system for the user. Some of the products essential to the system are only considered "viable" to the greater system if they are  capable of sucessfully interfacing with the Panel. In these cases, cooperation with the panel is the only determinant by which a product is considered useful. In our case, these categories of products are:
+		*The rack, whose only requirement is that it fits the Panel. 
+		*The inverter, which must accept the Panel's maximum voltage to be functional in the system
+		*The battery controller, which must accept the Panel's volts and amps
+		*The DCACDisconnect, which must be able to work with the Panel's volts and amps
+	Other products may still rely on certain properties of the Panel, but they must also account for other modules besides it, such as the inverter, the battery controller (in the case of batteries) and so on. I see this challenge as if it were mapped in a tree. I think that one panel may have multiple branches of products with which it may work with, and those chosen products may in turn affect the algorithms ability to chose other products as a result. 
+
+
+	Doing the math, I find that one will have this many combinations of system per panel:
+		viable Inverters * viable Racks * viable Batteries * viable Battery Controllers * viable DCACDisconnects
+
+	Of course, with the racks, we could find the cheapest, best fit rack for the system and exclude that set from the equation:
+		viable Inverters * (1) * viable Batteries * viable Battery Controllers * viable DCACDisconnects
+
+	Now, all of these systems would need to be tested against the user's location using PVWatt's to ultimately decide if the system is viable. After that, we would need to rank the systems for the application (in our case, we would do it by budget). This all seems pretty straightforward, the implementation (and how it ought to be integrated within the larger program) is what I'll need to figure out next.

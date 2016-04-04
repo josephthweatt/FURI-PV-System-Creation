@@ -26,7 +26,7 @@ public class SystemManager {
 	public ProductContainer getContainer(int i) {
 		return systemCreator.containers[i];
 	}
-	
+
 	public ProductContainer[] getContainers() {
 		return systemCreator.containers;
 	}
@@ -56,6 +56,21 @@ public class SystemManager {
 			containers[8] = new ProductContainer(PVWire.class);
 
 			makeContainersWithDB(); // sets db informaiton into containers
+		}
+
+		// grabs products and inserts them into a full System (products must
+		// already be made as objects). Will also return a system if it is
+		// needed
+		public FullSystem commitProductsToSystem(String systemName,
+				Object... product) {
+			if (location.getAddress() == null) {
+				systemMap.put(systemName,
+						new FullSystem(location.getCoordinates(), product));
+			} else {
+				systemMap.put(systemName, new FullSystem(location.getAddress(),
+						product));
+			}
+			return systemMap.get(systemName);
 		}
 
 		// changes the DBExtraction's database, also resets the
@@ -90,21 +105,6 @@ public class SystemManager {
 					System.out.println("could not place product!");
 				}
 			}
-		}
-
-		// grabs products and inserts them into a full System (products must
-		// already be made as objects). Will also return a system if it is
-		// needed
-		public FullSystem commitProductsToSystem(String systemName,
-				Object... product) {			
-			if (location.getAddress() == null) {
-				systemMap.put(systemName,
-						new FullSystem(location.getCoordinates(), product));
-			} else {
-				systemMap.put(systemName,
-						new FullSystem(location.getAddress(), product));
-			}
-			return systemMap.get(systemName);
 		}
 	}
 }

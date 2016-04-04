@@ -13,7 +13,7 @@ public class Pricing extends Algorithms {
 			double energyInVolts, ProductContainer[] containers) {
 		super(budget, energyInKW, availableSpace, energyInVolts, containers);
 	}
-	
+
 	@Override
 	public void runAlgorithm() {
 		super.runAlgorithm();
@@ -150,8 +150,6 @@ public class Pricing extends Algorithms {
 			}
 			if (!viable) {
 				continue; // skips to the next product
-			} else {
-				viable = false; // resets the validity check
 			}
 
 			// Verify the inverter will output enough energy to meet the user's
