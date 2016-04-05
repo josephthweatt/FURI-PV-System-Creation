@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Map;
 
 import ProductObjects.*;
 
@@ -60,28 +59,10 @@ public class Pricing extends Algorithms {
 			}
 		}
 	}
-
+	
 	private void findMatchingBatteryControllers(Panel panel) {
-		Boolean viableController = false;
 		for (int i = 0; i < viableBatteryControllers.size(); i++) {
-			// cycle through values of the battery controller amps and voltages
-			for (Map.Entry<Integer, ArrayList<Integer>> set : viableBatteryControllers
-					.get(i).maxAmps.entrySet()) {
-				if (panel.amps <= set.getKey().intValue()) {
-					for (int j = 0; j < set.getValue().size(); j++) {
-						if (panel.volts <= set.getValue().get(j)) {
-							viableController = true;
-							break;
-						}
-					}
-				}
-				if (viableController) {
-					system.addProduct(viableBatteryControllers.get(i));
-					findMatchingBatteries();
-					viableController = false;
-					break;
-				}
-			}
+			
 		}
 	}
 

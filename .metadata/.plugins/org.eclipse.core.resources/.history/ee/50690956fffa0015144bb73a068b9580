@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Map;
 
 import ProductObjects.*;
 
@@ -46,41 +45,7 @@ public class Pricing extends Algorithms {
 		for (int i = 0; i < viableInverters.size(); i++) {
 			if (panel.volts <= viableInverters.get(i).inputV) {
 				system.addProduct(viableInverters.get(i));
-				findMatchingDCACDisconnects(panel);
-			}
-		}
-	}
-
-	private void findMatchingDCACDisconnects(Panel panel) {
-		for (int i = 0; i < viableDCACDisconnects.size(); i++) {
-			if (panel.volts <= viableDCACDisconnects.get(i).volts
-					&& panel.amps <= viableDCACDisconnects.get(i).amps) {
-				system.addProduct(viableDCACDisconnects.get(i));
-				findMatchingBatteryControllers(panel);
-			}
-		}
-	}
-
-	private void findMatchingBatteryControllers(Panel panel) {
-		Boolean viableController = false;
-		for (int i = 0; i < viableBatteryControllers.size(); i++) {
-			// cycle through values of the battery controller amps and voltages
-			for (Map.Entry<Integer, ArrayList<Integer>> set : viableBatteryControllers
-					.get(i).maxAmps.entrySet()) {
-				if (panel.amps <= set.getKey().intValue()) {
-					for (int j = 0; j < set.getValue().size(); j++) {
-						if (panel.volts <= set.getValue().get(j)) {
-							viableController = true;
-							break;
-						}
-					}
-				}
-				if (viableController) {
-					system.addProduct(viableBatteryControllers.get(i));
-					findMatchingBatteries();
-					viableController = false;
-					break;
-				}
+				findMatchingDCACDisconnects();
 			}
 		}
 	}

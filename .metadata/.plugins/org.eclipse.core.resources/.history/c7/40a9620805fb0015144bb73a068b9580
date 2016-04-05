@@ -9,8 +9,8 @@ public class BatteryController {
 	public String bankVoltage;
 	public String maxAmpPerController;
 
-	// measured as amps, bank voltage
-	public HashMap<Integer, ArrayList<Integer>> maxAmps; 
+	HashMap<Integer, ArrayList<Integer>> maxAmps; // measured as amps,
+													// bankvoltage
 
 	// for nonspecific initialization
 	public BatteryController() {
@@ -25,8 +25,6 @@ public class BatteryController {
 		storeMaxAmps();
 	}
 
-	// stores the amps and the corresponding bank voltages to a hashmap. Each
-	// amp can have multiple bank voltages
 	private void storeMaxAmps() {
 		String[] ampSegments = maxAmpPerController.split(",");
 		for (int i = 0; i < ampSegments.length; i++) {
