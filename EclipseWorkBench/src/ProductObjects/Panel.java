@@ -10,6 +10,8 @@ public class Panel {
 	public int moduleType;
 	public String dimensions;
 
+	double heightInInches;
+	public double widthInInches;
 	public double areaInMeters; // the area of the panel
 	private double estimatedEnergyPerPanel;
 
@@ -27,8 +29,9 @@ public class Panel {
 		this.powerTolerance = powerTolerance;
 		this.moduleType = moduleType;
 		this.dimensions = dimensions;
+		getDimensions();
 
-		stringToMeters();
+		dimensionsToMeters();
 	}
 
 	/*
@@ -36,17 +39,9 @@ public class Panel {
 	 * are separated by '/') and multiplies them to get the Panel's square
 	 * meters. This is passed in as the PVWatts 'size' parameter
 	 */
-	public double stringToMeters() {
-		dimensions.trim();
-		String[] dims = dimensions.split("/");
-
-		// the dimensions string gives us measurements in inches:
-		double heightInches = Double.parseDouble(dims[0]);
-		double widthInches = Double.parseDouble(dims[1]);
-
-		// now we convert it to meters (39.370 inches = 1 meter)
-		double heightMeters = heightInches / 39.370;
-		double widthMeters = widthInches / 39.370;
+	public double dimensionsToMeters() {
+		double heightMeters = heightInInches / 39.370;
+		double widthMeters = widthInInches / 39.370;
 
 		return areaInMeters = heightMeters * widthMeters;
 	}
@@ -83,5 +78,15 @@ public class Panel {
 		}
 		return estimatedEnergyPerPanel = systemCap * approximateEfficiency
 				* wattToKW;
+	}
+	
+	private void getDimensions() {
+		String[] dims = dimensions.split("/");
+		if (heightInInches == 0) {
+			heightInInches = Double.parseDouble(dims[0]);
+		}
+		if (widthInInches == 0) {
+			widthInInches = Double.parseDouble(dims[1]);
+		}
 	}
 }

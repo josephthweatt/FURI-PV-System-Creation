@@ -7,11 +7,14 @@ public class Racking {
 	public String sizePerModule;
 	public boolean roofMounted;
 	
+	private int widthInInches;
+
 	// for nonspecific initialization
 	public Racking() {
 	}
 
-	public Racking(String name, double price, String sizePerModule, int roofMounted) {
+	public Racking(String name, double price, String sizePerModule,
+			int roofMounted) { 
 		this.name = name;
 		this.price = price;
 		this.sizePerModule = sizePerModule;
@@ -20,5 +23,14 @@ public class Racking {
 		} else {
 			this.roofMounted = false;
 		}
+	}
+	
+	public int widthInInches() {
+		// assigns width if it hasn't already
+		if (widthInInches == 0) {
+			widthInInches = Integer.parseInt(sizePerModule.substring(0, 
+					sizePerModule.indexOf("\"")));
+		}
+		return widthInInches;
 	}
 }

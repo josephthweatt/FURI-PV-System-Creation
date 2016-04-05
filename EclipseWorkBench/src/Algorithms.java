@@ -65,9 +65,6 @@ public abstract class Algorithms {
 		}
 	}
 
-	// ranks the systems according to the goal
-	protected abstract void rankSystems();
-
 	// returns the ranked systems, the map may contain more than 10
 	public HashMap<String, FullSystem> getSystems() {
 		HashMap<String, FullSystem> systems = new HashMap<String, FullSystem>();
@@ -94,6 +91,9 @@ public abstract class Algorithms {
 	}
 
 	/********************** private/protected methods **************************/
+
+	// ranks the systems according to the goal
+	protected abstract void rankSystems();
 
 	// below algorithms look for viable products in the system
 

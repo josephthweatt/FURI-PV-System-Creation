@@ -4,15 +4,30 @@ import ProductObjects.*;
 
 public class Pricing extends Algorithms {
 
-	public Pricing(Goal goal,
-			ProductContainer[] containers) {
+	public Pricing(Goal goal, ProductContainer[] containers) {
 		super(goal, containers);
 	}
 	
 	@Override
 	public void runAlgorithm() {
 		super.runAlgorithm();
-		// perform the rest of the instructions
+		
+		for (int i = 0; i < viablePanels.size(); i++) {
+			// find each panels optimal rack
+			Racking rack = findBestRack(viablePanels.get(i));
+		}
+	}
+	
+	private Racking findBestRack(Panel panel) {
+		for (int i = 0; i < viableRacks.size(); i++) {
+			
+		}
+		return;
+	}
+	
+	@Override
+	protected void rankSystems() {
+		
 	}
 
 	/**************** FINDVIABLE() METHODS *********************************/
