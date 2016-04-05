@@ -21,7 +21,7 @@ public class ProductContainer {
 		}
 	}
 
-	public void add(Object product) {
+	public void addProduct(Object product) {
 		// checks if the container has a designation
 		if (productType != null) {
 			this.products.add(product);

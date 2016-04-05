@@ -10,7 +10,7 @@ public class Panel {
 	public int moduleType;
 	public String dimensions;
 
-	public double heightInInches;
+	double heightInInches;
 	public double widthInInches;
 	public double areaInMeters; // the area of the panel
 	private double estimatedEnergyPerPanel;

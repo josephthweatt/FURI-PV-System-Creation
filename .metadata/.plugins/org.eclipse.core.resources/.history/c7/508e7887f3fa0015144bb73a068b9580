@@ -13,20 +13,16 @@ public class Pricing extends Algorithms {
 		super.runAlgorithm();
 
 		for (int i = 0; i < viablePanels.size(); i++) {
-			system = new FullSystem();
 			// find each panels optimal rack
-			findBestRack(viablePanels.get(i));
+			Racking rack = findBestRack(viablePanels.get(i));
 		}
 	}
 
-	private void findBestRack(Panel panel) {
-		// looks through the racks (cheapest to priciest). The cheapest
-		// rack to fit the panel will be added as the only rack for the panel
+	private Racking findBestRack(Panel panel) {
 		for (int i = 0; i < viableRacks.size(); i++) {
 			if (panel.heightInInches <= viableRacks.get(i).width()
 					|| panel.widthInInches <= viableRacks.get(i).width()) {
-				system.addProduct(viableRacks.get(i));
-				break;
+				
 			}
 		}
 		return;

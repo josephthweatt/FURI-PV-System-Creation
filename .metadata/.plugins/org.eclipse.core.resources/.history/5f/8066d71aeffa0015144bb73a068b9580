@@ -4,8 +4,8 @@ import java.util.HashMap;
 import ProductObjects.BatteryWire;
 
 /* 
- * Current Version created 4-4-16
- * modified the algorithm declaration to include the goal class
+ * Current Version created 3-24-16
+ * A test case for the findViable() methods in the Pricing class
  */
 
 public class PowerInfoMain {
@@ -17,10 +17,9 @@ public class PowerInfoMain {
 		// Using product container to compute the meters squared of its panels
 		SystemManager sysMan = new SystemManager(
 				new Location(33.4294, 111.9431));
-
+		
 		// budget: 9000 desired energy: .5KW available space: 30 m^2
-		Goal goal = new Goal("pricing", 9000.0, .5, 30.0);
-		Algorithms alg = new Pricing(goal, sysMan.getContainers());
+		Algorithms alg = new Pricing(9000.0, .5, 30.0, sysMan.getContainers());
 		// NOTE: this method should always be the first FindViable() called
 
 		// verify there was no issue with the parameters
@@ -45,12 +44,11 @@ public class PowerInfoMain {
 					+ alg.viableInverters.get(i).price);
 		}
 		// from non abstract methods
-		System.out.println("BatteryWires: "
-				+ alg.viableBatteryWires.get(0).name + " | "
-				+ alg.viableBatteryWires.get(0).price);
-		System.out.println("BatteryMeter: "
-				+ alg.viableBatteryMeters.get(0).name + " | "
-				+ alg.viableBatteryMeters.get(0).price);
+		System.out.println("BatteryWires: " + alg.viableBatteryWires.get(0).name
+				+ " | " + alg.viableBatteryWires.get(0).price);
+		System.out
+				.println("BatteryMeter: " + alg.viableBatteryMeters.get(0).name
+						+ " | " + alg.viableBatteryMeters.get(0).price);
 		System.out.println("PVWires: " + alg.viablePVWires.get(0).name + " | "
 				+ alg.viablePVWires.get(0).price);
 	}

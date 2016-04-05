@@ -29,7 +29,6 @@ public abstract class Algorithms {
 	protected ArrayList<PVWire> viablePVWires;
 
 	protected ArrayList<FullSystem> viableSystems; // runAlgorithm() finds these
-	protected FullSystem system; // temporary system to store new systems
 	protected ImpossibleParameters parameters;
 
 	// constructor called when the user wishes to have a specific voltage
