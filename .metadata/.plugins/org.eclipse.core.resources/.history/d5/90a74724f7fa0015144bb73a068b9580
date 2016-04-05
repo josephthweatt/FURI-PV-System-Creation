@@ -11,20 +11,13 @@ public class Pricing extends Algorithms {
 	@Override
 	public void runAlgorithm() {
 		super.runAlgorithm();
-		FullSystem tempSystem;
-		// sets default system wires to the default wires, which are the
-		// cheapest of the wires in the database
-		system = new FullSystem();
-		system.addProduct(viablePVWires.get(0));
-		system.addProduct(viableBatteryWires.get(0));
 
 		for (int i = 0; i < viablePanels.size(); i++) {
+			system = new FullSystem();
 			// find each panels optimal rack
 			findBestRack(viablePanels.get(i));
-
-			// calling this method creates a chain of similar methods to get
-			// systems of all combinations for this panel
-			findMatchingInverters(viablePanels.get(i));
+			
+			
 		}
 	}
 
@@ -39,15 +32,6 @@ public class Pricing extends Algorithms {
 			}
 		}
 		return;
-	}
-
-	private void findMatchingInverters(Panel panel) {
-		for (int i = 0; i < viableInverters.size(); i++) {
-			if (panel.volts <= viableInverters.get(i).inputV) {
-				system.addProduct(viableInverters.get(i));
-				findMatchingDCACDisconnects();
-			}
-		}
 	}
 
 	@Override

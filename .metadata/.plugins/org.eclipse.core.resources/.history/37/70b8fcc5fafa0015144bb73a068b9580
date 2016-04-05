@@ -153,9 +153,12 @@ public class FullSystem implements Cloneable {
 	public double findAnnualKWhPerPanel() {
 		// first, copy this object into one that can have its variables modified
 		FullSystem copySystem = null;
-		Object copy = cloneFullSystem();
-		copySystem = (FullSystem) copy;
-		
+		try {
+			Object copy = cloneFullSystem();
+			copySystem = (FullSystem) copy;
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
 		PVWattsManager pvwManager = new PVWattsManager(copySystem);
 
 		// assigns size to that of one panel

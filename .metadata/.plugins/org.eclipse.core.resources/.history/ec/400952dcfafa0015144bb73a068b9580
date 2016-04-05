@@ -106,23 +106,23 @@ public class SystemManager {
 			HashMap<String, Object> productMap = DBExtraction.getProducts();
 			for (Object product : productMap.values()) {
 				if (product instanceof Panel) {
-					containers[0].add(product);
+					containers[0].addProduct(product);
 				} else if (product instanceof Inverter) {
-					containers[1].add(product);
+					containers[1].addProduct(product);
 				} else if (product instanceof Racking) {
-					containers[2].add(product);
+					containers[2].addProduct(product);
 				} else if (product instanceof Battery) {
-					containers[3].add(product);
+					containers[3].addProduct(product);
 				} else if (product instanceof BatteryController) {
-					containers[4].add(product);
+					containers[4].addProduct(product);
 				} else if (product instanceof BatteryMeter) {
-					containers[5].add(product);
+					containers[5].addProduct(product);
 				} else if (product instanceof DCACDisconnect) {
-					containers[6].add(product);
+					containers[6].addProduct(product);
 				} else if (product instanceof BatteryWire) {
-					containers[7].add(product);
+					containers[7].addProduct(product);
 				} else if (product instanceof PVWire) {
-					containers[8].add(product);
+					containers[8].addProduct(product);
 				} else {
 					System.out.println("could not place product!");
 				}
