@@ -42,7 +42,10 @@ public class Pricing extends Algorithms {
 					// checks to see if the system gets enough energy per year
 					if (viableSystems.get(i).yearlyEnergy
 							/ HOURS_PER_YEAR < energyInKW) {
-						viableSystems.remove(i);
+						// Tries adding panels to the system to make it work
+						if(!addedMorePanels(viableSystems.get(i))) {
+							viableSystems.remove(i);
+						}
 					}
 				} else {
 					viableSystems.remove(i);
@@ -140,7 +143,7 @@ public class Pricing extends Algorithms {
 	protected void rankSystems() {
 
 	}
-
+	
 	/**************** FINDVIABLE() METHODS *********************************/
 
 	@Override

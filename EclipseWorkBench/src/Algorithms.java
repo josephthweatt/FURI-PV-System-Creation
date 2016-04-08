@@ -46,7 +46,9 @@ public abstract class Algorithms {
 		parameters = new ImpossibleParameters();
 	}
 
-	/************************* public methods **********************************/
+	/*************************
+	 * public methods
+	 **********************************/
 
 	// have not yet decided if this will return anything
 	public void runAlgorithm() {
@@ -82,8 +84,8 @@ public abstract class Algorithms {
 		if (parameters.valid == false) {
 			return false;
 		} else if (parameters.valid == true) {
-			System.out.println("Restrictive input(s) found: "
-					+ parameters.badParameter);
+			System.out.println(
+					"Restrictive input(s) found: " + parameters.badParameter);
 			System.out.println("No viable products found for: "
 					+ parameters.restrictedProduct);
 			return true;
@@ -91,10 +93,36 @@ public abstract class Algorithms {
 		return false;
 	}
 
-	/********************** private/protected methods **************************/
+	/**********************
+	 * private/protected methods
+	 **************************/
 
 	// ranks the systems according to the goal
 	protected abstract void rankSystems();
+
+	// attempts to keep a system viable by adding panels to make more energy
+	// returns true if adding more panels was successful
+	protected Boolean addedMorePanels(FullSystem system) {
+		int oldCount = system.panel.panelCount;
+		do {
+			system.panel.panelCount++;
+			system.findRealPanelArea();
+			system.calculateLoss();
+			system.calculateCost();
+			system.getDataFromAPI(null);
+			if (system.yearlyEnergy >= energyInKW) {
+				return true;
+			}
+		} while (system.cost <= budget
+				&& system.realPanelArea <= availableSpace);
+		// will revert back to old data if the attempt has failed
+		system.panel.panelCount = oldCount;
+		system.findRealPanelArea();
+		system.calculateLoss();
+		system.calculateCost();
+		system.getDataFromAPI(null);
+		return false;
+	}
 
 	// below algorithms look for viable products in the system
 
@@ -172,7 +200,7 @@ public abstract class Algorithms {
 				restrictedProduct += " and " + product;
 			}
 		}
-		
+
 		// called to report that no viable systems were found
 		public void noViableSystems() {
 			System.out.println("No viable systems. Could not find parts for: ");
