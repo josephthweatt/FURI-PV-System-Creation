@@ -31,22 +31,21 @@ public class FullSystem implements Cloneable {
 
 	// all the table names that one could expect from the database:
 	public static String[] productType = { "Panels", "Inverters", "Racking",
-			"Batteries", "BatteryControllers", "BatteryMeter",
-			"DCACDisconnect", "BatteryWires", "PVWires" };
+			"Batteries", "BatteryControllers", "BatteryMeter", "DCACDisconnect",
+			"BatteryWires", "PVWires" };
 
 	// System qualities
 	public double cost;
 	public double loss;
 	public double yearlyDC;
 	public double yearlyAC;
-	public double yearlyEnergy;
+	public double yearlyEnergy; //in kwH
 
 	public String address;
 	public double latitude;
 	public double longitude;
 
 	// Additional Panel information
-	public int panelCount = 1;
 	public double annualKWhPerPanel;
 	public double realPanelArea = 1; // default 1 (in meter)
 
@@ -112,10 +111,9 @@ public class FullSystem implements Cloneable {
 
 	// This method assigns the panelCount and changes the data that it affects.
 	// It is still possible to change the panel count by accessing it as a
-	// public
-	// variable, but IT IS NOT RECOMMENDED!!!
+	// public variable, but IT IS NOT RECOMMENDED!!!
 	public void changePanelAmount(int panelCount) {
-		this.panelCount = panelCount;
+		panel.panelCount = panelCount;
 		findRealPanelArea();
 		getDataFromAPI(null);
 
@@ -134,10 +132,10 @@ public class FullSystem implements Cloneable {
 	// returns zero if the system is incomplete
 	public double calculateCost() {
 		if (isComplete()) {
-			this.cost += panel.price * panelCount;
+			this.cost += panel.price * panel.panelCount;
 			this.cost += inverter.price;
 			this.cost += rack.price;
-			this.cost += battery.price;
+			this.cost += battery.price * battery.batteryCount;
 			this.cost += batteryControl.price;
 			this.cost += batteryMeter.price;
 			this.cost += dcacDisconnect.price;
@@ -155,7 +153,7 @@ public class FullSystem implements Cloneable {
 		FullSystem copySystem = null;
 		Object copy = cloneFullSystem();
 		copySystem = (FullSystem) copy;
-		
+
 		PVWattsManager pvwManager = new PVWattsManager(copySystem);
 
 		// assigns size to that of one panel
@@ -171,8 +169,8 @@ public class FullSystem implements Cloneable {
 	// the system (percent stored as a double from 0 to 100)
 	public void calculateLoss() {
 		if (isComplete() == false) {
-			System.out
-					.println("Incomplete system. Complete this system to use this method.");
+			System.out.println(
+					"Incomplete system. Complete this system to use this method.");
 			return;
 		}
 		final int WIRE_LOSS = 2; // 2% lost from wires
@@ -189,7 +187,7 @@ public class FullSystem implements Cloneable {
 	// will take up. This is opposed to the RELATIVE panel area, or how much the
 	// panels ought to cover in order to absorb the required amount of energy
 	public double findRealPanelArea() {
-		return realPanelArea = panelCount * panel.areaInMeters;
+		return realPanelArea = panel.panelCount * panel.areaInMeters;
 	}
 
 	// method to verify that the system has all the essential parts
@@ -329,8 +327,7 @@ public class FullSystem implements Cloneable {
 				source = IOUtils.toString(new URL(url),
 						Charset.forName("UTF-8"));
 			} catch (IOException outOfUS) {
-				// fixes the 422 error by adding 'intl' to regions outside the
-				// US
+				// fixes the 422 error by adding 'intl' to regions outside U.S.
 				url += amp + dataset;
 				try {
 					source = IOUtils.toString(new URL(url),
@@ -380,16 +377,16 @@ public class FullSystem implements Cloneable {
 		// takes all API params & variables and returns a single http string
 		private String compileURL() {
 			if (addressInput != null) {
-				return apiSite + version + format + apiKey + amp + address
-						+ amp + systemCap + system.panel.systemCap + amp
-						+ moduleTyp + system.panel.moduleType + amp + loss
+				return apiSite + version + format + apiKey + amp + address + amp
+						+ systemCap + system.panel.systemCap + amp + moduleTyp
+						+ system.panel.moduleType + amp + loss
 						+ (int) system.loss + amp + arrayTyp + arrayTypeInput
 						+ amp + tilt + tiltInput + amp + azimuth + azimuthInput;
 			} else {
 				return apiSite + version + format + apiKey + amp + latitude
-						+ latitudeInput + amp + longitude + longitudeInput
-						+ amp + systemCap + system.panel.systemCap + amp
-						+ moduleTyp + system.panel.moduleType + amp + loss
+						+ latitudeInput + amp + longitude + longitudeInput + amp
+						+ systemCap + system.panel.systemCap + amp + moduleTyp
+						+ system.panel.moduleType + amp + loss
 						+ (int) system.loss + amp + arrayTyp + arrayTypeInput
 						+ amp + tilt + tiltInput + amp + azimuth + azimuthInput;
 			}

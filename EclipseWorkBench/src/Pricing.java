@@ -30,7 +30,25 @@ public class Pricing extends Algorithms {
 			findMatchingInverters(viablePanels.get(i));
 		}
 		if (viableSystems.size() < 1) {
-			parameters.noSystems();
+			parameters.noViableSystems();
+		} else {
+			final int HOURS_PER_YEAR = 8760; // assumes non-leap year
+			// loop through systems, check that they satisfy user's parameters
+			for (int i = 0; i < viableSystems.size(); i++) {
+				if (viableSystems.get(i).findRealPanelArea() <= availableSpace
+						&& viableSystems.get(i).calculateCost() <= budget) {
+					viableSystems.get(i).calculateLoss();
+					viableSystems.get(i).getDataFromAPI(null);
+					// checks to see if the system gets enough energy per year
+					if (viableSystems.get(i).yearlyEnergy
+							/ HOURS_PER_YEAR < energyInKW) {
+						viableSystems.remove(i);
+					}
+				} else {
+					viableSystems.remove(i);
+				}
+			}
+			rankSystems();
 		}
 	}
 
@@ -101,14 +119,15 @@ public class Pricing extends Algorithms {
 				final int NIGHT_HOURS = 9;
 				int batteryCount = 1;
 				double KWHours = (viableBatteries.get(i).ampHours
-						* viableBatteries.get(i).voltage) / 1000; 
+						* viableBatteries.get(i).voltage) / 1000;
 				// add extra batteries until there's at least enough to cover
 				// a nights worth of consistent energy
 				while (KWHours < NIGHT_HOURS * energyInKW) {
-					batteryCount++; 
+					batteryCount++;
 					KWHours *= 2;
 				}
 				if (batteryCount * viableBatteries.get(i).price < budget) {
+					viableBatteries.get(i).batteryCount = batteryCount;
 					system.addProduct(viableBatteries.get(i));
 					// we store the system in a list to verify that it works
 					viableSystems.add((FullSystem) system.cloneFullSystem());
@@ -129,7 +148,7 @@ public class Pricing extends Algorithms {
 	protected void findViablePanels() {
 		viablePanels = new ArrayList<Panel>();
 		Panel panel;
-		int panelsNeeded;
+		int panelCount;
 		double temp;
 		double budget;
 
@@ -146,14 +165,14 @@ public class Pricing extends Algorithms {
 			// temp, because that would indicate that temp holds one less than
 			// the amount of Panels needed to satisfy energy requirements.
 			if (temp % 1 != 0) {
-				panelsNeeded = (int) temp + 1;
+				panelCount = (int) temp + 1;
 			} else {
-				panelsNeeded = (int) temp;
+				panelCount = (int) temp;
 			}
 			/**************************** DIMENSIONS ***************************/
 			// if the amount of panels we need do not fit into our available
 			// space, we move on to the next product
-			if (panelsNeeded * panel.areaInMeters > availableSpace) {
+			if (panelCount * panel.areaInMeters > availableSpace) {
 				continue;
 			}
 
@@ -173,9 +192,11 @@ public class Pricing extends Algorithms {
 			budget -= 500; // average cost of battery controller
 			budget -= 500; // average cost of DCAC disconnect
 
-			if (panelsNeeded * panel.price > budget) {
+			if (panelCount * panel.price > budget) {
 				continue;
 			}
+
+			panel.panelCount = panelCount;
 
 			// if these three conditions are satisfied, we will add the product
 			// to the viablePanels list

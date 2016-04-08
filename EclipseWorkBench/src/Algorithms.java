@@ -174,7 +174,7 @@ public abstract class Algorithms {
 		}
 		
 		// called to report that no viable systems were found
-		public void noSystems() {
+		public void noViableSystems() {
 			System.out.println("No viable systems. Could not find parts for: ");
 			if (system.panel == null) {
 				System.out.println("Panel");

@@ -13,6 +13,7 @@ public class Panel {
 	public double heightInInches;
 	public double widthInInches;
 	public double areaInMeters; // the area of the panel
+	public int panelCount = 1; // panels needed for the system
 	private double estimatedEnergyPerPanel;
 
 	// for nonspecific initialization
