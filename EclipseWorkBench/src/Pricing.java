@@ -63,6 +63,7 @@ public class Pricing extends Algorithms {
 
 	private void findMatchingBatteryControllers(Panel panel) {
 		Boolean viableController = false;
+		int voltage = 0; // for corresponding amps
 		for (int i = 0; i < viableBatteryControllers.size(); i++) {
 			// cycle through values of the battery controller amps and voltages
 			for (Map.Entry<Integer, ArrayList<Integer>> set : viableBatteryControllers
@@ -70,6 +71,7 @@ public class Pricing extends Algorithms {
 				if (panel.amps <= set.getKey().intValue()) {
 					for (int j = 0; j < set.getValue().size(); j++) {
 						if (panel.volts <= set.getValue().get(j)) {
+							voltage = set.getValue().get(j);
 							viableController = true;
 							break;
 						}
@@ -77,9 +79,32 @@ public class Pricing extends Algorithms {
 				}
 				if (viableController) {
 					system.addProduct(viableBatteryControllers.get(i));
-					findMatchingBatteries();
+					findMatchingBatteries(voltage);
 					viableController = false;
 					break;
+				}
+			}
+		}
+	}
+
+	public void findMatchingBatteries(int voltage) {
+		for (int i = 0; i < viableBatteries.size(); i++) {
+			// Battery voltage must be under the BatteryController volts
+			if (viableBatteries.get(i).voltage <= voltage) {
+				// find the amount of batteries needed to supply enough amp
+				// hours for one night
+				final int NIGHT_HOURS = 9;
+				int batteryCount = 1;
+				double KWHours = (viableBatteries.get(i).ampHours
+						* viableBatteries.get(i).voltage) / 1000; 
+				// add extra batteries until there's at least enough to cover
+				// a nights worth of consistent energy
+				while (KWHours < NIGHT_HOURS * energyInKW) {
+					batteryCount++; 
+					KWHours *= 2;
+				}
+				if (batteryCount * viableBatteries.get(i).price < budget) {
+					system.addProduct(viableBatteries.get(i));
 				}
 			}
 		}
@@ -180,8 +205,8 @@ public class Pricing extends Algorithms {
 			// We look at both dimensions to see if both sides fits
 			for (int j = 0; j < viablePanels.size(); j++) {
 				rackDims = rack.sizePerModule.split("X");
-				rackLengthInches = Double.parseDouble(rackDims[0].substring(0,
-						rackDims[0].indexOf("\"")));
+				rackLengthInches = Double.parseDouble(
+						rackDims[0].substring(0, rackDims[0].indexOf("\"")));
 
 				viablePanels.get(j).dimensions.trim();
 				panelDims = viablePanels.get(j).dimensions.split("/");

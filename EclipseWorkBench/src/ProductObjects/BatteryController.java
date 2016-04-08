@@ -9,7 +9,7 @@ public class BatteryController {
 	public String bankVoltage;
 	public String maxAmpPerController;
 
-	// measured as amps, bank voltage
+	// measured as <amps, bank voltage>
 	public HashMap<Integer, ArrayList<Integer>> maxAmps; 
 
 	// for nonspecific initialization
