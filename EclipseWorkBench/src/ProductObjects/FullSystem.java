@@ -397,9 +397,7 @@ public class FullSystem implements Cloneable {
 
 	}
 
-	/************************************************************************
-	 * Private, technical methods only to be used by this class
-	 ************************************************************************/
+	// gives the system as an object, typically to store the variant in a list
 	public Object cloneFullSystem() {
 		try {
 			return super.clone();

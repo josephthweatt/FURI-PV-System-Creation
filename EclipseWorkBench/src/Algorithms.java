@@ -159,7 +159,6 @@ public abstract class Algorithms {
 					badParameter = fieldName[i];
 				} else if (badParameter.contains(fieldName[i])) {
 					// skip any parameters which have already been added
-					continue;
 				} else {
 					badParameter += " and " + fieldName[i];
 				}
@@ -171,6 +170,38 @@ public abstract class Algorithms {
 			} else {
 				restrictedProduct = restrictedProduct.replaceAll(" and ", ", ");
 				restrictedProduct += " and " + product;
+			}
+		}
+		
+		// called to report that no viable systems were found
+		public void noSystems() {
+			System.out.println("No viable systems. Could not find parts for: ");
+			if (system.panel == null) {
+				System.out.println("Panel");
+			}
+			if (system.inverter == null) {
+				System.out.println("Inverter");
+			}
+			if (system.rack == null) {
+				System.out.println("Rack");
+			}
+			if (system.battery == null) {
+				System.out.println("Battery");
+			}
+			if (system.batteryControl == null) {
+				System.out.println("Battery Control");
+			}
+			if (system.batteryMeter == null) {
+				System.out.println("Battery Meter");
+			}
+			if (system.dcacDisconnect == null) {
+				System.out.println("DCAC Disconnect");
+			}
+			if (system.batteryWire == null) {
+				System.out.println("Battery Wire");
+			}
+			if (system.pvWires == null) {
+				System.out.println("PV Wires");
 			}
 		}
 	}

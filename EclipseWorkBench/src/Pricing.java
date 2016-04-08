@@ -18,7 +18,9 @@ public class Pricing extends Algorithms {
 		system = new FullSystem();
 		system.addProduct(viablePVWires.get(0));
 		system.addProduct(viableBatteryWires.get(0));
+		system.addProduct(viableBatteryMeters.get(0));
 
+		// this for loop will gather all available systems to viableSystems
 		for (int i = 0; i < viablePanels.size(); i++) {
 			// find each panels optimal rack
 			findBestRack(viablePanels.get(i));
@@ -26,6 +28,9 @@ public class Pricing extends Algorithms {
 			// calling this method creates a chain of similar methods to get
 			// systems of all combinations for this panel
 			findMatchingInverters(viablePanels.get(i));
+		}
+		if (viableSystems.size() < 1) {
+			parameters.noSystems();
 		}
 	}
 
@@ -105,6 +110,8 @@ public class Pricing extends Algorithms {
 				}
 				if (batteryCount * viableBatteries.get(i).price < budget) {
 					system.addProduct(viableBatteries.get(i));
+					// we store the system in a list to verify that it works
+					viableSystems.add((FullSystem) system.cloneFullSystem());
 				}
 			}
 		}
