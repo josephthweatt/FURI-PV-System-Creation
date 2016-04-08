@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 // made for storing multiple products of the same type
 // used for ranking individual objects and narrowing down the options
@@ -14,11 +15,7 @@ public class ProductContainer {
 	// constructor with products
 	public ProductContainer(Class<?> productType, Object[] products) {
 		this.productType = productType;
-		this.products = new ArrayList<Object>();
-		// casts products as their original objects, then adds them to ArrayList
-		for (int i = 0; i < products.length; i++) {
-			this.products.add(products[i]);
-		}
+		this.products = new ArrayList<Object>(Arrays.asList(products));
 	}
 
 	public void add(Object product) {
@@ -26,7 +23,8 @@ public class ProductContainer {
 		if (productType != null) {
 			this.products.add(product);
 		} else {
-			System.out.println("Product Type must be initialized");
+			this.products = new ArrayList<Object>();
+			this.products.add(product);
 		}
 	}
 

@@ -138,7 +138,10 @@ public class Pricing extends Algorithms {
 
 	@Override
 	protected void rankSystems() {
-
+		// uses ProductContainer's QuickSort to sort the systems
+		ProductContainer systems = new ProductContainer(FullSystem.class,
+				viableSystems.toArray());
+		systems.loToHi("cost");
 	}
 
 	/**************** FINDVIABLE() METHODS *********************************/

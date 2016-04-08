@@ -6,6 +6,8 @@ public class Battery {
 	public int voltage;
 	public int ampHours; // in Ah
 	
+	public int batteryCount = 1;
+	
 	// for nonspecific initialization
 	public Battery() {
 	}
