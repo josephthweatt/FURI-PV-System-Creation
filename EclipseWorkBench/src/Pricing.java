@@ -12,7 +12,7 @@ public class Pricing extends Algorithms {
 	@Override
 	public void runAlgorithm() {
 		super.runAlgorithm();
-		FullSystem tempSystem;
+		
 		// sets default system wires to the default wires, which are the
 		// cheapest of the wires in the database
 		system = new FullSystem();
@@ -35,13 +35,13 @@ public class Pricing extends Algorithms {
 			final int HOURS_PER_YEAR = 8760; // assumes non-leap year
 			// loop through systems, check that they satisfy user's parameters
 			for (int i = 0; i < viableSystems.size(); i++) {
-				if (viableSystems.get(i).findRealPanelArea() <= availableSpace
-						&& viableSystems.get(i).calculateCost() <= budget) {
+				if (viableSystems.get(i).findRealPanelArea() <= goal.availableSpace
+						&& viableSystems.get(i).calculateCost() <= goal.budget) {
 					viableSystems.get(i).calculateLoss();
 					viableSystems.get(i).getDataFromAPI(null);
 					// checks to see if the system gets enough energy per year
 					if (viableSystems.get(i).yearlyEnergy
-							/ HOURS_PER_YEAR < energyInKW) {
+							/ HOURS_PER_YEAR < goal.energyInKW) {
 						viableSystems.remove(i);
 					}
 				} else {
@@ -124,11 +124,11 @@ public class Pricing extends Algorithms {
 						* viableBatteries.get(i).voltage) / 1000;
 				// add extra batteries until there's at least enough to cover
 				// a nights worth of consistent energy
-				while (KWHours < NIGHT_HOURS * energyInKW) {
+				while (KWHours < NIGHT_HOURS * goal.energyInKW) {
 					batteryCount++;
 					KWHours *= 2;
 				}
-				if (batteryCount * viableBatteries.get(i).price < budget) {
+				if (batteryCount * viableBatteries.get(i).price < goal.budget) {
 					viableBatteries.get(i).batteryCount = batteryCount;
 					system.addProduct(viableBatteries.get(i));
 					// we store the system in a list to verify that it works
@@ -163,7 +163,7 @@ public class Pricing extends Algorithms {
 			/**************************** ENERGY *******************************/
 			// first we must check how many panels are needed to get the user's
 			// desired energy (in KW).
-			temp = energyInKW / panel.estimatedEnergyPerPanel();
+			temp = goal.energyInKW / panel.estimatedEnergyPerPanel();
 
 			// temp is created so that we can decide whether the Panel count
 			// should be rounded up. We round up if there is a remainder in
@@ -177,7 +177,7 @@ public class Pricing extends Algorithms {
 			/**************************** DIMENSIONS ***************************/
 			// if the amount of panels we need do not fit into our available
 			// space, we move on to the next product
-			if (panelCount * panel.areaInMeters > availableSpace) {
+			if (panelCount * panel.areaInMeters > goal.availableSpace) {
 				continue;
 			}
 
@@ -190,7 +190,7 @@ public class Pricing extends Algorithms {
 			 * products list, it is not a definite estimation of the entire
 			 * system's cost.
 			 *******************************************************************/
-			budget = this.budget;
+			budget = goal.budget;
 			budget -= 1500; // average cost of inverter
 			budget -= 1500; // average cost of battery
 			budget -= 100; // the approx. cost of a cheap battery meter
@@ -288,7 +288,7 @@ public class Pricing extends Algorithms {
 			
 			// Verify the inverter will output enough energy to meet the user's
 			// energy requirement
-			if (inverter.watts * 1000 >= energyInKW) {
+			if (inverter.watts * 1000 >= goal.energyInKW) {
 				viableInverters.add(inverter);
 			}
 		}
@@ -340,7 +340,7 @@ public class Pricing extends Algorithms {
 			// we need to see if the battery will be able to cover the
 			// amount of Watt hours used in a night. For more
 			// information, see the Progress log entry for 3-23-16
-			if (KWhours >= NIGHT_HOURS * energyInKW) {
+			if (KWhours >= NIGHT_HOURS * goal.energyInKW) {
 				viableBatteries.add(battery);
 			}
 		}

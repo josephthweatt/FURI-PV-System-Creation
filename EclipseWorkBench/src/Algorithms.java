@@ -5,10 +5,7 @@ import ProductObjects.*;
 
 public abstract class Algorithms {
 
-	public double budget;
-	public double energyInKW; // user's desired energy
-	public double availableSpace; // in square meters
-	public double energyInVolts; // an optional field. I may delete it later
+	public Goal goal;
 
 	protected ProductContainer[] containers; // this is used to evaluate
 												// products
@@ -34,12 +31,7 @@ public abstract class Algorithms {
 
 	// constructor called when the user wishes to have a specific voltage
 	public Algorithms(Goal goal, ProductContainer[] containers) {
-		this.budget = goal.budget;
-		this.energyInKW = goal.energyInKW;
-		this.availableSpace = goal.availableSpace;
-		if (goal.energyInVolts != -1) {
-			this.energyInVolts = goal.energyInVolts;
-		}
+		this.goal = goal;
 
 		this.containers = containers;
 
