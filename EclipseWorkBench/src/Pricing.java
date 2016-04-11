@@ -144,6 +144,10 @@ public class Pricing extends Algorithms {
 		ProductContainer systems = new ProductContainer(FullSystem.class,
 				viableSystems.toArray());
 		systems.loToHi("cost");
+		viableSystems.clear();
+		for (int i = 0; i < systems.products.size(); i++) {
+			viableSystems.add((FullSystem) systems.products.get(i));
+		}
 	}
 
 	/**************** FINDVIABLE() METHODS *********************************/

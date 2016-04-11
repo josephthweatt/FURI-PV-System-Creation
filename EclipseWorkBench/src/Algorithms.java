@@ -59,14 +59,8 @@ public abstract class Algorithms {
 	}
 
 	// returns the ranked systems, the map may contain more than 10
-	public HashMap<String, FullSystem> getSystems() {
-		HashMap<String, FullSystem> systems = new HashMap<String, FullSystem>();
-		for (int i = 0; i < viableSystems.size(); i++) {
-			// keys are saved as "panel: cost" to prevent overwriting values
-			systems.put(systems.get(i).panel + ": " + systems.get(i).cost,
-					systems.get(i));
-		}
-		return systems;
+	public FullSystem[] getSystems() {
+		return (FullSystem[]) viableSystems.toArray();
 	}
 
 	// returns 'true' when user parameters cannot generate viable Systems

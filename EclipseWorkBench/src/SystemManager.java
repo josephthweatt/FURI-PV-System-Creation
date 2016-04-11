@@ -1,11 +1,10 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import ProductObjects.*;
 
 public class SystemManager {
 	public SystemCreator systemCreator;
-	private HashMap<String, FullSystem> systemMap;
+	private FullSystem[] systems;
 	private Algorithms algorithm;
 
 	private Location location;
@@ -13,18 +12,18 @@ public class SystemManager {
 
 	public SystemManager() {
 		systemCreator = new SystemCreator();
-		systemMap = new HashMap<String, FullSystem>();
+		systems = null;
 	}
 
 	public SystemManager(Location location) {
 		systemCreator = new SystemCreator();
-		systemMap = new HashMap<String, FullSystem>();
+		systems = null;
 		this.location = location;
 	}
 
 	public SystemManager(Location location, Goal goal) {
 		systemCreator = new SystemCreator();
-		systemMap = new HashMap<String, FullSystem>();
+		systems = null;
 		this.location = location;
 		this.setGoal(goal);
 	}
@@ -37,8 +36,8 @@ public class SystemManager {
 		} // more will be added here as different algorithms are made
 	}
 
-	public FullSystem getSystemByName(String systemName) {
-		return systemMap.get(systemName);
+	public FullSystem getSystem(int index) {
+		return systems[index];
 	}
 
 	public ProductContainer getContainer(int i) {
@@ -52,11 +51,11 @@ public class SystemManager {
 	// called to put the found systems into the systemMap
 	public void setSystemsFromAlgorithm() {
 		algorithm.runAlgorithm();
-		systemMap = algorithm.getSystems();
+		systems = algorithm.getSystems();
 	}
 	
-	public HashMap<String, FullSystem> getSystems() {
-		return systemMap;
+	public FullSystem[] getSystems() {
+		return systems;
 	}
 
 	/******************************************************************************
@@ -84,19 +83,6 @@ public class SystemManager {
 			containers[8] = new ProductContainer(PVWire.class);
 
 			makeContainersWithDB(); // sets db informaiton into containers
-		}
-
-		// grabs products and inserts them into a full System
-		public FullSystem commitProductsToSystem(String systemName,
-				Object... product) {
-			if (location.getAddress() == null) {
-				systemMap.put(systemName,
-						new FullSystem(location.getCoordinates(), product));
-			} else {
-				systemMap.put(systemName, new FullSystem(location.getAddress(),
-						product));
-			}
-			return systemMap.get(systemName);
 		}
 
 		// changes the DBExtraction's database, also resets the
