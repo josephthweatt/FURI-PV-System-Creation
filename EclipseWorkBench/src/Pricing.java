@@ -27,7 +27,7 @@ public class Pricing extends Algorithms {
 
 			// calling this method creates a chain of similar methods to get
 			// systems of all combinations for this panel
-			findMatchingInverters(viablePanels.get(i));
+			findMatchingDCACDisconnects(viablePanels.get(i));
 		}
 		if (viableSystems.size() < 1) {
 			parameters.noViableSystems();
@@ -65,15 +65,6 @@ public class Pricing extends Algorithms {
 		return;
 	}
 
-	private void findMatchingInverters(Panel panel) {
-		for (int i = 0; i < viableInverters.size(); i++) {
-			if (panel.volts <= viableInverters.get(i).inputV) {
-				system.addProduct(viableInverters.get(i));
-				findMatchingDCACDisconnects(panel);
-			}
-		}
-	}
-
 	private void findMatchingDCACDisconnects(Panel panel) {
 		for (int i = 0; i < viableDCACDisconnects.size(); i++) {
 			if (panel.volts <= viableDCACDisconnects.get(i).volts
@@ -102,7 +93,8 @@ public class Pricing extends Algorithms {
 				}
 				if (viableController) {
 					system.addProduct(viableBatteryControllers.get(i));
-					findMatchingBatteries(voltage);
+					findMatchingInverters(voltage);
+					
 					viableController = false;
 					break;
 				}
@@ -110,6 +102,16 @@ public class Pricing extends Algorithms {
 		}
 	}
 
+	private void findMatchingInverters(int voltage) {
+		for (int i = 0; i < viableInverters.size(); i++) {
+			if (voltage <= viableInverters.get(i).inputV) {
+				system.addProduct(viableInverters.get(i));
+				findMatchingBatteries(voltage);
+			}
+		}
+	}
+	
+	// this function will store the complete system to viableSystems
 	public void findMatchingBatteries(int voltage) {
 		for (int i = 0; i < viableBatteries.size(); i++) {
 			// Battery voltage must be under the BatteryController volts

@@ -231,3 +231,17 @@ Resources:
 		-In doing this, I realize that SystemManager will at somepoint need to receive a directive to find the Systems according to user goals. This could be implemented as its own method, though I think that it could be called by the constructor (or it can be optional as a constructor parameter).
 			*I have solved this issue with the Goals class
 
+
+
+4-10-16
+-With the exception of a few errors I need to fix, I think the algorithm for Pricing is about finished. I'll make some of the corrections in the to-do, and then I'll start debugging.
+-Just a side-note, I'm going to want to do some refactoring on some of the classes to make the code more simple to implement in classes like main. I would like to simply create one Object of the system manager, call runAlgorithm(), and then get my results (so that's three operations for another programmer to implement my code).
+
+-The runAlgorithm involves a lot of method calling, mainly because it's exploring possibilities in a tree like fashion and this is the only way I know to do it at present. The calling structure is like so:
+	* from the product list, runAlgorithm() gets one of each PVWire, BatteryWire, BatteryMeter for every system. 
+	* from the product list, runAlgorithm() looks at each viable panel, then finds ONE rack for each panel (the combinations are not explored). At this point, a system will have 5/9 parts towards a full system.
+	* Each Panel calls findMatchingDCACDisconnects()
+	* Each disconnect will call findMatchingBatteryControllers()
+	* Each controller will call findMatchingInverters()
+	* Each inverter will call findMatchingBatteries(). This will give the system 9/9 essential parts, or the full system
+	* The findMatchingBatteries() method will then store the system to viableSystems.
