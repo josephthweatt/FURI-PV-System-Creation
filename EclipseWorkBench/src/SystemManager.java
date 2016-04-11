@@ -7,25 +7,11 @@ public class SystemManager {
 	private FullSystem[] systems;
 	private Algorithms algorithm;
 
-	private Location location;
 	private Goal goal;
 
 	public SystemManager() {
 		systemCreator = new SystemCreator();
 		systems = null;
-	}
-
-	public SystemManager(Location location) {
-		systemCreator = new SystemCreator();
-		systems = null;
-		this.location = location;
-	}
-
-	public SystemManager(Location location, Goal goal) {
-		systemCreator = new SystemCreator();
-		systems = null;
-		this.location = location;
-		this.setGoal(goal);
 	}
 
 	// sets the goal for what kind of systems to search for

@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import ProductObjects.BatteryWire;
+import ProductObjects.Goal;
 
 /* 
  * Current Version created 4-10-16

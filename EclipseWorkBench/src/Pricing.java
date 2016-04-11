@@ -15,7 +15,7 @@ public class Pricing extends Algorithms {
 		
 		// sets default system wires to the default wires, which are the
 		// cheapest of the wires in the database
-		system = new FullSystem();
+		system = new FullSystem(goal.location);
 		system.addProduct(viablePVWires.get(0));
 		system.addProduct(viableBatteryWires.get(0));
 		system.addProduct(viableBatteryMeters.get(0));

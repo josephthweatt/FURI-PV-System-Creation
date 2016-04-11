@@ -52,11 +52,24 @@ public class FullSystem implements Cloneable {
 	// for nonspecific initialization
 	public FullSystem() {
 	}
+	
+	public FullSystem(Goal.Location location) {
+		if (location.getAddress() == null) {
+			this.latitude = location.getLatitude();
+			this.longitude = location.getLongitude();
+		} else {
+			this.address = location.getAddress();
+		}
+	}
 
 	// constructor to initialize with products
-	public FullSystem(double[] coordinates, Object... product) {
-		this.latitude = coordinates[0];
-		this.longitude = coordinates[1];
+	public FullSystem(Goal.Location location, Object... product) {
+		if (location.getAddress() == null) {
+			this.latitude = location.getLatitude();
+			this.longitude = location.getLongitude();
+		} else {
+			this.address = location.getAddress();
+		}
 		addProduct(product);
 
 		findRealPanelArea();
@@ -67,20 +80,6 @@ public class FullSystem implements Cloneable {
 			calculateCost();
 			calculateLoss();
 			findAnnualKWhPerPanel();
-		}
-	}
-
-	public FullSystem(String address, Object... product) {
-		this.address = address;
-		addProduct(product);
-
-		findRealPanelArea();
-		getDataFromAPI(null);
-
-		// things to do if the user has entered a full system
-		if (isComplete()) {
-			calculateCost();
-			calculateLoss();
 		}
 	}
 
