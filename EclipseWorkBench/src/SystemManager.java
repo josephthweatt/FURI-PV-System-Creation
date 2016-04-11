@@ -54,6 +54,10 @@ public class SystemManager {
 		algorithm.runAlgorithm();
 		systemMap = algorithm.getSystems();
 	}
+	
+	public HashMap<String, FullSystem> getSystems() {
+		return systemMap;
+	}
 
 	/******************************************************************************
 	 * The SystemCreator subclass is dedicated to creating new PVSystems. It is

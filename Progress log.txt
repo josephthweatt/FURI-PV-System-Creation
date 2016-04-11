@@ -245,3 +245,7 @@ Resources:
 	* Each controller will call findMatchingInverters()
 	* Each inverter will call findMatchingBatteries(). This will give the system 9/9 essential parts, or the full system
 	* The findMatchingBatteries() method will then store the system to viableSystems.
+
+-I've finished the only two things I needed to do on my todo list (thus far), so I'm going to now create a test method in PowerInfoMain to test the Pricing Algorithm. 
+	*It just occured to me while writing the testcase that systemMap in the systemManager cannot be a HashMap, because doing so might skew the way the Algorithm ranked the systems. I'll return it as a standard array, because there'll be less overhead and it'll discourage deleting or adding Fullsystems. I'll do this in the next commit, though
+	*I'm also going to change getSystemByName to just getSystem, and then it'll take an index number as a parameter, then return the fullsystem at that index

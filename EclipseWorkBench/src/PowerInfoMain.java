@@ -4,8 +4,8 @@ import java.util.HashMap;
 import ProductObjects.BatteryWire;
 
 /* 
- * Current Version created 4-4-16
- * modified the algorithm declaration to include the goal class
+ * Current Version created 4-10-16
+ * first time testing the Pricing Algorithm
  */
 
 public class PowerInfoMain {
@@ -20,38 +20,25 @@ public class PowerInfoMain {
 
 		// budget: 9000 desired energy: .5KW available space: 30 m^2
 		Goal goal = new Goal("pricing", 9000.0, .5, 30.0);
-		Algorithms alg = new Pricing(goal, sysMan.getContainers());
-		// NOTE: this method should always be the first FindViable() called
-
-		// verify there was no issue with the parameters
-		if (alg.impossibleParameters()) {
-			System.exit(0);
+		sysMan.setGoal(goal);
+		sysMan.setSystemsFromAlgorithm();
+		
+		// print systems
+		for (int i = 0; i < ; i++) {
+			System.out.println("System #" + i);
+			System.out.println("\tCost: " + sysMan.getSystem().cost);
+			System.out.println("\tYearly KWH: " + sysMan.getSystem().yearlyEnergy);
+			System.out.println("\tSize (m): " + sysMan.getSystem().realPanelArea);
+			System.out.println("\tPanel: " + sysMan.getSystem().panel.name);
+			System.out.println("\tRack: " sysMan.getSystem().rack.name);
+			System.out.println("\tInverter: " + sysMan.getSystem().inverter.name);
+			System.out.println("\tBattery: " + sysMan.getSystem().battery.name);
+			System.out.println("\tBattery Controller: " + sysMan.getSystem().batteryController.name);
+			System.out.println("\tBattery Meter: " + sysMan.getSystem().batteryMeter.name);
+			System.out.println("\tDisconnect: " + sysMan.getSystem().dcacDisconnect.name);
+			System.out.println("\tPVWire: " + sysMan.getSystem().pvWire.name);
+			System.out.println("\tBattery Wire: " + sysMan.getSystem().batteryWire.name);
+			System.out.println();
 		}
-
-		// print a few products to see if everything's working
-		System.out.println("Panels: ");
-		for (int i = 0; i < alg.viablePanels.size(); i++) {
-			System.out.println(alg.viablePanels.get(i).name + " | "
-					+ alg.viablePanels.get(i).price);
-		}
-		System.out.println("Batteries: ");
-		for (int i = 0; i < alg.viableBatteries.size(); i++) {
-			System.out.println(alg.viableBatteries.get(i).name + " | "
-					+ alg.viableBatteries.get(i).price);
-		}
-		System.out.println("Inverters: ");
-		for (int i = 0; i < alg.viableInverters.size(); i++) {
-			System.out.println(alg.viableInverters.get(i).name + " | "
-					+ alg.viableInverters.get(i).price);
-		}
-		// from non abstract methods
-		System.out.println("BatteryWires: "
-				+ alg.viableBatteryWires.get(0).name + " | "
-				+ alg.viableBatteryWires.get(0).price);
-		System.out.println("BatteryMeter: "
-				+ alg.viableBatteryMeters.get(0).name + " | "
-				+ alg.viableBatteryMeters.get(0).price);
-		System.out.println("PVWires: " + alg.viablePVWires.get(0).name + " | "
-				+ alg.viablePVWires.get(0).price);
 	}
 }
