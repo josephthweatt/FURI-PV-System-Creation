@@ -264,25 +264,28 @@ public class Pricing extends Algorithms {
 	protected void findViableInverters() {
 		viableInverters = new ArrayList<Inverter>();
 		Inverter inverter;
-		Boolean viable;
-
+		Boolean viable = false;
 		for (int i = 0; i < containers[1].products.size(); i++) {
 			inverter = (Inverter) containers[1].products.get(i);
 
 			/**************************** ENERGY *******************************/
 			// Verify that the inverter can receive as many or more volts as at
-			// least one viable Panel
-			viable = false;
-			for (int j = 0; j < viablePanels.size(); j++) {
-				if (inverter.inputV >= viablePanels.get(j).volts) {
-					viable = true;
-					break;
+			// least one Battery Controller type
+			for (int j = 0; j < viableBatteryControllers.size(); j++) {
+				for (ArrayList<Integer> volts : viableBatteryControllers.get(j).maxAmps.values()) {
+					for (int k = 0; k < volts.size(); k++) {
+						if (inverter.inputV >= volts.get(k)) {
+							viable = true;
+							break;
+						}
+					}
 				}
 			}
 			if (!viable) {
 				continue; // skips to the next product
 			}
-
+			viable = false;
+			
 			// Verify the inverter will output enough energy to meet the user's
 			// energy requirement
 			if (inverter.watts * 1000 >= energyInKW) {
