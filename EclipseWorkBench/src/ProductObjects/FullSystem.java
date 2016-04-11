@@ -27,7 +27,7 @@ public class FullSystem implements Cloneable {
 	public BatteryMeter batteryMeter;
 	public DCACDisconnect dcacDisconnect;
 	public BatteryWire batteryWire;
-	public PVWire pvWires;
+	public PVWire pvWire;
 
 	// all the table names that one could expect from the database:
 	public static String[] productType = { "Panels", "Inverters", "Racking",
@@ -103,7 +103,7 @@ public class FullSystem implements Cloneable {
 			} else if (product[i].getClass() == BatteryWire.class) {
 				batteryWire = (BatteryWire) product[i];
 			} else if (product[i].getClass() == PVWire.class) {
-				pvWires = (PVWire) product[i];
+				pvWire = (PVWire) product[i];
 			}
 		}
 	}
@@ -139,7 +139,7 @@ public class FullSystem implements Cloneable {
 			this.cost += batteryMeter.price;
 			this.cost += dcacDisconnect.price;
 			this.cost += batteryWire.price;
-			this.cost += pvWires.price;
+			this.cost += pvWire.price;
 			return cost;
 		}
 		return 0.0;
@@ -207,7 +207,7 @@ public class FullSystem implements Cloneable {
 			return false;
 		if (batteryWire == null)
 			return false;
-		if (pvWires == null)
+		if (pvWire == null)
 			return false;
 
 		return true;

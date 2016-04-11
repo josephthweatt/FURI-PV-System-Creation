@@ -186,7 +186,7 @@ public abstract class Algorithms {
 			if (system.batteryWire == null) {
 				System.out.println("Battery Wire");
 			}
-			if (system.pvWires == null) {
+			if (system.pvWire == null) {
 				System.out.println("PV Wires");
 			}
 		}
