@@ -42,11 +42,12 @@ public abstract class Algorithms {
 
 	// have not yet decided if this will return anything
 	public void runAlgorithm() {
+		viableSystems = new ArrayList<FullSystem>();
 		// Overriding this method ought to implement 'super' to call findViables
 		findViablePanels();
 		findViableRacks();
-		findViableInverters();
 		findViableBatteryControllers();
+		findViableInverters();
 		findViableBatteries();
 		findViableDCACDisconnect();
 		findViableBatteryMeters();
