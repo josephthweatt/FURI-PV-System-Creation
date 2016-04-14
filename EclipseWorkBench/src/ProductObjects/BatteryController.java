@@ -33,11 +33,13 @@ public class BatteryController {
 			String[] amps = ampSegments[i].split("/");
 			String[] voltages = amps[1].split("&");
 			Integer ampsInt = Integer.parseInt(amps[0]);
-
-			maxAmps.put(ampsInt, new ArrayList<Integer>());
+			maxAmps = new HashMap<Integer, ArrayList<Integer>>();
+			
+			ArrayList<Integer> voltArray = new ArrayList<Integer>();
 			for (int j = 0; j < voltages.length; j++) {
-				maxAmps.get(ampsInt).add(Integer.parseInt(voltages[j]));
+				voltArray.add(Integer.parseInt(voltages[j]));
 			}
+			maxAmps.put(ampsInt, voltArray);
 		}
 	}
 }
