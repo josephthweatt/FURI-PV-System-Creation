@@ -17,7 +17,7 @@ public class Goal {
 	}
 
 	public Goal(String goal, double budget, double energyInKW,
-			double availableSpace, double[] coordinates) {
+			double availableSpace, Double[] coordinates) {
 		this.goal = goal;
 		this.budget = budget;
 		this.energyInKW = energyInKW;
@@ -39,7 +39,7 @@ public class Goal {
 	}
 
 	public Goal(String goal, double budget, double energyInKW,
-			double availableSpace, double energyInVolts, double[] coordinates) {
+			double availableSpace, double energyInVolts, Double[] coordinates) {
 		this.goal = goal;
 		this.budget = budget;
 		this.energyInKW = energyInKW;
@@ -86,14 +86,14 @@ public class Goal {
 					System.exit(0);
 				}
 
-				latitude = (Double) location[0];
-				longitude = (Double) location[1];
+				latitude = ((Double) location[0]).doubleValue();
+				longitude = ((Double) location[1]).doubleValue();
 				address = null;
 			} else if (location[0] instanceof String) { // string address
 				address = (String) location[0];
 				latitude = longitude = 0;
 			} else {
-				System.out.println("Invalid Objects given to setLocation");
+				System.out.println("Invalid Objects given to Location");
 			}
 		}
 
