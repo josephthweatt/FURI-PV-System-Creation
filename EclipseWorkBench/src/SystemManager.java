@@ -13,11 +13,17 @@ public class SystemManager {
 		systemCreator = new SystemCreator();
 		systems = null;
 	}
+	
+	public SystemManager(Goal goal) {
+		systemCreator = new SystemCreator();
+		systems = null;
+		setGoal(goal);
+	}
 
 	// sets the goal for what kind of systems to search for
 	public void setGoal(Goal goal) {
 		this.goal = goal;
-		if (goal.equals("pricing")) {
+		if (goal.goal.equals("pricing")) {
 			algorithm = new Pricing(goal, systemCreator.containers);
 		} // more will be added here as different algorithms are made
 	}
