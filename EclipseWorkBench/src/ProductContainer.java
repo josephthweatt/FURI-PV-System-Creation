@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 // made for storing multiple products of the same type
-// used for ranking individual objects and narrowing down the options
+// used for ranking individual objects and narrowing down the viable options
 public class ProductContainer {
 	public Class<?> productType;
 	public ArrayList<Object> products;

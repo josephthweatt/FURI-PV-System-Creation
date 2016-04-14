@@ -1,4 +1,4 @@
 Just some things I need to do before integrating into the Android application
 
--Have findViableInverters and findMatchingInverters look at batteryControllers, not at the Panels. BatteryControllers are intermediaries between Panels and inverters.
--In the Algorithms class (and subsequentally Pricing) turn the "user constraints" into a singular "Goal" class. 
+-Have findViableInverters and findMatchingInverters look at batteryControllers, not at the Panels. BatteryControllers are intermediaries between Panels and inverters.(X)
+-In the Algorithms class (and subsequentally Pricing) turn the "user constraints" into a singular "Goal" class. (X)
