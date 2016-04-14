@@ -22,6 +22,7 @@ public class Pricing extends Algorithms {
 
 		// this for loop will gather all available systems to viableSystems
 		for (int i = 0; i < viablePanels.size(); i++) {
+			system.addProduct(viablePanels.get(i));
 			// find each panels optimal rack
 			findBestRack(viablePanels.get(i));
 
@@ -35,16 +36,10 @@ public class Pricing extends Algorithms {
 			final int HOURS_PER_YEAR = 8760; // assumes non-leap year
 			// loop through systems, check that they satisfy user's parameters
 			for (int i = 0; i < viableSystems.size(); i++) {
-				if (viableSystems.get(i).findRealPanelArea() <= goal.availableSpace
-						&& viableSystems.get(i).calculateCost() <= goal.budget) {
-					viableSystems.get(i).calculateLoss();
-					viableSystems.get(i).getDataFromAPI(null);
-					// checks to see if the system gets enough energy per year
-					if (viableSystems.get(i).yearlyEnergy
-							/ HOURS_PER_YEAR < goal.energyInKW) {
-						viableSystems.remove(i);
-					}
-				} else {
+				viableSystems.get(i).getDataFromAPI(null);
+				// checks to see if the system gets enough energy per year
+				if (viableSystems.get(i).yearlyEnergy
+						/ HOURS_PER_YEAR < goal.energyInKW) {
 					viableSystems.remove(i);
 				}
 			}
@@ -132,9 +127,19 @@ public class Pricing extends Algorithms {
 					viableBatteries.get(i).batteryCount = batteryCount;
 					system.addProduct(viableBatteries.get(i));
 					// we store the system in a list to verify that it works
-					viableSystems.add((FullSystem) system.cloneFullSystem());
+					verifyAndAddSystem();
 				}
 			}
+		}
+	}
+	
+	// Checks to see if the system is worth checking against the PVWatts API,
+	// then adds it to viableSystems if it is
+	private void verifyAndAddSystem() {
+		if (system.findRealPanelArea() <= goal.availableSpace
+				&& system.calculateCost() <= goal.budget) {
+			system.calculateLoss();
+			viableSystems.add((FullSystem) system.cloneFullSystem());
 		}
 	}
 
