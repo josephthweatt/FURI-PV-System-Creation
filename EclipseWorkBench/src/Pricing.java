@@ -12,7 +12,7 @@ public class Pricing extends Algorithms {
 	@Override
 	public void runAlgorithm() {
 		super.runAlgorithm();
-		
+
 		// sets default system wires to the default wires, which are the
 		// cheapest of the wires in the database
 		system = new FullSystem(goal.location);
@@ -89,7 +89,7 @@ public class Pricing extends Algorithms {
 				if (viableController) {
 					system.addProduct(viableBatteryControllers.get(i));
 					findMatchingInverters(voltage);
-					
+
 					viableController = false;
 					break;
 				}
@@ -105,7 +105,7 @@ public class Pricing extends Algorithms {
 			}
 		}
 	}
-	
+
 	// this function will store the complete system to viableSystems
 	public void findMatchingBatteries(int voltage) {
 		for (int i = 0; i < viableBatteries.size(); i++) {
@@ -132,7 +132,7 @@ public class Pricing extends Algorithms {
 			}
 		}
 	}
-	
+
 	// Checks to see if the system is worth checking against the PVWatts API,
 	// then adds it to viableSystems if it is
 	@Override
@@ -150,7 +150,7 @@ public class Pricing extends Algorithms {
 		ProductContainer systems = new ProductContainer(FullSystem.class,
 				viableSystems.toArray());
 		systems.loToHi("cost");
-		viableSystems.clear();
+		viableSystems.clear(); 
 		for (int i = 0; i < systems.products.size(); i++) {
 			viableSystems.add((FullSystem) systems.products.get(i));
 		}
@@ -282,7 +282,8 @@ public class Pricing extends Algorithms {
 			// Verify that the inverter can receive as many or more volts as at
 			// least one Battery Controller type
 			for (int j = 0; j < viableBatteryControllers.size(); j++) {
-				for (ArrayList<Integer> volts : viableBatteryControllers.get(j).maxAmps.values()) {
+				for (ArrayList<Integer> volts : viableBatteryControllers
+						.get(j).maxAmps.values()) {
 					for (int k = 0; k < volts.size(); k++) {
 						if (inverter.inputV >= volts.get(k)) {
 							viable = true;
@@ -295,7 +296,7 @@ public class Pricing extends Algorithms {
 				continue; // skips to the next product
 			}
 			viable = false;
-			
+
 			// Verify the inverter will output enough energy to meet the user's
 			// energy requirement
 			if (inverter.watts * 1000 >= goal.energyInKW) {
@@ -339,7 +340,9 @@ public class Pricing extends Algorithms {
 	protected void findViableBatteries() {
 		viableBatteries = new ArrayList<Battery>();
 		Battery battery;
-		final int NIGHT_HOURS = 9;
+		final int NIGHT_HOURS = 8;
+		// nightly energy assumes less energy is used during night hours
+		double nightlyEnergy = goal.energyInKW * .70;
 		double KWhours;
 
 		for (int i = 0; i < containers[3].products.size(); i++) {
@@ -348,9 +351,11 @@ public class Pricing extends Algorithms {
 
 			/**************************** ENERGY *******************************/
 			// we need to see if the battery will be able to cover the
-			// amount of Watt hours used in a night. For more
-			// information, see the Progress log entry for 3-23-16
-			if (KWhours >= NIGHT_HOURS * goal.energyInKW) {
+			// amount of Watt hours used in a night. One battery does not need
+			// to cover all energy demands, covering a portion (for simplicity's
+			// sake, we'll say 20%) will show the battery is capable of that
+			// For more information, see the Progress log entry for 3-23-16
+			if (KWhours >= NIGHT_HOURS * nightlyEnergy * .20) {
 				viableBatteries.add(battery);
 			}
 		}

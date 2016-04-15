@@ -251,3 +251,4 @@ Resources:
 
 -So I found the main problem (or perhaps just 'a' problem) causing the bottleneck. Panels are being evauated improperly, applying the 15% efficiency to the panel's system cap when it is supposed to be applied to the Kilowatts that a panel is exposed to. I'll make some changes to this method and see how the list populates after that.
 -This seems to have given the algorithm more panels to work with, thus allowing other products to enter their respective "viable" list. Batteries, however, are still missing. 
+-The reason why the batteries are missing is because the findViableBatteries method is checking to see if the battery can support a full night (9 hours) of energy, where energy is constant throughout the day. This is impossible, and should be modified to account for the easing of power usage thoughout the night

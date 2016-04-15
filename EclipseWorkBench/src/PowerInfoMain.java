@@ -16,7 +16,7 @@ public class PowerInfoMain {
 		SystemManager sysMan = new SystemManager();
 
 		// budget: 15000 desired energy: 3KW available space: 50 m^2
-		Goal goal = new Goal("pricing", 25000.0, 3, 55.0, coordinates);
+		Goal goal = new Goal("pricing", 25000.0, 3, 70.0, coordinates);
 		sysMan.setGoal(goal);;
 		sysMan.setSystemsFromAlgorithm();
 		
