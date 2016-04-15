@@ -15,8 +15,8 @@ public class PowerInfoMain {
 		// Using product container to compute the meters squared of its panels
 		SystemManager sysMan = new SystemManager();
 
-		// budget: 9000 desired energy: .5KW available space: 30 m^2
-		Goal goal = new Goal("pricing", 588000.0, .01, 500.0, coordinates);
+		// budget: 15000 desired energy: 3KW available space: 50 m^2
+		Goal goal = new Goal("pricing", 25000.0, 3, 55.0, coordinates);
 		sysMan.setGoal(goal);;
 		sysMan.setSystemsFromAlgorithm();
 		

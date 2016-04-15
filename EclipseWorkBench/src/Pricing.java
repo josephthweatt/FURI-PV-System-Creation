@@ -135,7 +135,8 @@ public class Pricing extends Algorithms {
 	
 	// Checks to see if the system is worth checking against the PVWatts API,
 	// then adds it to viableSystems if it is
-	private void verifyAndAddSystem() {
+	@Override
+	protected void verifyAndAddSystem() {
 		if (system.findRealPanelArea() <= goal.availableSpace
 				&& system.calculateCost() <= goal.budget) {
 			system.calculateLoss();

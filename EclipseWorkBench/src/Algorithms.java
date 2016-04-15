@@ -79,6 +79,9 @@ public abstract class Algorithms {
 	}
 
 	/********************** private/protected methods **************************/
+	// Checks to see if the system is worth checking against the PVWatts API,
+	// then adds it to viableSystems if it is
+	protected abstract void verifyAndAddSystem();
 
 	// ranks the systems according to the goal
 	protected abstract void rankSystems();

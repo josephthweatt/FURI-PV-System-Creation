@@ -58,27 +58,8 @@ public class Panel {
 			return estimatedEnergyPerPanel;
 		}
 		// if est. EnergyPerPanel hasn't been found yet, we find it here...
-		double approximateEfficiency = 0;
 		double wattToKW = .001;
-
-		if (moduleType == 0) {
-			// moduleType 0 is standard efficiency (15%)
-			approximateEfficiency = .15;
-		} else if (moduleType == 1) {
-			// moduleType 1 is premium efficiency (19%)
-			approximateEfficiency = .19;
-		} else if (moduleType == 2) {
-			// moduleType 2 is thin film Panels (10% efficiency)
-			approximateEfficiency = .10;
-		} else {
-			// if the module type is something else, print the error and
-			// exit the program
-			System.out.println("Error: Invalid module type on the panel: "
-					+ name + "\nType given: " + moduleType);
-			System.exit(0);
-		}
-		return estimatedEnergyPerPanel = systemCap * approximateEfficiency
-				* wattToKW;
+		return estimatedEnergyPerPanel = systemCap * wattToKW;
 	}
 	
 	private void getDimensions() {
