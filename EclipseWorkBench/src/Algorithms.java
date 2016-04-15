@@ -61,7 +61,10 @@ public abstract class Algorithms {
 
 	// returns the ranked systems, the map may contain more than 10
 	public FullSystem[] getSystems() {
-		return (FullSystem[]) viableSystems.toArray();
+		if (viableSystems.size() > 0) {
+			return (FullSystem[]) viableSystems.toArray();
+		}
+		return null;
 	}
 
 	// returns 'true' when user parameters cannot generate viable Systems

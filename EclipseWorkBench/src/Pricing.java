@@ -43,7 +43,9 @@ public class Pricing extends Algorithms {
 					viableSystems.remove(i);
 				}
 			}
-			rankSystems();
+			if (viableSystems.size() > 0) {
+				rankSystems();
+			}
 		}
 	}
 
