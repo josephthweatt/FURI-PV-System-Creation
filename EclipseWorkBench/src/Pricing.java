@@ -38,8 +38,8 @@ public class Pricing extends Algorithms {
 			for (int i = 0; i < viableSystems.size(); i++) {
 				viableSystems.get(i).getDataFromAPI(null);
 				// checks to see if the system gets enough energy per year
-				if (viableSystems.get(i).yearlyEnergy
-						/ HOURS_PER_YEAR < goal.energyInKW) {
+				if (viableSystems.get(i).yearlyEnergy / HOURS_PER_YEAR 
+						< goal.energyInKW) {
 					viableSystems.remove(i);
 				}
 			}
@@ -113,20 +113,7 @@ public class Pricing extends Algorithms {
 		for (int i = 0; i < viableBatteries.size(); i++) {
 			// Battery voltage must be under the BatteryController volts
 			if (viableBatteries.get(i).voltage <= voltage) {
-				// find the amount of batteries needed to supply enough amp
-				// hours for one night
-				final int NIGHT_HOURS = 9;
-				int batteryCount = 1;
-				double KWHours = (viableBatteries.get(i).ampHours
-						* viableBatteries.get(i).voltage) / 1000;
-				// add extra batteries until there's at least enough to cover
-				// a nights worth of consistent energy
-				while (KWHours < NIGHT_HOURS * goal.energyInKW) {
-					batteryCount++;
-					KWHours *= 2;
-				}
-				if (batteryCount * viableBatteries.get(i).price < goal.budget) {
-					viableBatteries.get(i).batteryCount = batteryCount;
+				if (viableBatteries.get(i).batteryCount * viableBatteries.get(i).price < goal.budget) {
 					system.addProduct(viableBatteries.get(i));
 					// we store the system in a list to verify that it works
 					verifyAndAddSystem();
@@ -356,7 +343,6 @@ public class Pricing extends Algorithms {
 			KWhours = nightlyEnergy * OFF_PEAK_HOURS;
 			totalAmpHours = (2 * KWhours) / battery.voltage;
 			
-			// batteryCount will likely change later in the algorithm
 			double temp = totalAmpHours / battery.ampHours;
 			if (temp % 1 < .5) {
 				battery.batteryCount = (int) temp;
