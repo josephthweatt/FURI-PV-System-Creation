@@ -15,16 +15,18 @@ public class PowerInfoMain {
 		// Using product container to compute the meters squared of its panels
 		SystemManager sysMan = new SystemManager();
 
-		// budget: 15000 desired energy: 3KW available space: 50 m^2
-		Goal goal = new Goal("pricing", 31200.0, 5, 70.0, coordinates);
+		// budget: 31200 desired energy: 3KW available space: 40 m^2
+		Goal goal = new Goal("pricing", 31200.0, 3, 40.0, coordinates);
 		sysMan.setGoal(goal);
 		sysMan.setSystemsFromAlgorithm();
 		
 		// print systems
 		for (int i = 0; i < sysMan.getSystems().length; i++) {
-			System.out.println("System #" + i + 1);
+			System.out.println("System #" + (i + 1));
 			System.out.println("\tCost: " + sysMan.getSystem(i).cost);
 			System.out.println("\tYearly KWH: " + sysMan.getSystem(i).yearlyEnergy);
+			System.out.println("\tSize (KW): " + (double) (sysMan.getSystem(i).panel.systemCap 
+					* sysMan.getSystem(i).panel.panelCount) / 1000);
 			System.out.println("\tSize (m): " + sysMan.getSystem(i).realPanelArea);
 			System.out.println("\tPanel: " + sysMan.getSystem(i).panel.name);
 			System.out.println("\tRack: " + sysMan.getSystem(i).rack.name);

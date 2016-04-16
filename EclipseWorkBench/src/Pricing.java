@@ -34,20 +34,10 @@ public class Pricing extends Algorithms {
 			parameters.noViableSystems();
 		} else {
 			// loop through systems, check that they satisfy user's parameters
-			int i = 0;
-			while (!(i >= viableSystems.size())) {
+			for (int i = 0; i < viableSystems.size(); i++) {
 				viableSystems.get(i).getDataFromAPI(null);
-				// checks to see if the system gets enough energy per year
-				if (viableSystems.get(i).yearlyEnergy
-						/ HOURS_PER_YEAR < goal.energyInKW) {
-					viableSystems.remove(i);
-				} else {
-					i++;
-				}
 			}
-			if (viableSystems.size() > 0) {
-				rankSystems();
-			}
+			rankSystems();
 		}
 	}
 
@@ -130,7 +120,9 @@ public class Pricing extends Algorithms {
 	@Override
 	protected void verifyAndAddSystem() {
 		if (system.findRealPanelArea() <= goal.availableSpace
-				&& system.calculateCost() <= goal.budget) {
+				&& system.calculateCost() <= goal.budget
+				&& system.panel.panelCount
+						* system.panel.systemCap >= goal.sizeInKW) {
 			system.calculateLoss();
 			viableSystems.add((FullSystem) system.cloneFullSystem());
 		}
@@ -156,6 +148,7 @@ public class Pricing extends Algorithms {
 		viablePanels = new ArrayList<Panel>();
 		Panel panel;
 		int panelCount;
+		double temp;
 		double budget;
 
 		// For details on finding the panel count, see Progress Log entry
@@ -167,13 +160,21 @@ public class Pricing extends Algorithms {
 		system.calculateLoss();
 		system.getDataFromAPI(null);
 		double ratio = (system.yearlyEnergy / HOURS_PER_YEAR);
-		double newProjectedEnergy = goal.energyInKW / ratio;
+		double newProjectedEnergy = goal.sizeInKW / ratio;
 
 		// checks through ALL panels in the database
 		for (int i = 0; i < containers[0].products.size(); i++) {
 			panel = (Panel) containers[0].products.get(i);
-			panelCount = (int) (newProjectedEnergy
-					/ panel.estimatedEnergyPerPanel()) + 1;
+
+			/**************************** ENERGY *******************************/
+			// first we must check how many panels are needed to get the user's
+			// desired size(in KW).
+			temp = goal.sizeInKW / panel.estimatedEnergyPerPanel();
+			if (temp % 1 != 0) {
+				panelCount = (int) temp + 1;
+			} else {
+				panelCount = (int) temp;
+			}
 
 			/**************************** DIMENSIONS ***************************/
 			// if the amount of panels we need do not fit into our available
@@ -290,7 +291,7 @@ public class Pricing extends Algorithms {
 
 			// Verify the inverter will output enough energy to meet the user's
 			// energy requirement
-			if (inverter.watts * 1000 >= goal.energyInKW) {
+			if (inverter.watts * 1000 >= goal.sizeInKW) {
 				viableInverters.add(inverter);
 			}
 		}
@@ -333,7 +334,7 @@ public class Pricing extends Algorithms {
 		Battery battery;
 		final int OFF_PEAK_HOURS = 8; // as fraction of day
 		// nightly energy assumes less energy is used during night hours
-		double nightlyEnergy = goal.energyInKW * .70;
+		double nightlyEnergy = goal.sizeInKW * .70;
 		double KWhours, totalAmpHours;
 
 		for (int i = 0; i < containers[3].products.size(); i++) {
@@ -370,8 +371,8 @@ public class Pricing extends Algorithms {
 			/**************************** ENERGY *******************************/
 			// check that disconnect can handle the amps & volts of a system
 			for (int j = 0; j < viablePanels.size(); j++) {
-				if (disconnect.amps >= viablePanels.get(i).amps) {
-					if (disconnect.volts >= viablePanels.get(i).volts) {
+				if (disconnect.amps >= viablePanels.get(j).amps) {
+					if (disconnect.volts >= viablePanels.get(j).volts) {
 						viableDCACDisconnects.add(disconnect);
 						break;
 					}
