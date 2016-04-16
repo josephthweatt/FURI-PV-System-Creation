@@ -131,6 +131,7 @@ public class FullSystem implements Cloneable {
 	// returns zero if the system is incomplete
 	public double calculateCost() {
 		if (isComplete()) {
+			cost = 0;
 			this.cost += panel.price * panel.panelCount;
 			this.cost += inverter.price;
 			this.cost += rack.price;
