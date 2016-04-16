@@ -16,13 +16,13 @@ public class PowerInfoMain {
 		SystemManager sysMan = new SystemManager();
 
 		// budget: 15000 desired energy: 3KW available space: 50 m^2
-		Goal goal = new Goal("pricing", 25000.0, 3, 70.0, coordinates);
+		Goal goal = new Goal("pricing", 25000.0, 1.5, 70.0, coordinates);
 		sysMan.setGoal(goal);;
 		sysMan.setSystemsFromAlgorithm();
 		
 		// print systems
 		for (int i = 0; i < sysMan.getSystems().length; i++) {
-			System.out.println("System #" + i);
+			System.out.println("System #" + i + 1);
 			System.out.println("\tCost: " + sysMan.getSystem(i).cost);
 			System.out.println("\tYearly KWH: " + sysMan.getSystem(i).yearlyEnergy);
 			System.out.println("\tSize (m): " + sysMan.getSystem(i).realPanelArea);

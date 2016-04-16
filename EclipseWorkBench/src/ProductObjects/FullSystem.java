@@ -167,7 +167,7 @@ public class FullSystem implements Cloneable {
 	// calculates percent of energy one expects to lose from
 	// the system (percent stored as a double from 0 to 100)
 	public void calculateLoss() {
-		if (isComplete() == false) {
+		if (panel == null || inverter == null) {
 			System.out.println(
 					"Incomplete system. Complete this system to use this method.");
 			return;

@@ -272,4 +272,5 @@ Resources:
 	count = Projected / systemCap
 	* Although this is not gauranteed to get ALL of the desired energy, so it would be safe to add the panel count by one:
 	count = (Projected / systemCap) + 1
+
 	

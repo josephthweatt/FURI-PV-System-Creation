@@ -28,6 +28,8 @@ public abstract class Algorithms {
 	protected FullSystem system; // temporary system to store new systems
 	protected ImpossibleParameters parameters;
 
+	protected final int HOURS_PER_YEAR = 8760; // assumes non-leap year
+	
 	// constructor called when the user wishes to have a specific voltage
 	public Algorithms(Goal goal, ProductContainer[] containers) {
 		this.goal = goal;
@@ -61,7 +63,11 @@ public abstract class Algorithms {
 	// returns the ranked systems, the map may contain more than 10
 	public FullSystem[] getSystems() {
 		if (viableSystems.size() > 0) {
-			return (FullSystem[]) viableSystems.toArray();
+			FullSystem[] sysArray = new FullSystem[viableSystems.size()];
+			for (int i = 0; i < viableSystems.size(); i++) {
+				sysArray[i] = (FullSystem) viableSystems.get(i);
+			}
+			return sysArray;
 		}
 		return null;
 	}

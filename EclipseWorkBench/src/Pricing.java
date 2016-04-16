@@ -33,14 +33,13 @@ public class Pricing extends Algorithms {
 		if (viableSystems.size() < 1) {
 			parameters.noViableSystems();
 		} else {
-			final int HOURS_PER_YEAR = 8760; // assumes non-leap year
 			// loop through systems, check that they satisfy user's parameters
-			int i  = 0;
+			int i = 0;
 			while (!(i >= viableSystems.size())) {
 				viableSystems.get(i).getDataFromAPI(null);
 				// checks to see if the system gets enough energy per year
-				if (viableSystems.get(i).yearlyEnergy / HOURS_PER_YEAR 
-						< goal.energyInKW) {
+				if (viableSystems.get(i).yearlyEnergy
+						/ HOURS_PER_YEAR < goal.energyInKW) {
 					viableSystems.remove(i);
 				} else {
 					i++;
@@ -116,7 +115,8 @@ public class Pricing extends Algorithms {
 		for (int i = 0; i < viableBatteries.size(); i++) {
 			// Battery voltage must be under the BatteryController volts
 			if (viableBatteries.get(i).voltage <= voltage) {
-				if (viableBatteries.get(i).batteryCount * viableBatteries.get(i).price < goal.budget) {
+				if (viableBatteries.get(i).batteryCount
+						* viableBatteries.get(i).price < goal.budget) {
 					system.addProduct(viableBatteries.get(i));
 					// we store the system in a list to verify that it works
 					verifyAndAddSystem();
@@ -142,7 +142,7 @@ public class Pricing extends Algorithms {
 		ProductContainer systems = new ProductContainer(FullSystem.class,
 				viableSystems.toArray());
 		systems.loToHi("cost");
-		viableSystems.clear(); 
+		viableSystems.clear();
 		for (int i = 0; i < systems.products.size(); i++) {
 			viableSystems.add((FullSystem) systems.products.get(i));
 		}
@@ -156,26 +156,25 @@ public class Pricing extends Algorithms {
 		viablePanels = new ArrayList<Panel>();
 		Panel panel;
 		int panelCount;
-		double temp;
 		double budget;
+
+		// For details on finding the panel count, see Progress Log entry
+		// 4-15-16
+		// Create Real KWH to Projected KWH ratio
+		FullSystem system = new FullSystem(goal.location,
+				containers[0].products.get(0),
+				new Inverter(null, 0, 95, 0, 0, 0));
+		system.calculateLoss();
+		system.getDataFromAPI(null);
+		double ratio = (system.yearlyEnergy / HOURS_PER_YEAR);
+		double newProjectedEnergy = goal.energyInKW / ratio;
 
 		// checks through ALL panels in the database
 		for (int i = 0; i < containers[0].products.size(); i++) {
 			panel = (Panel) containers[0].products.get(i);
-			/**************************** ENERGY *******************************/
-			// first we must check how many panels are needed to get the user's
-			// desired energy (in KW).
-			temp = goal.energyInKW / panel.estimatedEnergyPerPanel();
+			panelCount = (int) (newProjectedEnergy
+					/ panel.estimatedEnergyPerPanel()) + 1;
 
-			// temp is created so that we can decide whether the Panel count
-			// should be rounded up. We round up if there is a remainder in
-			// temp, because that would indicate that temp holds one less than
-			// the amount of Panels needed to satisfy energy requirements.
-			if (temp % 1 != 0) {
-				panelCount = (int) temp + 1;
-			} else {
-				panelCount = (int) temp;
-			}
 			/**************************** DIMENSIONS ***************************/
 			// if the amount of panels we need do not fit into our available
 			// space, we move on to the next product
@@ -341,11 +340,11 @@ public class Pricing extends Algorithms {
 			battery = (Battery) containers[3].products.get(i);
 			/**************************** ENERGY *******************************/
 			// we need to see if the battery will be able to cover the
-			// amount of Watt hours used in a night. For more information, see 
+			// amount of Watt hours used in a night. For more information, see
 			// the Progress log entry for 3-23-16 and 4-15-16
 			KWhours = nightlyEnergy * OFF_PEAK_HOURS;
 			totalAmpHours = (2 * KWhours) / battery.voltage;
-			
+
 			double temp = totalAmpHours / battery.ampHours;
 			if (temp % 1 < .5) {
 				battery.batteryCount = (int) temp;
