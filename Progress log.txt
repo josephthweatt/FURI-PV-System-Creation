@@ -259,3 +259,17 @@ Resources:
 -A good source for finding the amount of batteries I would need would be this instructables article showing how to mathematically calculate the batteries needed*. Unfortunately, many of the batteries in my sample database do not seem to have the same high voltages as his predicted system. I'll write the formula out and code it into the Pricing class' findViableBatteries() method. Look there to see the implementation
 
 	*http://www.instructables.com/id/How-to-Size-Your-Off-Grid-Solar-Batteries-1/
+
+-Fixed the battery methods, so they seem to be running well now. The systems are still not producing enough energy to be considered a fully workable combination, I'm going to look into that right now.
+-Panel count seems to be calculated once in the findViablePanel method, but forgotten hence. I think it will need to be recalculated later for added impact.
+-I believe I should factor the powerTolerance of the panels into the calculations of the panel count. It is possible that I may only need to find the panel count once, if this is the case.
+	* this helps a little, but I'm going to need to add more panels if I'm to get the systems working.
+-I think I figured how to get the panelCount to be accurate:
+	* An accurate panel count occurs when the number of panels provides enough energy to meet the energy requirement when the system is processed by the API. The API makes things tricky, on account of how much time it takes in the algorithm and the fact that locations will change every time the application is used. However, if we create one test query for the API with the user's given location, we can find a ratio of Real system kilowatt hour to Projected System kilowatt hours.
+	* with this ratio, we can find the amount of Projected System KWHs needed to get the Real System KWHs. This is that equation
+	Projected * ratio = Real
+	* Using the new Projected value, we can find the amount of panels needed with this equation:
+	count = Projected / systemCap
+	* Although this is not gauranteed to get ALL of the desired energy, so it would be safe to add the panel count by one:
+	count = (Projected / systemCap) + 1
+	

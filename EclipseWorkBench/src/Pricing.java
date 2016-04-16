@@ -35,12 +35,15 @@ public class Pricing extends Algorithms {
 		} else {
 			final int HOURS_PER_YEAR = 8760; // assumes non-leap year
 			// loop through systems, check that they satisfy user's parameters
-			for (int i = 0; i < viableSystems.size(); i++) {
+			int i  = 0;
+			while (!(i >= viableSystems.size())) {
 				viableSystems.get(i).getDataFromAPI(null);
 				// checks to see if the system gets enough energy per year
 				if (viableSystems.get(i).yearlyEnergy / HOURS_PER_YEAR 
 						< goal.energyInKW) {
 					viableSystems.remove(i);
+				} else {
+					i++;
 				}
 			}
 			if (viableSystems.size() > 0) {

@@ -3,7 +3,7 @@ package ProductObjects;
 public class Panel {
 	public String name;
 	public double price;
-	public int systemCap; // this is in KW
+	public int systemCap; // this is in Watts
 	public double amps;
 	public double volts;
 	public int powerTolerance;
@@ -21,7 +21,8 @@ public class Panel {
 	}
 
 	public Panel(String name, double price, int systemCap, double amps,
-			double volts, int powerTolerance, int moduleType, String dimensions) {
+			double volts, int powerTolerance, int moduleType,
+			String dimensions) {
 		this.name = name;
 		this.price = price;
 		this.systemCap = systemCap;
@@ -59,9 +60,13 @@ public class Panel {
 		}
 		// if est. EnergyPerPanel hasn't been found yet, we find it here...
 		double wattToKW = .001;
-		return estimatedEnergyPerPanel = systemCap * wattToKW;
+		estimatedEnergyPerPanel = systemCap * wattToKW;
+		// the returned estimated energy will factor in the powerTolerance,
+		// which typically equates to percent loss on the panel
+		return estimatedEnergyPerPanel -= estimatedEnergyPerPanel
+				* (.01 * powerTolerance);
 	}
-	
+
 	private void getDimensions() {
 		String[] dims = dimensions.split("/");
 		if (heightInInches == 0) {

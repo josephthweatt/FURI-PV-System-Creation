@@ -390,7 +390,6 @@ public class FullSystem implements Cloneable {
 						+ amp + tilt + tiltInput + amp + azimuth + azimuthInput;
 			}
 		}
-
 	}
 
 	// gives the system as an object, typically to store the variant in a list
