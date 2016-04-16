@@ -254,4 +254,8 @@ Resources:
 -The reason why the batteries are missing is because the findViableBatteries method is checking to see if the battery can support a full night (9 hours) of energy, where energy is constant throughout the day. This is impossible, and should be modified to account for the easing of power usage thoughout the night
 
 4-15-16
--I just fized a few issues that were taking place as the result of a null viableSystem list. The problem now is making sure that we actually have systems within our list, which I suppose is the real problem.
+-I just fixed a few issues that were taking place as the result of a null viableSystem list. The problem now is making sure that we actually have systems within our list, which I suppose is the real problem.
+-The battery is still an issue, I'm going to do more research on how many batteries should go with each system.
+-A good source for finding the amount of batteries I would need would be this instructables article showing how to mathematically calculate the batteries needed*. Unfortunately, many of the batteries in my sample database do not seem to have the same high voltages as his predicted system. I'll write the formula out and code it into the Pricing class' findViableBatteries() method. Look there to see the implementation
+
+	*http://www.instructables.com/id/How-to-Size-Your-Off-Grid-Solar-Batteries-1/

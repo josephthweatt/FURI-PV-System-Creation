@@ -342,22 +342,28 @@ public class Pricing extends Algorithms {
 	protected void findViableBatteries() {
 		viableBatteries = new ArrayList<Battery>();
 		Battery battery;
-		final int NIGHT_HOURS = 8;
+		final int OFF_PEAK_HOURS = 8; // as fraction of day
 		// nightly energy assumes less energy is used during night hours
 		double nightlyEnergy = goal.energyInKW * .70;
-		double KWhours;
+		double KWhours, totalAmpHours;
 
 		for (int i = 0; i < containers[3].products.size(); i++) {
 			battery = (Battery) containers[3].products.get(i);
-			KWhours = (battery.ampHours * battery.voltage) / 1000;
-
 			/**************************** ENERGY *******************************/
 			// we need to see if the battery will be able to cover the
-			// amount of Watt hours used in a night. One battery does not need
-			// to cover all energy demands, covering a portion (for simplicity's
-			// sake, we'll say 20%) will show the battery is capable of that
-			// For more information, see the Progress log entry for 3-23-16
-			if (KWhours >= NIGHT_HOURS * nightlyEnergy * .20) {
+			// amount of Watt hours used in a night. For more information, see 
+			// the Progress log entry for 3-23-16 and 4-15-16
+			KWhours = nightlyEnergy * OFF_PEAK_HOURS;
+			totalAmpHours = (2 * KWhours) / battery.voltage;
+			
+			// batteryCount will likely change later in the algorithm
+			double temp = totalAmpHours / battery.ampHours;
+			if (temp % 1 < .5) {
+				battery.batteryCount = (int) temp;
+			} else {
+				battery.batteryCount = (int) temp + 1;
+			}
+			if (battery.batteryCount * battery.price < goal.budget) {
 				viableBatteries.add(battery);
 			}
 		}
