@@ -39,7 +39,7 @@ public class Pricing extends Algorithms {
 				viableSystems.get(i).getDataFromAPI(null);
 				// checks to see if the system gets enough energy per year
 				if (viableSystems.get(i).yearlyEnergy
-						/ HOURS_PER_YEAR < goal.energyInKW) {
+						/ HOURS_PER_YEAR < goal.powerInKW) {
 					viableSystems.remove(i);
 				} else {
 					i++;
@@ -167,7 +167,7 @@ public class Pricing extends Algorithms {
 		system.calculateLoss();
 		system.getDataFromAPI(null);
 		double ratio = (system.yearlyEnergy / HOURS_PER_YEAR);
-		double newProjectedEnergy = goal.energyInKW / ratio;
+		double newProjectedEnergy = goal.powerInKW / ratio;
 
 		// checks through ALL panels in the database
 		for (int i = 0; i < containers[0].products.size(); i++) {
@@ -290,7 +290,7 @@ public class Pricing extends Algorithms {
 
 			// Verify the inverter will output enough energy to meet the user's
 			// energy requirement
-			if (inverter.watts * 1000 >= goal.energyInKW) {
+			if (inverter.watts * 1000 >= goal.powerInKW) {
 				viableInverters.add(inverter);
 			}
 		}
@@ -333,7 +333,7 @@ public class Pricing extends Algorithms {
 		Battery battery;
 		final int OFF_PEAK_HOURS = 8; // as fraction of day
 		// nightly energy assumes less energy is used during night hours
-		double nightlyEnergy = goal.energyInKW * .70;
+		double nightlyEnergy = goal.powerInKW * .70;
 		double KWhours, totalAmpHours;
 
 		for (int i = 0; i < containers[3].products.size(); i++) {

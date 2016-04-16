@@ -3,7 +3,7 @@ package ProductObjects;
 public class Goal {
 	public String goal;
 	public double budget;
-	public double energyInKW; // user's desired energy
+	public double powerInKW; // user's desired energy
 	public double availableSpace; // in square meters
 	public double energyInVolts;
 
@@ -20,7 +20,7 @@ public class Goal {
 			double availableSpace, Double[] coordinates) {
 		this.goal = goal;
 		this.budget = budget;
-		this.energyInKW = energyInKW;
+		this.powerInKW = energyInKW;
 		this.availableSpace = availableSpace;
 		this.energyInVolts = -1;
 
@@ -31,7 +31,7 @@ public class Goal {
 			double availableSpace, String address) {
 		this.goal = goal;
 		this.budget = budget;
-		this.energyInKW = energyInKW;
+		this.powerInKW = energyInKW;
 		this.availableSpace = availableSpace;
 		this.energyInVolts = -1;
 
@@ -42,7 +42,7 @@ public class Goal {
 			double availableSpace, double energyInVolts, Double[] coordinates) {
 		this.goal = goal;
 		this.budget = budget;
-		this.energyInKW = energyInKW;
+		this.powerInKW = energyInKW;
 		this.availableSpace = availableSpace;
 		this.energyInVolts = energyInVolts;
 
@@ -53,7 +53,7 @@ public class Goal {
 			double availableSpace, double energyInVolts, String address) {
 		this.goal = goal;
 		this.budget = budget;
-		this.energyInKW = energyInKW;
+		this.powerInKW = energyInKW;
 		this.availableSpace = availableSpace;
 		this.energyInVolts = energyInVolts;
 
