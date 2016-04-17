@@ -128,6 +128,30 @@ public abstract class Algorithms {
 		containers[8].loToHi("price");
 		viablePVWires.add((PVWire) containers[8].products.get(0));
 	}
+	
+	
+	//returns the top 'x' of systems in the viableSystem list
+	protected ArrayList<FullSystem> getBestSystems(int x) {
+		ArrayList<FullSystem> topX = new ArrayList<FullSystem>();
+		
+		rankSystems();
+		for (int i = 0; i < x; i++) {
+			// will not add systems with the same panel
+			if (!hasPanel(topX, viableSystems.get(i).panel)) {
+				topX.add(viableSystems.get(i));
+			}
+		}
+		return topX;
+	}
+	
+	private Boolean hasPanel(ArrayList<FullSystem> systems, Panel panel) {
+		for (int i = systems.size() - 1; i >= 0; i--) {
+			if (systems.get(i).panel == panel) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	/****************************************************************************
 	 * ImpossibleParameters looks for user input that may be considered

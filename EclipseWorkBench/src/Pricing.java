@@ -33,11 +33,11 @@ public class Pricing extends Algorithms {
 		if (viableSystems.size() < 1) {
 			parameters.noViableSystems();
 		} else {
-			// loop through systems, check that they satisfy user's parameters
-			for (int i = 0; i < viableSystems.size(); i++) {
+			viableSystems = getBestSystems(10);
+			// loop through  the top 10 system
+			for (int i = 0; i < 10; i++) {
 				viableSystems.get(i).getDataFromAPI(null);
 			}
-			rankSystems();
 		}
 	}
 

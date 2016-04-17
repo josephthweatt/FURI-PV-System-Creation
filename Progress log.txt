@@ -278,4 +278,6 @@ Resources:
 -The narrow selection of systems is probably due to the fact that the system is not collecting energy during the night hours (which is literaly half of all hours). That must be why the system's expectations is out of proportion.
 	* On this note, a system may only be generating power at the amount of its size during the peak hours, which is maybe half of half a day, on a good day. I'm going to need to rethink the implementation of the user's energy parameter. It must be included, but cannot have such a generalized effect on the functionality of the algorithm.
 -The current incarnation of the algorithm will look at system size in KW, rather than the previous "KW per hour". This will make it easier for users to ask the algorithm quereies. To see the origional "KW per hour" constraint, look in the branch Pricing With Average Annual Power
+
+-I'm having some issues with the speed of the program. rankSystems in the Pricing class is taking too much time due to the rapid increase of system variants in the arrayList. I'll need to think of a solution for this later.
 	
