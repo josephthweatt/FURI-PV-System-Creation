@@ -135,7 +135,7 @@ public abstract class Algorithms {
 		ArrayList<FullSystem> topX = new ArrayList<FullSystem>();
 		
 		rankSystems();
-		for (int i = 0; i < x; i++) {
+		for (int i = 0; i < viableSystems.size(); i++) {
 			// will not add systems with the same panel
 			if (!hasPanel(topX, viableSystems.get(i).panel)) {
 				topX.add(viableSystems.get(i));

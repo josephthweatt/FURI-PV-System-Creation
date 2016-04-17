@@ -35,7 +35,7 @@ public class Pricing extends Algorithms {
 		} else {
 			viableSystems = getBestSystems(10);
 			// loop through  the top 10 system
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < viableSystems.size(); i++) {
 				viableSystems.get(i).getDataFromAPI(null);
 			}
 		}
