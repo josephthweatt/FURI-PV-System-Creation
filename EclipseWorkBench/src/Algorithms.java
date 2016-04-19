@@ -19,12 +19,12 @@ public abstract class Algorithms {
 	protected ArrayList<Racking> viableRacks;
 	protected ArrayList<Battery> viableBatteries;
 	protected ArrayList<BatteryController> viableBatteryControllers;
-	protected ArrayList<BatteryMeter> viableBatteryMeters;
+	protected ArrayList<BatteryMeter> viableBatteryMeters; 
 	protected ArrayList<DCACDisconnect> viableDCACDisconnects;
 	protected ArrayList<BatteryWire> viableBatteryWires;
 	protected ArrayList<PVWire> viablePVWires;
 
-	protected ArrayList<FullSystem> viableSystems; // runAlgorithm() finds these
+	protected ProductContainer viableSystems; // runAlgorithm() finds these
 	protected FullSystem system; // temporary system to store new systems
 	protected ImpossibleParameters parameters;
 
@@ -43,7 +43,7 @@ public abstract class Algorithms {
 
 	// have not yet decided if this will return anything
 	public void runAlgorithm() {
-		viableSystems = new ArrayList<FullSystem>();
+		viableSystems = new ProductContainer(FullSystem.class);
 		// Overriding this method ought to implement 'super' to call findViables
 		findViablePanels();
 		findViableRacks();
@@ -62,10 +62,11 @@ public abstract class Algorithms {
 
 	// returns the ranked systems, the map may contain more than 10
 	public FullSystem[] getSystems() {
-		if (viableSystems.size() > 0) {
-			FullSystem[] sysArray = new FullSystem[viableSystems.size()];
-			for (int i = 0; i < viableSystems.size(); i++) {
-				sysArray[i] = (FullSystem) viableSystems.get(i);
+		if (viableSystems.products.size() > 0) {
+			FullSystem[] sysArray = 
+				new FullSystem[viableSystems.products.size()];
+			for (int i = 0; i < viableSystems.products.size(); i++) {
+				sysArray[i]= (FullSystem) viableSystems.products.get(i);
 			}
 			return sysArray;
 		}
@@ -135,10 +136,10 @@ public abstract class Algorithms {
 		ArrayList<FullSystem> topX = new ArrayList<FullSystem>();
 		
 		rankSystems();
-		for (int i = 0; i < viableSystems.size(); i++) {
+		for (int i = 0; i < viableSystems.products.size(); i++) {
 			// will not add systems with the same panel
-			if (!hasPanel(topX, viableSystems.get(i).panel)) {
-				topX.add(viableSystems.get(i));
+			if (!hasPanel(topX, viableSystems.products.get(i).panel)) {
+				topX.add(viableSystems.products.get(i));
 			}
 		}
 		return topX;

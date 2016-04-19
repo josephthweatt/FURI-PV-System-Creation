@@ -124,20 +124,14 @@ public class Pricing extends Algorithms {
 				&& system.panel.panelCount
 						* system.panel.systemCap >= goal.sizeInKW) {
 			system.calculateLoss();
-			viableSystems.add((FullSystem) system.cloneFullSystem());
+			viableSystems.products.add(
+					(FullSystem) system.cloneFullSystem());
 		}
 	}
 
 	@Override
 	protected void rankSystems() {
-		// uses ProductContainer's QuickSort to sort the systems
-		ProductContainer systems = new ProductContainer(FullSystem.class,
-				viableSystems.toArray());
-		systems.loToHi("cost");
-		viableSystems.clear();
-		for (int i = 0; i < systems.products.size(); i++) {
-			viableSystems.add((FullSystem) systems.products.get(i));
-		}
+		viableSystems.loToHi("cost");
 	}
 
 	/**************** FINDVIABLE() METHODS *********************************/

@@ -280,4 +280,6 @@ Resources:
 -The current incarnation of the algorithm will look at system size in KW, rather than the previous "KW per hour". This will make it easier for users to ask the algorithm quereies. To see the origional "KW per hour" constraint, look in the branch Pricing With Average Annual Power
 
 -I'm having some issues with the speed of the program. rankSystems in the Pricing class is taking too much time due to the rapid increase of system variants in the arrayList. I'll need to think of a solution for this later.
-	
+
+4-19-16
+-In order to reduce the time to execute rank systems, I'm going to make the viableProducts list a Product container object. This would help the system because it wouldn't need to run the O(N) section of rankSystems() and would give the list the quicksort algorithms inherent in the products class.
