@@ -20,23 +20,23 @@ public class Pricing extends Algorithms {
 		system.addProduct(viableBatteryWires.get(0));
 		system.addProduct(viableBatteryMeters.get(0));
 
-		// this for loop will gather all available systems to viableSystems
-		for (int i = 0; i < viablePanels.size(); i++) {
+		// this will gather all available systems to viableSystems
+		for (int i = 0; i < viablePanels.products.size(); i++) {
 			system.addProduct(viablePanels.get(i));
 			// find each panels optimal rack
 			findBestRack(viablePanels.get(i));
 
-			// calling this method creates a chain of similar methods to get
-			// systems of all combinations for this panel
+			// calling this method creates a chain of similar methods to
+			// get systems of all combinations for this panel
 			findMatchingDCACDisconnects(viablePanels.get(i));
 		}
-		if (viableSystems.size() < 1) {
+		if (viableSystems.products.size() < 1) {
 			parameters.noViableSystems();
 		} else {
-			viableSystems = getBestSystems(10);
+			viableSystems.products = getBestSystems(10);
 			// loop through  the top 10 system
-			for (int i = 0; i < viableSystems.size(); i++) {
-				viableSystems.get(i).getDataFromAPI(null);
+			for (int i = 0; i < viableSystems.products.size(); i++) {
+				viableSystems.products.get(i).getDataFromAPI(null);
 			}
 		}
 	}
