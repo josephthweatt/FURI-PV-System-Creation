@@ -255,6 +255,34 @@ public class Pricing extends Algorithms {
 			parameters.badParameter("Racking");
 		}
 	}
+	
+	@Override
+	protected void findViableBatteryControllers() {
+		viableBatteryControllers = new ArrayList<BatteryController>();
+		BatteryController control;
+		int controlHighestVoltage;
+
+		for (int i = 0; i < containers[4].products.size(); i++) {
+			control = (BatteryController) containers[4].products.get(i);
+
+			/**************************** ENERGY *******************************/
+			// Verify that the controller will support at least one panel
+			// voltage
+			String[] voltages = control.bankVoltage.split("/");
+			controlHighestVoltage = Integer
+					.parseInt(voltages[voltages.length - 1]); // highest bank
+																// voltage
+			for (int j = 0; j < viablePanels.size(); j++) {
+				if (controlHighestVoltage >= viablePanels.get(j).volts) {
+					viableBatteryControllers.add(control);
+					break;
+				}
+			}
+		}
+		if (viableBatteryControllers.size() == 0) {
+			parameters.badParameter("Battery Controller");
+		}
+	}
 
 	@Override
 	protected void findViableInverters() {
@@ -292,35 +320,7 @@ public class Pricing extends Algorithms {
 		if (viableInverters.size() == 0) {
 			parameters.badParameter("Inverter", "energyInKW");
 		}
-	}
-
-	@Override
-	protected void findViableBatteryControllers() {
-		viableBatteryControllers = new ArrayList<BatteryController>();
-		BatteryController control;
-		int controlHighestVoltage;
-
-		for (int i = 0; i < containers[4].products.size(); i++) {
-			control = (BatteryController) containers[4].products.get(i);
-
-			/**************************** ENERGY *******************************/
-			// Verify that the controller will support at least one panel
-			// voltage
-			String[] voltages = control.bankVoltage.split("/");
-			controlHighestVoltage = Integer
-					.parseInt(voltages[voltages.length - 1]); // highest bank
-																// voltage
-			for (int j = 0; j < viablePanels.size(); j++) {
-				if (controlHighestVoltage >= viablePanels.get(j).volts) {
-					viableBatteryControllers.add(control);
-					break;
-				}
-			}
-		}
-		if (viableBatteryControllers.size() == 0) {
-			parameters.badParameter("Battery Controller");
-		}
-	}
+	}	
 
 	@Override
 	protected void findViableBatteries() {
