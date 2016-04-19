@@ -131,8 +131,8 @@ public abstract class Algorithms {
 	}
 
 	// returns the top 'x' of systems in the viableSystem list
-	protected ArrayList<Object> getBestSystems(int x) {
-		ArrayList<Object> topX = new ArrayList<Object>();
+	protected ArrayList<FullSystem> getBestSystems(int x) {
+		ArrayList<FullSystem> topX = new ArrayList<FullSystem>();
 
 		rankSystems();
 		for (int i = 0; i < viableSystems.products.size(); i++) {
@@ -145,9 +145,9 @@ public abstract class Algorithms {
 		return topX;
 	}
 
-	private Boolean hasPanel(ArrayList<Object> systems, Panel panel) {
+	private Boolean hasPanel(ArrayList<FullSystem> systems, Panel panel) {
 		for (int i = systems.size() - 1; i >= 0; i--) {
-			if (((FullSystem) systems.get(i)).panel == panel) {
+			if (systems.get(i).panel == panel) {
 				return true;
 			}
 		}

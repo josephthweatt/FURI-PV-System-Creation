@@ -19,7 +19,7 @@ public abstract class Algorithms {
 	protected ArrayList<Racking> viableRacks;
 	protected ArrayList<Battery> viableBatteries;
 	protected ArrayList<BatteryController> viableBatteryControllers;
-	protected ArrayList<BatteryMeter> viableBatteryMeters;
+	protected ArrayList<BatteryMeter> viableBatteryMeters; 
 	protected ArrayList<DCACDisconnect> viableDCACDisconnects;
 	protected ArrayList<BatteryWire> viableBatteryWires;
 	protected ArrayList<PVWire> viablePVWires;
@@ -29,7 +29,7 @@ public abstract class Algorithms {
 	protected ImpossibleParameters parameters;
 
 	protected final int HOURS_PER_YEAR = 8760; // assumes non-leap year
-
+	
 	// constructor called when the user wishes to have a specific voltage
 	public Algorithms(Goal goal, ProductContainer[] containers) {
 		this.goal = goal;
@@ -63,10 +63,10 @@ public abstract class Algorithms {
 	// returns the ranked systems, the map may contain more than 10
 	public FullSystem[] getSystems() {
 		if (viableSystems.products.size() > 0) {
-			FullSystem[] sysArray = new FullSystem[viableSystems.products
-					.size()];
+			FullSystem[] sysArray = 
+				new FullSystem[viableSystems.products.size()];
 			for (int i = 0; i < viableSystems.products.size(); i++) {
-				sysArray[i] = (FullSystem) viableSystems.products.get(i);
+				sysArray[i]= (FullSystem) viableSystems.products.get(i);
 			}
 			return sysArray;
 		}
@@ -129,25 +129,25 @@ public abstract class Algorithms {
 		containers[8].loToHi("price");
 		viablePVWires.add((PVWire) containers[8].products.get(0));
 	}
-
-	// returns the top 'x' of systems in the viableSystem list
-	protected ArrayList<Object> getBestSystems(int x) {
-		ArrayList<Object> topX = new ArrayList<Object>();
-
+	
+	
+	//returns the top 'x' of systems in the viableSystem list
+	protected ArrayList<FullSystem> getBestSystems(int x) {
+		ArrayList<FullSystem> topX = new ArrayList<FullSystem>();
+		
 		rankSystems();
 		for (int i = 0; i < viableSystems.products.size(); i++) {
 			// will not add systems with the same panel
-			if (!hasPanel( topX,
-					(Panel) ((FullSystem) (viableSystems.products.get(i))).panel)) {
-				topX.add((FullSystem) viableSystems.products.get(i));
+			if (!hasPanel(topX, viableSystems.products.get(i).panel)) {
+				topX.add(viableSystems.products.get(i));
 			}
 		}
 		return topX;
 	}
-
-	private Boolean hasPanel(ArrayList<Object> systems, Panel panel) {
+	
+	private Boolean hasPanel(ArrayList<FullSystem> systems, Panel panel) {
 		for (int i = systems.size() - 1; i >= 0; i--) {
-			if (((FullSystem) systems.get(i)).panel == panel) {
+			if (systems.get(i).panel == panel) {
 				return true;
 			}
 		}
@@ -195,7 +195,7 @@ public abstract class Algorithms {
 				restrictedProduct += " and " + product;
 			}
 		}
-
+		
 		// called to report that no viable systems were found
 		public void noViableSystems() {
 			System.out.println("No viable systems. Could not find parts for: ");

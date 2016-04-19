@@ -21,7 +21,7 @@ public class Pricing extends Algorithms {
 		system.addProduct(viableBatteryMeters.get(0));
 
 		// this will gather all available systems to viableSystems
-		for (int i = 0; i < viablePanels.size(); i++) {
+		for (int i = 0; i < viablePanels.products.size(); i++) {
 			system.addProduct(viablePanels.get(i));
 			// find each panels optimal rack
 			findBestRack(viablePanels.get(i));
@@ -34,10 +34,9 @@ public class Pricing extends Algorithms {
 			parameters.noViableSystems();
 		} else {
 			viableSystems.products = getBestSystems(10);
-			// loop through the top 10 system
+			// loop through  the top 10 system
 			for (int i = 0; i < viableSystems.products.size(); i++) {
-				((FullSystem) (viableSystems.products.get(i)))
-						.getDataFromAPI(null);
+				viableSystems.products.get(i).getDataFromAPI(null);
 			}
 		}
 	}
@@ -122,9 +121,11 @@ public class Pricing extends Algorithms {
 	protected void verifyAndAddSystem() {
 		if (system.findRealPanelArea() <= goal.availableSpace
 				&& system.calculateCost() <= goal.budget
-				&& system.panel.panelCount * system.panel.systemCap >= goal.sizeInKW) {
+				&& system.panel.panelCount
+						* system.panel.systemCap >= goal.sizeInKW) {
 			system.calculateLoss();
-			viableSystems.products.add((FullSystem) system.cloneFullSystem());
+			viableSystems.products.add(
+					(FullSystem) system.cloneFullSystem());
 		}
 	}
 
@@ -148,8 +149,8 @@ public class Pricing extends Algorithms {
 		// 4-15-16
 		// Create Real KWH to Projected KWH ratio
 		FullSystem system = new FullSystem(goal.location,
-				containers[0].products.get(0), new Inverter(null, 0, 95, 0, 0,
-						0));
+				containers[0].products.get(0),
+				new Inverter(null, 0, 95, 0, 0, 0));
 		system.calculateLoss();
 		system.getDataFromAPI(null);
 		double ratio = (system.yearlyEnergy / HOURS_PER_YEAR);
@@ -233,8 +234,8 @@ public class Pricing extends Algorithms {
 			// We look at both dimensions to see if both sides fits
 			for (int j = 0; j < viablePanels.size(); j++) {
 				rackDims = rack.sizePerModule.split("X");
-				rackLengthInches = Double.parseDouble(rackDims[0].substring(0,
-						rackDims[0].indexOf("\"")));
+				rackLengthInches = Double.parseDouble(
+						rackDims[0].substring(0, rackDims[0].indexOf("\"")));
 
 				viablePanels.get(j).dimensions.trim();
 				panelDims = viablePanels.get(j).dimensions.split("/");
@@ -254,7 +255,7 @@ public class Pricing extends Algorithms {
 			parameters.badParameter("Racking");
 		}
 	}
-
+	
 	@Override
 	protected void findViableBatteryControllers() {
 		viableBatteryControllers = new ArrayList<BatteryController>();
@@ -295,8 +296,8 @@ public class Pricing extends Algorithms {
 			// Verify that the inverter can receive as many or more volts as at
 			// least one Battery Controller type
 			for (int j = 0; j < viableBatteryControllers.size(); j++) {
-				for (ArrayList<Integer> volts : viableBatteryControllers.get(j).maxAmps
-						.values()) {
+				for (ArrayList<Integer> volts : viableBatteryControllers
+						.get(j).maxAmps.values()) {
 					for (int k = 0; k < volts.size(); k++) {
 						if (inverter.inputV >= volts.get(k)) {
 							viable = true;
@@ -319,7 +320,7 @@ public class Pricing extends Algorithms {
 		if (viableInverters.size() == 0) {
 			parameters.badParameter("Inverter", "energyInKW");
 		}
-	}
+	}	
 
 	@Override
 	protected void findViableBatteries() {
