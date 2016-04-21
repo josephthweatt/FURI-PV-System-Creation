@@ -289,3 +289,4 @@ Resources:
 
 4-20-16
 -Taking out the midnite kid reduced the current test case considerably. It should be noted that long processing times still occur when the user's constraints are more slack (such as reducing size in KW or increasing available size), but this seems to be on the right track to present information under any reasonable set of parameters
+-I think the only thing missing now would be a way to convert a user inputted address into a PVWatts formatted address. 
