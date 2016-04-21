@@ -10,12 +10,12 @@ public class PowerInfoMain {
 	
 	public static void main(String[] args) throws IOException {
 		// we use Tempe's coordinates for the test case
-		Double[] coordinates = {-33.4294, 111.9431};
+		String address = "Tempe AZ 85281";
 		
 		// Using product container to compute the meters squared of its panels
 		SystemManager sysMan = new SystemManager();
 
-		Goal goal = new Goal("pricing", 25000.0, 4, 35.0, coordinates);
+		Goal goal = new Goal("pricing", 25000.0, 4, 35.0, address);
 		sysMan.setGoal(goal);
 		sysMan.setSystemsFromAlgorithm();
 		

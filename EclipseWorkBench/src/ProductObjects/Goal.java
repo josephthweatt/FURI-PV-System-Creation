@@ -90,11 +90,19 @@ public class Goal {
 				longitude = ((Double) location[1]).doubleValue();
 				address = null;
 			} else if (location[0] instanceof String) { // string address
-				address = (String) location[0];
+				address = urlFormat((String) location[0]);
 				latitude = longitude = 0;
 			} else {
 				System.out.println("Invalid Objects given to Location");
 			}
+		}
+		
+		// converts an address to a url-implementable string
+		private String urlFormat(String address) {
+			address = address.replace(" ", "%20");
+			address = address.replace(",", "%2C");
+			address = address.replace(".", "");
+			return address;
 		}
 
 		public double getLatitude() {

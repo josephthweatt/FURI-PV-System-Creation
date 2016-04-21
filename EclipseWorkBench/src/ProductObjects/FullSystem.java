@@ -39,7 +39,7 @@ public class FullSystem implements Cloneable {
 	public double loss;
 	public double yearlyDC;
 	public double yearlyAC;
-	public double yearlyEnergy; //in kwH
+	public double yearlyEnergy; // in kwH
 
 	public String address;
 	public double latitude;
@@ -52,7 +52,7 @@ public class FullSystem implements Cloneable {
 	// for nonspecific initialization
 	public FullSystem() {
 	}
-	
+
 	public FullSystem(Goal.Location location) {
 		if (location.getAddress() == null) {
 			this.latitude = location.getLatitude();
@@ -291,8 +291,12 @@ public class FullSystem implements Cloneable {
 
 		public PVWattsManager(FullSystem system) {
 			this.system = system;
-			this.latitudeInput = system.latitude;
-			this.longitudeInput = system.longitude;
+			if (system.address != null) {
+				addressInput = system.address;
+			} else {
+				this.latitudeInput = system.latitude;
+				this.longitudeInput = system.longitude;
+			}
 			this.size = system.realPanelArea;
 		}
 
@@ -377,8 +381,9 @@ public class FullSystem implements Cloneable {
 		// takes all API params & variables and returns a single http string
 		private String compileURL() {
 			if (addressInput != null) {
-				return apiSite + version + format + apiKey + amp + address + amp
-						+ systemCap + system.panel.systemCap + amp + moduleTyp
+				return apiSite + version + format + apiKey + amp + address
+						+ addressInput + amp + systemCap
+						+ system.panel.systemCap + amp + moduleTyp
 						+ system.panel.moduleType + amp + loss
 						+ (int) system.loss + amp + arrayTyp + arrayTypeInput
 						+ amp + tilt + tiltInput + amp + azimuth + azimuthInput;
