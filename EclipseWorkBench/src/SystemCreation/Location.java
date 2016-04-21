@@ -1,3 +1,4 @@
+package SystemCreation;
 // an object to store the location, which can either be an address (String)
 // or coordinates (Double). Note that the PVWatts class will try to use the
 // address string before the coordinates
