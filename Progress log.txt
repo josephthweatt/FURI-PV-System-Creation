@@ -286,3 +286,6 @@ Resources:
 -I'm going to need to have a look at the batteries list. I think it might be possible that some systems are not adding in batteries, and because of their reduced cost, they are appearing in the top 10/15 of the cheapest PV systems.
 
 -I realize now that the program is probably looking at a battery controller called the Midnite Kid, which is for small scale PV systems and is considerably cheaper that the rest of the controllers. The code currently has no way of knowing this, so it allows all variants to accept this cheap controller. This provides misleading results, adds more systems to the list than needed, and is probably the main burden of the rank systems method. In short, I deleted it until further modifications can be made.  
+
+4-20-16
+-Taking out the midnite kid reduced the current test case considerably. It should be noted that long processing times still occur when the user's constraints are more slack (such as reducing size in KW or increasing available size), but this seems to be on the right track to present information under any reasonable set of parameters

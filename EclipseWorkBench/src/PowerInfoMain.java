@@ -2,21 +2,20 @@ import java.io.IOException;
 import ProductObjects.Goal;
 
 /* 
- * Current Version created 4-10-16
- * first time testing the Pricing Algorithm
+ * Current Version created 4-20
+ * doing some other debugging before putting everything in the app
  */
 
 public class PowerInfoMain {
 	
 	public static void main(String[] args) throws IOException {
 		// we use Tempe's coordinates for the test case
-		Double[] coordinates = {33.4294, 111.9431};
+		Double[] coordinates = {-33.4294, 111.9431};
 		
 		// Using product container to compute the meters squared of its panels
 		SystemManager sysMan = new SystemManager();
 
-		// budget: 31200 desired energy: 3KW available space: 40 m^2
-		Goal goal = new Goal("pricing", 25000.0, 5, 30.0, coordinates);
+		Goal goal = new Goal("pricing", 25000.0, 4, 35.0, coordinates);
 		sysMan.setGoal(goal);
 		sysMan.setSystemsFromAlgorithm();
 		
