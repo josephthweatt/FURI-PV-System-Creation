@@ -1,6 +1,6 @@
-package ProductObjects;
+package com.example.family.furi.ProductObjects;
 
-/* It should be noted that the PVWires table in the PVModels
+/* It should be noted that the PVWires table in the PVModels.db
  * database has an extra column called "CableType". Please 
  * ignore this, as it was an attempt to lump the battery and
  * PV cables together, but was too complicated 

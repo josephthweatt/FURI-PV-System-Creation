@@ -1,4 +1,4 @@
-package ProductObjects;
+package com.example.family.furi.ProductObjects;
 
 import java.util.ArrayList;
 import java.util.HashMap;

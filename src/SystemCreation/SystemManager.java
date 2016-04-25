@@ -1,21 +1,26 @@
-package SystemCreation;
+package com.example.family.furi.SystemCreation;
+import android.content.Context;
+
 import java.util.HashMap;
 
-import ProductObjects.*;
+import com.example.family.furi.ProductObjects.*;
 
 public class SystemManager {
+	Context context;
 	public SystemCreator systemCreator;
 	private FullSystem[] systems;
 	private Algorithms algorithm;
 
 	private Goal goal;
 
-	public SystemManager() {
+	public SystemManager(Context context) {
+		context = this.context;
 		systemCreator = new SystemCreator();
 		systems = null;
 	}
 	
-	public SystemManager(Goal goal) {
+	public SystemManager(Context context, Goal goal) {
+		this.context = context;
 		systemCreator = new SystemCreator();
 		systems = null;
 		setGoal(goal);
@@ -30,6 +35,9 @@ public class SystemManager {
 	}
 
 	public FullSystem getSystem(int index) {
+		if (systems.length < 1) {
+			return null;
+		}
 		return systems[index];
 	}
 
@@ -60,7 +68,7 @@ public class SystemManager {
 		private DBExtraction db;
 
 		public SystemCreator() {
-			db = new DBExtraction("PVModels.db");
+			db = new DBExtraction(context, "com/example/family/furi/databases/PVModels.db");
 			db.loadAllProducts();
 
 			containers = new ProductContainer[9];
@@ -80,7 +88,7 @@ public class SystemManager {
 
 		// changes the DBExtraction's database, also resets the
 		public void setNewDatabase(String dbName) {
-			db = new DBExtraction(dbName);
+			db = new DBExtraction(context, dbName);
 			db.loadAllProducts();
 			makeContainersWithDB();
 		}

@@ -1,7 +1,7 @@
-package SystemCreation;
+package com.example.family.furi.SystemCreation;
 import java.util.ArrayList;
 
-import ProductObjects.*;
+import com.example.family.furi.ProductObjects.*;
 
 public abstract class Algorithms {
 
@@ -134,6 +134,12 @@ public abstract class Algorithms {
 	// returns the top 'x' of systems in the viableSystem list
 	protected ArrayList<Object> getBestSystems(int x) {
 		ArrayList<Object> topX = new ArrayList<Object>();
+
+		// viableSystems needs to be reduced for the mobile app so that processing time is normal
+		// and stack overflow error does not occur. Here we take the first 3000 systems
+		for (int i = viableSystems.products.size() - 1; i >= 3000; i--) {
+			viableSystems.products.remove(i);
+		}
 
 		rankSystems();
 		for (int i = 0; i < viableSystems.products.size(); i++) {

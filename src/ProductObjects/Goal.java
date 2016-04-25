@@ -1,4 +1,4 @@
-package ProductObjects;
+package com.example.family.furi.ProductObjects;
 // Object class to contain the parameters the user has for their system
 public class Goal {
 	public String goal;

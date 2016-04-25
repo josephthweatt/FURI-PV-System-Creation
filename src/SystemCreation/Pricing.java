@@ -1,8 +1,8 @@
-package SystemCreation;
+package com.example.family.furi.SystemCreation;
 import java.util.ArrayList;
 import java.util.Map;
 
-import ProductObjects.*;
+import com.example.family.furi.ProductObjects.*;
 
 public class Pricing extends Algorithms {
 
@@ -39,6 +39,8 @@ public class Pricing extends Algorithms {
 			for (int i = 0; i < viableSystems.products.size(); i++) {
 				((FullSystem) (viableSystems.products.get(i)))
 						.getDataFromAPI(null);
+
+				((FullSystem) (viableSystems.products.get(i))).findAnnualKWhPerPanel();
 			}
 		}
 	}

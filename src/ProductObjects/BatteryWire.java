@@ -1,4 +1,4 @@
-package ProductObjects;
+package com.example.family.furi.ProductObjects;
 
 public class BatteryWire {
 	public String name;

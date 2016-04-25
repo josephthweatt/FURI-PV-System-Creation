@@ -1,10 +1,8 @@
-package ProductObjects;
+package com.example.family.furi.ProductObjects;
 
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 
 import org.apache.commons.io.IOUtils;
@@ -68,12 +66,11 @@ public class FullSystem implements Cloneable {
 			this.latitude = location.getLatitude();
 			this.longitude = location.getLongitude();
 		} else {
-			this.address = location.getAddress();
+			this.address =location.getAddress();
 		}
 		addProduct(product);
 
 		findRealPanelArea();
-		getDataFromAPI(null);
 
 		// things to do if the user has entered a full system
 		if (isComplete()) {
@@ -369,13 +366,7 @@ public class FullSystem implements Cloneable {
 		// Method to retrieve API key without showing it on git (for safety
 		// reasons)
 		private static String getPVWattsKey() {
-			try {
-				return Files.readAllLines(Paths.get("C:/PVWattsKey.txt"),
-						Charset.forName("UTF-8")).get(0);
-			} catch (IOException e) {
-				e.printStackTrace();
-				return "Error retrieving Key: is the file in the GitHub Directory?";
-			}
+			return "eeEqBaSqw72MV0lwyfIqxBaKWm76UGgHDc95GQ31";
 		}
 
 		// takes all API params & variables and returns a single http string
