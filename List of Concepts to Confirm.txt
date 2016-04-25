@@ -1,4 +1,0 @@
-A list of my methods and thought processes that I would like Sai and dr. Kuitche to look at. While I feel like these conceptions are well-founded, they may not be so valid, and should be put under review:
-
-* Checking the voltages of batteries in the findViableBatteries method
-	-how will I know if a battery is compatible with a battery controller? Does it matter with these series of tests?

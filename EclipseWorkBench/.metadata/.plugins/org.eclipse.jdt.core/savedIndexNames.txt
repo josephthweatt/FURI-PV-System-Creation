@@ -1,1 +1,0 @@
-INDEX VERSION 1.127+C:\Users\Family\Documents\GitHub\FURI-PV-System-Creation\EclipseWorkBench\.metadata\.plugins\org.eclipse.jdt.core
