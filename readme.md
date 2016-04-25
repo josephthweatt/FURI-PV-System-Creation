@@ -6,8 +6,7 @@ Created and maintained by Joseph Thweatt (Undergraduate Researcher), under the m
 This research project seeks to develop decision-making methods for planning the construction of photovoltaic systems. Such methods are based on the indexing and ranking of essential parts (i.e. panels, inverters, batteries) as they pertain to the user’s purpose in building the system. From the research, one can see how photovoltaic systems can be specialized for certain purposes by analyzing the unique properties of the parts that comprise it. The scope of the research is limited to residential locations, but could be scaled to serve the needs of industrial locations if the demand is sufficient.
 
 # Overview
-----------
-OPSRA is a residential utility designed to provide users with custom PV Systems based on their location and personal needs. As of the conclusion of this FURI season, Spring 2016, the project has achieved a working state. It's capabilities are as such:
+OPSRA is a residential utility designed to provide users with custom PV Systems based on their location and personal needs. As of the conclusion of this FURI season, Spring 2016, the project has achieved a working state. Its capabilities are as such:
 * The program can read information on photovoltaic system modules from a sqlite database and store the products into objects. The code for the objects can be found in the [Product Objects] folder.
 * The program can take a user's constraints, including their budget, location, and power requirements, and use that information to find a set of systems which satisfy those constraints.
 * The program can consult APIs, such as the [PVWatts solar calculator], to better determine the effectiveness of a system combination.
@@ -17,7 +16,6 @@ OPSRA is a residential utility designed to provide users with custom PV Systems 
 Updates on the master branch will be closed until further notice. Those wishing to work with the program are encouraged to fork it and make improvements as they please.
 
 # Using OPSRA
--------------
 The current version of OPSRA consists of two packages, [System Creation] and [Product Objects]. Both packages are implemented into [PowerInfoMain], which runs a main class providing a demonstration of a user request. To implement OPSRA into your own program or application, rewrite PowerInfoMain or replace it with your own code. If you intend to modify OPSRA, first read through the package information below.
 
 ### The ProductObjects Package
